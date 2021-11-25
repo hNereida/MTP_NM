@@ -6,27 +6,6 @@ import RF24
 # CONSTANTS 
 import Constants_NM as CNTS
 
-# VARIABLES
-my_address = 1
-
-haveData = False
-hadToken = False
-
-packet_type = "111"
-data = bytearray()
-
-# nodes = { adress: valor, hasData: True or False, hasToken: True or False, toSend: True or False}
-nodes = [{"adress": 2, "hasData": False, "hasToken": False, "toSendData": False},
-         {"adress": 3, "hasData": False, "hasToken": False, "toSendData": False},
-         {"adress": 4, "hasData": False, "hasToken": False, "toSendData": False},
-         {"adress": 5, "hasData": False, "hasToken": False, "toSendData": False},
-         {"adress": 6, "hasData": False, "hasToken": False, "toSendData": False}]
-
-token = 1
-
-lastNodeNoToken = 0
-nodesToSend = []
-
 # IMPORTAR FUNCIONS DEFINIDES PER GRUP B --> ADAPTAR FUNCIONS FETES AMB LES SEVES FUNCIONS
 
 # FUNCIONS AUXILIARS (ES POSARAN EN UN ALTRE DOCUMENT)
@@ -56,15 +35,15 @@ def read_usb_file():
 # Fer import de radio, mirar el self
 # MIRAR COM S'ADAPTA AMB LES FUNCIONS DEL TEAM B
 # UTILITZAR LES CONSTANTS DE RETRIES I TIMEOUTS
-def send_hello(dest_address):
-      responded = False
+def send_hello(source_address, dest_address):
+    responded = False
     hasData = False
     hadToken = False
     radio = RF24.RF24()
     radio.stopListening()
     # Part Team B
-    hello_packet = HelloPacket(my_adress, dest_address, CNTS.HELLO_PACKET)
-    packetToSend = HelloPacket.buildPacket()
+    hello_packet = HelloPacket(source_address, dest_address, CNTS.HELLO_PACKET)
+    packetToSend = hello_packet.buildPacket()
     radio.write(packetToSend)
     # Part Team B
     # Esperar un temps???
@@ -83,12 +62,12 @@ def send_hello(dest_address):
 # ACABAR FUNCIO
 # MIRAR COM S'ADAPTA MAB LES FUNCIONS DEL TEAM B
 def obtain_data_packets():
-      filename = get_file()
+    filename = get_file()
     with open(filename,'rb') as f:
         ba = bytearray(f.read())
     os.system("sudo umount -l /mnt/USBDrive")
     to_send = create_list(number_of_files, ba)
-     return to_send
+    return to_send
 
 # FER LA FUNCIO
 def create_list(number_of_files, bytearray):
@@ -100,6 +79,7 @@ def create_list(number_of_files, bytearray):
 # MIRAR COM S'ADAPTA MAB LES FUNCIONS DEL TEAM B
 # ACABAR FUNCIO
 def send_data(address):
+    # crear radio
     radio.openWritingPipe(pipesbytes)
     radio.powerUp()
     pack=0

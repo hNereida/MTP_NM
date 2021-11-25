@@ -47,7 +47,7 @@ def s0():
 def s1():
     global nodes
     for node in nodes:
-      	responded, node["hasData"], node["hasToken"] = Functions.send_hello(node["adress"])
+      	responded, node["hasData"], node["hasToken"] = Functions.send_hello(myAddress, node["adress"])
         if responded and not node["hasData"]:
             node["toSendData"] = True
     return s2()
@@ -59,7 +59,7 @@ def s2():
     global fileData
     for node in nodes:
         if node["toSendData"]:
-            if Functions.send_data(node["adress"], fileData): #includes ACK
+            if Functions.send_data(myAddress, node["adress"], fileData): #includes ACK
                 node["hasData"] = True
                 token += 1
                 lastNodeNoToken = node["adress"]
@@ -93,7 +93,7 @@ def s4():
       	return s7() # Estat on llegeixes el token
 
 def s5():
-  	Functions.send_hello_response(haveData, hadToken)
+  	Functions.send_hello_response(myAddress, haveData, hadToken)
   	if not haveData:
   	  	return s5()
 
@@ -107,7 +107,6 @@ def s6():
 #Update the information of the node with the information of the token    
 def s7():
     global token
-    Functions.send_token_ack() # no se is cal aixo
     token = Functions.read_token()
     if token == 6:
         return s8()
@@ -116,4 +115,3 @@ def s7():
 def s8():
   	print("C'est fini!") # Considerar canvi
     # sys.exit()
-    
