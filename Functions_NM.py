@@ -79,10 +79,16 @@ def create_list(number_of_files, bytearray):
 # MIRAR COM S'ADAPTA MAB LES FUNCIONS DEL TEAM B
 # ACABAR FUNCIO
 def send_data(myAddress, toAddress, data):
-    # crear radio
-    radio.openWritingPipe(pipesbytes)
+    radio = RF24.RF24()
+    radio.begin(25,0) #set CE and IRQ pins
+    radio.setDataRate(RF24.RF24_1MBPS) 
+    radio.setChannel(0x4c) #Set Channel 76
+    radio.setRetries(1,4) #250us*i , 4 retries - es pot canviar
+    radio.setPALevel(RF24.RF24_PA_MAX) #0 dBm power amplifier level - see table in docu https://nrf24.github.io/RF24/classRF24.html
+    radio.openWritingPipe(bytearray(CNTS.PIPES))
     radio.powerUp()
     pack=0
+    #FUNCIO GRUP B createDataPacket(myAddress,toAddress,data)
     identifier = "010" #identifier Data packet
     for temp in to_send:
         for x in range(0,len(temp),31):
@@ -91,9 +97,28 @@ def send_data(myAddress, toAddress, data):
             while not(radio.write(aux)):    
                 print("failed delivery ")
         pack+=1
-    while not(radio.write(EOT)):    
+    while not(radio.write(EOT)):   
         print("failed delivery " )
         time.sleep(0.01)
+        return False
+    return True
+
+def send_token(toAddress, token): #Fa falta myaddress?
+    radio = RF24.RF24()
+    radio.begin(25,0) #set CE and IRQ pins
+    radio.setDataRate(RF24.RF24_1MBPS) 
+    radio.setChannel(0x4c) #Set Channel 76
+    radio.setRetries(1,4) #250us*i , 4 retries - es pot canviar
+    radio.setPALevel(RF24.RF24_PA_MAX) #0 dBm power amplifier level - see table in docu https://nrf24.github.io/RF24/classRF24.html
+    radio.openWritingPipe(bytearray(CNTS.PIPES))
+    radio.powerUp()
+    pack=0
+    #FUNCIO GRUP B createTokenPacket(toAddress,token)
+    identifier = "100" #identifier Data packet
+    while not(radio.write(token)):    
+        print("failed delivery ")
+        return False
+    return True
 
 # Fer import de radio
 # Declarar EOT
