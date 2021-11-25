@@ -100,22 +100,34 @@ def send_data(myAddress, toAddress, data):
 # MIRAR COM S'ADAPTA MAB LES FUNCIONS DEL TEAM B
 # ACABAR FUNCIO
 def wait_read_packets():
+    finalData = ""
     radio.openReadingPipe(1, pipesbytes)
     radio.startListening()
     while EOT not in receivedPacket:
         if radio.available():
             receivedPacket = radio.read(32)
             header = receivedPacket[0]
-            if (header&0x0E) = 0x04: #Multiplico la header per 00001110 per quedarme amb els bits on hi ha la info del packet
+            #Multiplico la header per 00001110 per quedarme amb els bits on hi ha la info del packet
+            if (header&0x0E) = 0x00:
+                return finalData, CNTS.HELLO_PACKET
+            elif (header&0x0E) = 0x02:
+                return finalData, CNTS.HELLO_RESPONSE
+            elif (header&0x0E) = 0x04: 
                 seqReceived = bool(header & 0x01)
                 dec = header>>1
                 if EOT not in receivedPacket:
                     if seq == seqReceived:
                         received[dec]=received[dec] + receivedPacket[1:32] 
-                        seq=not seq     
+                        seq=not seq    
+            elif (header&0x0E) = 0x06:
+                return finalData, CNTS.DATA_ACK
+            elif (header&0x0E) = 0x08:
+                return finalData, CNTS.TOKEN_PACKET
+            elif (header&0x0E) = 0x0A:
+                return finalData, CNTS.TOKEN_ACK 
     for dataReceived in received:
         finalData.extend(dataReceived)
-    return finalData
+    return finalData, CNTS.DATA_PACKET
 
 # CANVIAR A GUARDAR A RASPBERRY
 # ACABAR LA FUNCIO
