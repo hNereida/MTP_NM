@@ -105,13 +105,14 @@ def wait_read_packets():
     while EOT not in receivedPacket:
         if radio.available():
             receivedPacket = radio.read(32)
-            cabacera = receivedPacket[0]
-            logic = bool(data2 & 0x01)
-            dec = data2>>1
-            if EOT not in receivedPacket:
-                if seq == logic:
-                    received[dec]=received[dec] + receivedPacket[1:32] 
-                    seq=not seq     
+            header = receivedPacket[0]
+            if (header&0x0E) = 0x04: #Multiplico la header per 00001110 per quedarme amb els bits on hi ha la info del packet
+                seqReceived = bool(header & 0x01)
+                dec = header>>1
+                if EOT not in receivedPacket:
+                    if seq == seqReceived:
+                        received[dec]=received[dec] + receivedPacket[1:32] 
+                        seq=not seq     
     for dataReceived in received:
         finalData.extend(dataReceived)
     return finalData
