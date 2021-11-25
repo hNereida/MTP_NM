@@ -3,25 +3,8 @@ import time
 import os
 import RF24
 
-# CONSTANTS (ES POSARAN EN UN ALTRE DOCUMENT)
-
-HELLO_RETRIES = 10
-TOKEN_RETRIES = 10
-DATA_RETRIES = 5
-HELLO_TIMEOUT = 1
-TOKEN_TIMEOUT = 1
-DATA_TIMEOUT = 2
-
-NUM_NODES = 6
-
-HELLO_PACKET = "000"
-HELLO_RESPONSE = "001"
-TOKEN_PACKET = "010"
-DATA_PACKET = "100"
-DATA_ACK_PACKET = "011"
-TOKEN_ACK_PACKET = "101"
-
-pipes = [0x52, 0x78, 0x41, 0x41, 0x41]
+# CONSTANTS 
+import Constants_NM as CNTS
 
 # VARIABLES
 my_address = 1
@@ -74,43 +57,38 @@ def read_usb_file():
 # MIRAR COM S'ADAPTA AMB LES FUNCIONS DEL TEAM B
 # UTILITZAR LES CONSTANTS DE RETRIES I TIMEOUTS
 def send_hello(dest_address):
-  	responded = False
+      responded = False
     hasData = False
     hadToken = False
     radio = RF24.RF24()
-	radio.stopListening()
+    radio.stopListening()
     # Part Team B
-    hello_packet = PacketName(my_adress, dest_address, HELLO_PACKET)
-    packetToSend = PacketName.buildPacket()
-	radio.write(packetToSend)
+    hello_packet = HelloPacket(my_adress, dest_address, CNTS.HELLO_PACKET)
+    packetToSend = HelloPacket.buildPacket()
+    radio.write(packetToSend)
     # Part Team B
     # Esperar un temps???
-	radio.startListening()
-	if radio.available(): # buscar funcio per mirar si hi ha dades rebudes IMPORTANT!!! (potser es aquesta)
+    radio.startListening()
+    if radio.available(): # buscar funcio per mirar si hi ha dades rebudes IMPORTANT!!! (potser es aquesta)
         # IMPLEMENTAR TIMEOUTS I RETRIES???
         responded = True
-    	rcvBytes = radio.read(32)
-        rcvPacket = packetName()
+        rcvBytes = radio.read(32)
+        rcvPacket = DataPacket()
         rcvPacket.parsePacket(rcvBytes)
-        if rcvPacket.getField3() == HELLO_RESPONSE: # No se si es modificarar el nom getField3()
+        if rcvPacket.getTypePacket() == CNTS.HELLO_RESPONSE:
             hasData = rcvPacket.getField4() # No se si es modificarar el nom getField4()
             hadToken = rcvPacket.getField5() # No se si es modificarar el nom getField5()
     return responded, hasData, hadToken
-
-# Retorna true si la data s'ha enviat correctament
-# Falta implementar la funcio
-def send_data(address, data):
-    return True
   
 # ACABAR FUNCIO
 # MIRAR COM S'ADAPTA MAB LES FUNCIONS DEL TEAM B
 def obtain_data_packets():
-  	filename = get_file()
-	with open(filename,'rb') as f:
+      filename = get_file()
+    with open(filename,'rb') as f:
         ba = bytearray(f.read())
     os.system("sudo umount -l /mnt/USBDrive")
     to_send = create_list(number_of_files, ba)
- 	return to_send
+     return to_send
 
 # FER LA FUNCIO
 def create_list(number_of_files, bytearray):
@@ -118,6 +96,7 @@ def create_list(number_of_files, bytearray):
 
 # Fer import de radio
 # Declarar EOT
+# Retorna true si la data s'ha enviat correctament
 # MIRAR COM S'ADAPTA MAB LES FUNCIONS DEL TEAM B
 # ACABAR FUNCIO
 def send_data(address):
@@ -141,7 +120,7 @@ def send_data(address):
 # MIRAR COM S'ADAPTA MAB LES FUNCIONS DEL TEAM B
 # ACABAR FUNCIO
 def wait_read_packets():
-	radio.openReadingPipe(1, pipesbytes)
+    radio.openReadingPipe(1, pipesbytes)
     radio.startListening()
     while EOT not in receivedPacket:
         if radio.available():
@@ -162,82 +141,6 @@ def wait_read_packets():
 def write_file(data):
     with open("/mnt/USBDrive/fileOutput.txt","wb") as f:
         f.write(data)
-
-# AQUI COMENCEN ELS ESTATS
-
-#Check if we have the USB connected. If we have it connected, we are the first to transmit. If not, we just wait.
-def s0():
-	if is_usb_connected():
-    	data = read_usb_file()
-    	return s1()
-	else: 
-		return s4()
-
-#We are the first to transmit -> we have the token. We need to send a hello to everybody reachable.  
-
-def s1():
-	for node in nodes:
-      	responded, node["hasData"], node["hasToken"] = send_hello(node["adress"])
-        if responded and not node["hasData"]:
-			node["toSendData"] = True
-	return s2()
-
-#Send data
-def s2():
-	for node in nodes:
-		if node["toSendData"]:
-			if send_data(node["adress"], data): #includes ACK
-            	node["hasData"] = True
-                token += 1
-                lastNodeNoToken = node["adress"]
-	return s3()
-
-#Updates token information and sends token to the last device that has received data. 
-#If we cannot send the token to the last one (has already had the token or it is unreachable), we need to try to send the token to another.
-def s3():
-  	for node in nodes:
-      	if node["toSendData"]:
-      		nodesToSend.append(node["adress"])
-	if lastNodeNoToken > 0:
-		sendToken(lastNodeNoToken, token) # (Node adress, token)
-    else:
-      	sendToken(random.choice(nodesToSend), token)
-    return s4()
-
-
-#State where we wait to reveive a packet
-def s4():
-	packet_type, data = wait_read_packets() #TORNA EL VALOR HELLO_PACKET/DATA_PACKET/TOKEN_PACKET i DATA DEL PAQUET
-    if packet_type == HELLO_PACKET:
-    	return s5()
-    else if packet_type == DATA_PACKET:
-      	return s6() # MODIFICAR PER ESTAT ON ESPERES EL TOKEN
-    else if packet_type == TOKEN_PACKET:
-      	return s7() # Estel que at on esperes la data
-
-def s5():
-	send_hello_response(haveData, hadToken) # Definir funció
-	if not haveData:
-    return s5()
-
-def s6():
-  	# XUCLAR DATA I GUARDAR EN FITXER
-    write_file(data) #into raspberry
-    haveData = True
-    return s4()
-
-#Update the information of the node with the information of the token    
-def s7():
-    send_token_ack() # no se is cal aixo
-  	token = read_token()
-    if token == 6:
-      	return s8()
-    return s1()
-
-def s8():
-  	print("C'est fini!") # Considerar canvi
-
-
 
 # #Functions to do:
 # int read_token()
