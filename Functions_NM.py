@@ -78,7 +78,7 @@ def create_list(number_of_files, bytearray):
 # Retorna true si la data s'ha enviat correctament
 # MIRAR COM S'ADAPTA MAB LES FUNCIONS DEL TEAM B
 # ACABAR FUNCIO
-def send_data(address):
+def send_data(myAddress, toAddress, data):
     # crear radio
     radio.openWritingPipe(pipesbytes)
     radio.powerUp()
@@ -125,5 +125,4 @@ def write_file(data):
 # #Functions to do:
 # int read_token()
 # send_token(address, token)
-# send_data(address, data) #includes ACK
 # send_token_ack() # no se si cal aquesta funcio
