@@ -8,7 +8,7 @@ class TokenPacketResponse(PacketGeneric):
     ack_nack = None
 
     # Constructor
-    def __init__(self, sourceAddress=0, destAddress=0, typePacket=0, ack_nack=0):
+    def __init__(self, sourceAddress=0, destAddress=0, ack_nack=0):
         # call parent's constructor
         super().__init__(sourceAddress, destAddress, packets.TOKEN_RESPONSE["type"])
         self.ack_nack = ack_nack

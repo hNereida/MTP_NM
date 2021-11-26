@@ -11,7 +11,7 @@ class DataPacket(PacketGeneric):
     payload = None # bytes
 
     # Constructor
-    def __init__(self, sourceAddress=0, destAddress=0, typePacket=0, length=0, eot=0, sequence_number=0, payload=[]):
+    def __init__(self, sourceAddress=0, destAddress=0, length=0, eot=0, sequence_number=0, payload=[]):
         # call parent's constructor
         super().__init__(sourceAddress, destAddress, packets.DATA["type"])
         self.length = length

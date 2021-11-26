@@ -8,7 +8,7 @@ class TokenPacket(PacketGeneric):
     num_recv_data = None
 
     # Constructor
-    def __init__(self, sourceAddress=0, destAddress=0, typePacket=0, num_recv_data=0):
+    def __init__(self, sourceAddress=0, destAddress=0, num_recv_data=0):
         # call parent's constructor
         super().__init__(sourceAddress, destAddress, packets.TOKEN["type"])
         self.num_recv_data = num_recv_data

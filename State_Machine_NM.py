@@ -43,7 +43,6 @@ def s0():
         return s4()
 
 #We are the first to transmit -> we have the token. We need to send a hello to everybody reachable.  
-
 def s1():
     global nodes
     for node in nodes:

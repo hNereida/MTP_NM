@@ -5,8 +5,15 @@ import RF24
 
 # CONSTANTS 
 import Constants_NM as CNTS
+import Packets.PacketsDefinitions as packets
 
 # IMPORTAR FUNCIONS DEFINIDES PER GRUP B --> ADAPTAR FUNCIONS FETES AMB LES SEVES FUNCIONS
+from Packets.HelloPacket import HelloPacket
+from Packets.HelloPacketResponse import HelloPacketResponse
+from Packets.DataPacket import DataPacket
+from Packets.DataPacketResponse import DataPacketResponse
+from Packets.TokenPacket import TokenPacket
+from Packets.TokenPacketResponse import TokenPacketResponse
 
 # FUNCIONS AUXILIARS (ES POSARAN EN UN ALTRE DOCUMENT)
 
@@ -42,24 +49,29 @@ def send_hello(source_address, dest_address):
     radio = RF24.RF24()
     radio.stopListening()
     # Part Team B
-    hello_packet = HelloPacket(source_address, dest_address, CNTS.HELLO_PACKET)
+    hello_packet = HelloPacket(source_address, dest_address)
     packetToSend = hello_packet.buildPacket()
     radio.write(packetToSend)
     # Part Team B
-    # Esperar un temps???
+    # Esperar un temps??? --> GP: not sure
+    time.sleep(0.1)
+
+     # buscar funcio per mirar si hi ha dades rebudes IMPORTANT!!! (potser es aquesta)
     radio.startListening()
-    if radio.available(): # buscar funcio per mirar si hi ha dades rebudes IMPORTANT!!! (potser es aquesta)
-        # IMPLEMENTAR TIMEOUTS I RETRIES???
-        responded = True
-        rcvBytes = radio.read(32)
-        rcvPacket = DataPacket()
-        rcvPacket.parsePacket(rcvBytes)
-        if rcvPacket.getTypePacket() == CNTS.HELLO_RESPONSE:
-            hasData = rcvPacket.getField4() # No se si es modificarar el nom getField4()
-            hadToken = rcvPacket.getField5() # No se si es modificarar el nom getField5()
+    while not radio.available():
+      time.sleep(0.001)
+
+    # IMPLEMENTAR TIMEOUTS I RETRIES???
+    responded = True
+    rcvBytes = radio.read(radio.payloadSize)
+    rcvPacket = HelloPacketResponse()
+    rcvPacket.parsePacket(rcvBytes)
+    if rcvPacket.getTypePacket() == packets.HELLO_RESPONSE["type"]:
+        hasData = rcvPacket.hadData() 
+        hadToken = rcvPacket.hadToken()
     return responded, hasData, hadToken
   
-# ACABAR FUNCIO
+# TODO: ACABAR FUNCIO
 # MIRAR COM S'ADAPTA MAB LES FUNCIONS DEL TEAM B
 def obtain_data_packets():
     filename = get_file()
@@ -103,7 +115,7 @@ def send_data(myAddress, toAddress, data):
         return False
     return True
 
-def send_token(toAddress, token): #Fa falta myaddress?
+def send_token(sourceAddress, toAddress, numRecvData):
     radio = RF24.RF24()
     radio.begin(25,0) #set CE and IRQ pins
     radio.setDataRate(RF24.RF24_1MBPS) 
@@ -113,11 +125,15 @@ def send_token(toAddress, token): #Fa falta myaddress?
     radio.openWritingPipe(bytearray(CNTS.PIPES))
     radio.powerUp()
     pack=0
+
     #FUNCIO GRUP B createTokenPacket(toAddress,token)
-    identifier = "100" #identifier Data packet
+    tokenPacket = TokenPacket(sourceAddress, toAddress, numRecvData)
+    token = tokenPacket.buildPacket()
+
     while not(radio.write(token)):    
-        print("failed delivery ")
-        return False
+      print("failed delivery ")
+      #return False
+
     return True
 
 # Fer import de radio
@@ -128,28 +144,78 @@ def wait_read_packets():
     finalData = ""
     radio.openReadingPipe(1, pipesbytes)
     radio.startListening()
+
+    """
+    # Group B
+    # Read one packet
+    while not radio.available():
+      time.sleep(0.01)
+    receivedPacket = radio.read(32)
+
+    if PacketGeneric.isPacket(receivedPacket, packets.HELLO["type"]):
+      helloPacket = HelloPacket()
+      helloPacket.parsePacket(receivedPacket)
+      # do whatever with the packet
+
+    elif PacketGeneric.isPacket(receivedPacket, packets.HELLO_RESPONSE["type"]):
+      helloResponsePacket = HelloResponsePacket()
+      helloResponsePacket.parsePacket(receivedPacket)
+      # do whatever with the packet
+
+    # TODO: Check sequence number for Stop & Wait
+    elif PacketGeneric.isPacket(receivedPacket, packets.DATA["type"]):
+      dataPacket = DataPacket()
+      dataPacket.parsePacket(receivedPacket)
+      finalData = dataPacket.getPayload()
+
+      while not dataPacket.isEot():
+        while not radio.available():
+          time.sleep(0.01)
+        receivedPacket = radio.read(32)
+        dataPacket.parsePacket(receivedPacket)
+        finalData.extend(dataPacket.getPayload())
+
+    # TODO: Check sequence number for Stop & Wait
+    elif PacketGeneric.isPacket(receivedPacket, packets.DATA_RESPONSE["type"]):
+      dataResponsePacket = DataResponsePacket()
+      dataResponsePacket.parsePacket(receivedPacket)
+      # do whatever with the packet
+
+    elif PacketGeneric.isPacket(receivedPacket, packets.TOKEN["type"]):
+      tokenPacket = TokenPacket()
+      tokenPacket.parsePacket(receivedPacket)
+      # do whatever with the packet
+
+    elif PacketGeneric.isPacket(receivedPacket, packets.TOKEN_RESPONSE["type"]):
+      tokenResponsePacket = TokenResponsePacket()
+      tokenResponsePacket.parsePacket(receivedPacket)
+      # do whatever with the packet
+
+    """
     while EOT not in receivedPacket:
-        if radio.available():
-            receivedPacket = radio.read(32)
-            header = receivedPacket[0]
-            #Multiplico la header per 00001110 per quedarme amb els bits on hi ha la info del packet
-            if (header&0x0E) = 0x00:
-                return finalData, CNTS.HELLO_PACKET
-            elif (header&0x0E) = 0x02:
-                return finalData, CNTS.HELLO_RESPONSE
-            elif (header&0x0E) = 0x04: 
-                seqReceived = bool(header & 0x01)
-                dec = header>>1
-                if EOT not in receivedPacket:
-                    if seq == seqReceived:
-                        received[dec]=received[dec] + receivedPacket[1:32] 
-                        seq=not seq    
-            elif (header&0x0E) = 0x06:
-                return finalData, CNTS.DATA_ACK
-            elif (header&0x0E) = 0x08:
-                return finalData, CNTS.TOKEN_PACKET
-            elif (header&0x0E) = 0x0A:
-                return finalData, CNTS.TOKEN_ACK 
+        while not radio.available():
+          time.sleep(0.01)
+
+        receivedPacket = radio.read(32)
+        header = receivedPacket[0]
+        #Multiplico la header per 00001110 per quedarme amb els bits on hi ha la info del packet
+        if (header&0x0E) = 0x00:
+            return finalData, CNTS.HELLO_PACKET
+        elif (header&0x0E) = 0x02:
+            return finalData, CNTS.HELLO_RESPONSE
+        elif (header&0x0E) = 0x04: 
+            seqReceived = bool(header & 0x01)
+            dec = header>>1
+            if EOT not in receivedPacket:
+                if seq == seqReceived:
+                    received[dec]=received[dec] + receivedPacket[1:32] 
+                    seq=not seq    
+        elif (header&0x0E) = 0x06:
+            return finalData, CNTS.DATA_ACK
+        elif (header&0x0E) = 0x08:
+            return finalData, CNTS.TOKEN_PACKET
+        elif (header&0x0E) = 0x0A:
+            return finalData, CNTS.TOKEN_ACK 
     for dataReceived in received:
         finalData.extend(dataReceived)
     return finalData, CNTS.DATA_PACKET
