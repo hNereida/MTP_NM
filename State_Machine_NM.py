@@ -53,9 +53,9 @@ def s1():
 
 #Send data
 def s2():
+    global nodes
     global token
     global lastNodeNoToken
-    global fileData
     for node in nodes:
         if node["toSendData"]:
             if Functions.send_data(myAddress, node["adress"], fileData): #includes ACK
@@ -67,9 +67,7 @@ def s2():
 #Updates token information and sends token to the last device that has received data. 
 #If we cannot send the token to the last one (has already had the token or it is unreachable), we need to try to send the token to another.
 def s3():
-    global nodes
     global nodesToSend
-    global lastNodeNoToken
     for node in nodes:
         if node["toSendData"]:
             nodesToSend.append(node["adress"])
