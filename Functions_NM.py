@@ -130,7 +130,7 @@ def wait_read_packets():
     radio.openReadingPipe(1, pipesbytes)
     radio.startListening()
 
-    """
+    
     # Group B
     # Read one packet
     while not radio.available():
@@ -204,7 +204,7 @@ def wait_read_packets():
     for dataReceived in received:
         finalData.extend(dataReceived)
     return finalData, CNTS.DATA_PACKET
-
+"""
 # CANVIAR A GUARDAR A RASPBERRY
 # ACABAR LA FUNCIO
 def write_file(data):
