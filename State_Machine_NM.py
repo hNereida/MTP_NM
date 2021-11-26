@@ -112,3 +112,5 @@ def s7():
 def s8():
   	print("C'est fini!") # Considerar canvi
     # sys.exit()
+
+s0();
