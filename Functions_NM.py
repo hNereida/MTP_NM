@@ -59,7 +59,7 @@ def send_hello(source_address, dest_address):
      # buscar funcio per mirar si hi ha dades rebudes IMPORTANT!!! (potser es aquesta)
     radio.startListening()
     while not radio.available():
-      time.sleep(0.001)
+      time.sleep(CNTS.TIMEOUT)
 
     # IMPLEMENTAR TIMEOUTS I RETRIES???
     responded = True
@@ -70,22 +70,7 @@ def send_hello(source_address, dest_address):
         hasData = rcvPacket.hadData() 
         hadToken = rcvPacket.hadToken()
     return responded, hasData, hadToken
-  
-# TODO: ACABAR FUNCIO
-# MIRAR COM S'ADAPTA MAB LES FUNCIONS DEL TEAM B
-def obtain_data_packets():
-    filename = get_file()
-    with open(filename,'rb') as f:
-        ba = bytearray(f.read())
-    os.system("sudo umount -l /mnt/USBDrive")
-    to_send = create_list(number_of_files, ba)
-    return to_send
 
-# FER LA FUNCIO
-def create_list(number_of_files, bytearray):
-    return to_send
-
-# Fer import de radio
 # Declarar EOT
 # Retorna true si la data s'ha enviat correctament
 # MIRAR COM S'ADAPTA MAB LES FUNCIONS DEL TEAM B
@@ -93,15 +78,15 @@ def create_list(number_of_files, bytearray):
 def send_data(myAddress, toAddress, data):
     radio = RF24.RF24()
     radio.begin(25,0) #set CE and IRQ pins
-    radio.setDataRate(RF24.RF24_1MBPS) 
-    radio.setChannel(0x4c) #Set Channel 76
-    radio.setRetries(1,4) #250us*i , 4 retries - es pot canviar
-    radio.setPALevel(RF24.RF24_PA_MAX) #0 dBm power amplifier level - see table in docu https://nrf24.github.io/RF24/classRF24.html
+    radio.setDataRate(CNTS.DATARATE) 
+    radio.setChannel(CNTS.CHANNEL) #Set Channel 6
+    radio.setRetries(1,CNTS.RETRIES) #250us*i , 4 retries - es pot canviar
+    radio.setPALevel(CNTS.POWERLEVEL) #0 dBm power amplifier level - see table in docu https://nrf24.github.io/RF24/classRF24.html
     radio.openWritingPipe(bytearray(CNTS.PIPES))
     radio.powerUp()
     pack=0
     #FUNCIO GRUP B createDataPacket(myAddress,toAddress,data)
-    identifier = "010" #identifier Data packet
+    identifier = CNTS.DATA_PACKET #identifier Data packet
     for temp in to_send:
         for x in range(0,len(temp),31):
             data = identifier + pack
@@ -149,47 +134,47 @@ def wait_read_packets():
     # Group B
     # Read one packet
     while not radio.available():
-      time.sleep(0.01)
+        time.sleep(0.01)
     receivedPacket = radio.read(32)
 
     if PacketGeneric.isPacket(receivedPacket, packets.HELLO["type"]):
-      helloPacket = HelloPacket()
-      helloPacket.parsePacket(receivedPacket)
-      # do whatever with the packet
+        helloPacket = HelloPacket()
+        helloPacket.parsePacket(receivedPacket)
+        # do whatever with the packet
 
     elif PacketGeneric.isPacket(receivedPacket, packets.HELLO_RESPONSE["type"]):
-      helloResponsePacket = HelloResponsePacket()
-      helloResponsePacket.parsePacket(receivedPacket)
-      # do whatever with the packet
+        helloResponsePacket = HelloResponsePacket()
+        helloResponsePacket.parsePacket(receivedPacket)
+        # do whatever with the packet
 
     # TODO: Check sequence number for Stop & Wait
     elif PacketGeneric.isPacket(receivedPacket, packets.DATA["type"]):
-      dataPacket = DataPacket()
-      dataPacket.parsePacket(receivedPacket)
-      finalData = dataPacket.getPayload()
+        dataPacket = DataPacket()
+        dataPacket.parsePacket(receivedPacket)
+        finalData = dataPacket.getPayload()
 
-      while not dataPacket.isEot():
+    while not dataPacket.isEot():
         while not radio.available():
-          time.sleep(0.01)
+            time.sleep(0.01)
         receivedPacket = radio.read(32)
         dataPacket.parsePacket(receivedPacket)
         finalData.extend(dataPacket.getPayload())
 
     # TODO: Check sequence number for Stop & Wait
     elif PacketGeneric.isPacket(receivedPacket, packets.DATA_RESPONSE["type"]):
-      dataResponsePacket = DataResponsePacket()
-      dataResponsePacket.parsePacket(receivedPacket)
-      # do whatever with the packet
+        dataResponsePacket = DataResponsePacket()
+        dataResponsePacket.parsePacket(receivedPacket)
+        # do whatever with the packet
 
     elif PacketGeneric.isPacket(receivedPacket, packets.TOKEN["type"]):
-      tokenPacket = TokenPacket()
-      tokenPacket.parsePacket(receivedPacket)
-      # do whatever with the packet
+        tokenPacket = TokenPacket()
+        tokenPacket.parsePacket(receivedPacket)
+        # do whatever with the packet
 
     elif PacketGeneric.isPacket(receivedPacket, packets.TOKEN_RESPONSE["type"]):
-      tokenResponsePacket = TokenResponsePacket()
-      tokenResponsePacket.parsePacket(receivedPacket)
-      # do whatever with the packet
+        tokenResponsePacket = TokenResponsePacket()
+        tokenResponsePacket.parsePacket(receivedPacket)
+    # do whatever with the packet
 
     """
     while EOT not in receivedPacket:
@@ -199,22 +184,22 @@ def wait_read_packets():
         receivedPacket = radio.read(32)
         header = receivedPacket[0]
         #Multiplico la header per 00001110 per quedarme amb els bits on hi ha la info del packet
-        if (header&0x0E) = 0x00:
+        if (header&0x0E) == 0x00:
             return finalData, CNTS.HELLO_PACKET
-        elif (header&0x0E) = 0x02:
+        elif (header&0x0E) == 0x02:
             return finalData, CNTS.HELLO_RESPONSE
-        elif (header&0x0E) = 0x04: 
+        elif (header&0x0E) == 0x04: 
             seqReceived = bool(header & 0x01)
             dec = header>>1
             if EOT not in receivedPacket:
                 if seq == seqReceived:
                     received[dec]=received[dec] + receivedPacket[1:32] 
                     seq=not seq    
-        elif (header&0x0E) = 0x06:
+        elif (header&0x0E) == 0x06:
             return finalData, CNTS.DATA_ACK
-        elif (header&0x0E) = 0x08:
+        elif (header&0x0E) == 0x08:
             return finalData, CNTS.TOKEN_PACKET
-        elif (header&0x0E) = 0x0A:
+        elif (header&0x0E) == 0x0A:
             return finalData, CNTS.TOKEN_ACK 
     for dataReceived in received:
         finalData.extend(dataReceived)

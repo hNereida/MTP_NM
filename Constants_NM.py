@@ -2,10 +2,13 @@ import RF24
 
 # CONSTANTS
 
+RETRIES = 4 # Mirar si s'ha de modificar
 HELLO_RETRIES = 4 # Mirar si s'ha de modificar
 TOKEN_RETRIES = 4 # Mirar si s'ha de modificar
 DATA_RETRIES = 4 # Mirar si s'ha de modificar
 TIMEOUT = 0.001 # (en segons) Mirar si s'ha de modificar
+
+# DECLARAR EOT
 
 NUM_NODES = 6
 
