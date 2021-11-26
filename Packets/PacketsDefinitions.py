@@ -32,14 +32,14 @@ HELLO = {
 HELLO_RESPONSE = {
   "type": 1,
   "fields": {
-    "have_data": {
+    "had_data": {
       "static": True,
       "byte_start": 1,
       "bit_start": 1,
       "byte_end": 1,
       "bit_end": 1
     },
-    "have_token": {
+    "had_token": {
       "static": True,
       "byte_start": 1,
       "bit_start": 2,
