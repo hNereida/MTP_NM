@@ -1,6 +1,4 @@
 import random
-import time
-import os
 import RF24
 
 # CONSTANTS
@@ -12,7 +10,7 @@ import Functions_NM as Functions
 import Packets.PacketsDefinitions as packets
 
 # VARIABLES
-myAddress = 1
+myAddress = 3
 
 haveData = False
 hadToken = False
@@ -21,12 +19,12 @@ packetType = "111"
 fileData = bytearray()
 rcvData = bytearray()
 
-# nodes = { adress: valor, hasData: True or False, hasToken: True or False, toSend: True or False}
-nodes = [{"adress": 2, "hasData": False, "hasToken": False, "toSendData": False},
-         {"adress": 3, "hasData": False, "hasToken": False, "toSendData": False},
-         {"adress": 4, "hasData": False, "hasToken": False, "toSendData": False},
-         {"adress": 5, "hasData": False, "hasToken": False, "toSendData": False},
-         {"adress": 6, "hasData": False, "hasToken": False, "toSendData": False}]
+# nodes = { address: valor, hasData: True or False, hasToken: True or False, toSend: True or False}
+nodes = [{"address": 1, "hasData": False, "hasToken": False, "toSendData": False},
+         {"address": 2, "hasData": False, "hasToken": False, "toSendData": False},
+         {"address": 4, "hasData": False, "hasToken": False, "toSendData": False},
+         {"address": 5, "hasData": False, "hasToken": False, "toSendData": False},
+         {"address": 6, "hasData": False, "hasToken": False, "toSendData": False}]
 
 token = 1
 
@@ -52,10 +50,10 @@ def s1():
     anyResponded = False
     while not anyResponded:
         for node in nodes:
-      	    responded, node["hasData"], node["hasToken"] = Functions.send_hello(myAddress, node["adress"])
+      	    responded, node["hasData"], node["hasToken"] = Functions.send_hello(myAddress, node["address"])
             if responded:
                 anyResponded = True
-                nodesToSendToken.append(node["adress"])
+                nodesToSendToken.append(node["address"])
             if responded and not node["hasData"]:
                 node["toSendData"] = True
 
@@ -68,10 +66,10 @@ def s2():
     global lastNodeNoToken
     for node in nodes:
         if node["toSendData"]:
-            if Functions.send_data(myAddress, node["adress"], fileData): #includes ACK
+            if Functions.send_data(myAddress, node["address"], fileData): #includes ACK
                 node["hasData"] = True
                 token += 1
-                lastNodeNoToken = node["adress"]
+                lastNodeNoToken = node["address"]
             node["toSendData"] = False
     
     return s3()
@@ -81,7 +79,7 @@ def s2():
 def s3():
     responded = False
     if lastNodeNoToken > 0:
-        responded = Functions.sendToken(myAddress, lastNodeNoToken, token) # (Node adress, token)
+        responded = Functions.sendToken(myAddress, lastNodeNoToken, token) # (Node address, token)
     while not responded:
         responded = Functions.sendToken(myAddress, random.choice(nodesToSendToken), token)
     return s4()
@@ -121,4 +119,8 @@ def s8():
   	print("C'est fini!") # Considerar canvi
     # sys.exit()
 
-s0();
+def main():
+    return s0()
+
+if __name__ == "__main__":
+    main()
