@@ -5,7 +5,7 @@ import RF24
 import Constants_NM as CNTS
 
 # FUNCIONS AUXILIARS
-import Functions_NM as Functions
+import Functions_NM_Team_C as Functions
 
 import Packets.PacketsDefinitions as packets
 
@@ -79,9 +79,9 @@ def s2():
 def s3():
     responded = False
     if lastNodeNoToken > 0:
-        responded = Functions.sendToken(myAddress, lastNodeNoToken, token) # (Node address, token)
+        responded = Functions.send_token(myAddress, lastNodeNoToken, token) # (Node address, token)
     while not responded:
-        responded = Functions.sendToken(myAddress, random.choice(nodesToSendToken), token)
+        responded = Functions.send_token(myAddress, random.choice(nodesToSendToken), token)
     return s4()
 
 
