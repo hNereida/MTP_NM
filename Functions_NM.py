@@ -188,13 +188,14 @@ def wait_read_packets():
         time.sleep(0.01)
     rcvBytes = radio.read(CNTS.PACKET_SIZE)
 
-    if PacketGeneric.isPacket(rcvBytes, packets.HELLO["type"]):
+    packetGeneric = PacketGeneric()
+    if packetGeneric.isPacket(rcvBytes, packets.HELLO["type"]):
         helloPacket = HelloPacket()
         helloPacket.parsePacket(rcvBytes)
         return packets.HELLO["type"], helloPacket.getSourceAddress()
 
     # TODO: Check sequence number for Stop & Wait
-    if PacketGeneric.isPacket(rcvBytes, packets.DATA["type"]):
+    if packetGeneric.isPacket(rcvBytes, packets.DATA["type"]):
         dataPacket = DataPacket()
         dataPacket.parsePacket(rcvBytes)
         finalData = dataPacket.getPayload()
@@ -220,7 +221,7 @@ def wait_read_packets():
 
         return packets.DATA["type"], finalData
 
-    if PacketGeneric.isPacket(rcvBytes, packets.TOKEN["type"]):
+    if packetGeneric.isPacket(rcvBytes, packets.TOKEN["type"]):
         tokenPacket = TokenPacket()
         tokenPacket.parsePacket(rcvBytes)
         # We should check with the CRC that the packet is okey, value True of below
