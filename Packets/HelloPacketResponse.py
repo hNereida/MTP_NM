@@ -60,8 +60,8 @@ class HelloPacketResponse(PacketGeneric):
         return True
 
     # Setters & Getters
-    def hadData(self):
+    def had_Data(self):
         return self.hadData
 
-    def hadToken(self):
+    def had_Token(self):
         return self.hadToken

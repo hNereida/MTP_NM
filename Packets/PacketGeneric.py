@@ -1,6 +1,6 @@
 import Packets.PacketsDefinitions as packets
 from Packets.PacketsUtils import *
-from Packets.PacketGeneric import PacketGeneric
+
 
 class PacketGeneric():
     # Properties

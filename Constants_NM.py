@@ -16,4 +16,5 @@ CHANNEL = 6
 ENCODING_TRANSMISSION = 'utf-8'
 PACKET_SIZE = 32
 DATA_SIZE = 30
-PIPES = [0x52, 0x78, 0x41, 0x41, 0x41]
+pipes_aux = [0x52, 0x78, 0x41, 0x41, 0x41]
+PIPES = bytearray(pipes_aux)
