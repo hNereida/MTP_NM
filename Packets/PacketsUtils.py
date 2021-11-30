@@ -14,7 +14,7 @@ def getFieldLength(field_parameters):
     if(field_parameters["static"]):
         bit_end = field_parameters["byte_end"]*8 + field_parameters["bit_end"]
     else:
-        bit_end = 8*constansts.PACKET_SIZE - 1
+        bit_end = 8*constants.PACKET_SIZE - 1
 
     return (bit_end + 1 - bit_start)
 
