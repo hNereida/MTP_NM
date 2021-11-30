@@ -61,7 +61,7 @@ def get_file():
     #         print("USB detected")
     #         usb=False
 
-    subprocess.call(['sh', '/home/media/pi/MTP/protocol/read_usb.sh']) #AFEGIT PER NOSALTRES (TEAM C)
+    subprocess.call(['sh', '/home/pi/MTP/protocol/read_usb.sh']) #AFEGIT PER NOSALTRES (TEAM C)
 
     txt_files = [f for f in os.listdir('/home/pi/working-directory') if f.endswith('.txt')]
     filename = txt_files[1]
