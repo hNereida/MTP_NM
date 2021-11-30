@@ -94,6 +94,7 @@ def send_hello(srcAddress, rcvAddress):
     rcvBytes = radio.read(CNTS.PACKET_SIZE)
     rcvPacket = HelloPacketResponse()
     rcvPacket.parsePacket(rcvBytes)
+    print(packets.HELLO_RESPONSE["type"])
     if rcvPacket.getTypePacket() == packets.HELLO_RESPONSE["type"]:
         hasData = rcvPacket.had_Data() 
         hadToken = rcvPacket.had_Token()
