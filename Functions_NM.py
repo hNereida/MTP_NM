@@ -2,6 +2,7 @@ import time
 import os
 import math
 import RF24
+import subprocess
 
 # CONSTANTS 
 import Constants_NM as CNTS
@@ -37,26 +38,38 @@ def initialize_radio(): # quan es para la radio?
 
 
 def is_usb_connected():
-    usbpath = "/media/pi/" # Modificar per cada raspberry
+    usbpath = "/mnt/USBDrive" # Modificar per cada raspberry
     isconnected = False
     time.sleep(0.01)
     if len(os.listdir(os.path.dirname(usbpath))) != 0:
         usb = os.listdir(os.path.dirname(usbpath))[0]
         time.sleep(0.01)
-        files = os.listdir(os.path.join(usbpath, usb))
+        files = os.listdir(os.path.join(usbpath))
         if len(files) != 0:
             isconnected = True
     return isconnected
 
+def get_file():
+    #USB detection check, TODO: LED indication
+    usb=True
+    while usb:
+        str=subprocess.getoutput("sudo mount -t vfat -o uid=pi,gid=pi, /dev/sda1 /mnt/USBDrive")
+        if "does not exist" in str:
+            time.sleep(1)
+        else:
+            print("USB detected")
+            usb=False
+
+    txt_files = [f for f in os.listdir('/mnt/USBDrive') if f.endswith('.txt')]
+    filename = txt_files[0]
+    #print("Loading file: "+ filename +" with size: "+str(os.path.getsize("/mnt/USBDrive/"+filename)))
+    return "/mnt/USBDrive/"+filename
+
 def read_usb_file():
-    usbpath = "/media/pi/" # Modificar per cada raspberry
-    usb = os.listdir(os.path.dirname(usbpath))[0]
-    files = os.listdir(os.path.join(usbpath, usb))
-    filename = files[0]
-    file = open(os.path.join(usbpath, usb, filename), "rb")
-    data = file.read()
-    file.close()
-    return data
+    filename = get_file()
+    with open(filename,'rb') as f:
+        ba = bytearray(f.read()) 
+    return ba
 
 # Fer import de radio, mirar el self
 # MIRAR COM S'ADAPTA AMB LES FUNCIONS DEL TEAM B
@@ -82,8 +95,8 @@ def send_hello(srcAddress, rcvAddress):
     rcvPacket = HelloPacketResponse()
     rcvPacket.parsePacket(rcvBytes)
     if rcvPacket.getTypePacket() == packets.HELLO_RESPONSE["type"]:
-        hasData = rcvPacket.hadData() 
-        hadToken = rcvPacket.hadToken()
+        hasData = rcvPacket.had_Data() 
+        hadToken = rcvPacket.had_Token()
     return responded, hasData, hadToken
 
 
