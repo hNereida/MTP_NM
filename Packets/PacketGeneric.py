@@ -22,8 +22,6 @@ class PacketGeneric():
 
         # Add source address
         length_source_address = getFieldLength(packets.FIXED_PART["fields"]["source_address"])
-        print(length_source_address)
-        print(type(length_source_address))
         packet_string = addFieldToBinaryString(
             packets.FIXED_PART["fields"]["source_address"], 
             packet_string,
