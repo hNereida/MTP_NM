@@ -61,10 +61,12 @@ def get_file():
     #         print("USB detected")
     #         usb=False
 
-    txt_files = [f for f in os.listdir('/media/usb') if f.endswith('.txt')]
+    os.system("home/pi/MTP/protocol/read_usb.sh") #AFEGIT PER NOSALTRES (TEAM C)
+
+    txt_files = [f for f in os.listdir('/home/pi/working-directory') if f.endswith('.txt')]
     filename = txt_files[1]
     #print("Loading file: "+ filename +" with size: "+str(os.path.getsize("/mnt/USBDrive/"+filename)))
-    return "/media/usb/"+filename
+    return "/home/pi/working-directory/"+filename
 
 def read_usb_file():
     filename = get_file()
@@ -236,5 +238,5 @@ def wait_read_packets():
 # CANVIAR A GUARDAR A RASPBERRY
 # ACABAR LA FUNCIO
 def write_file(data):
-    with open("/media/usb/fileOutput.txt","wb") as f:
+    with open("/home/pi/working-directory/fileOutput_NM.txt","wb") as f:
         f.write(data)
