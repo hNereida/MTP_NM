@@ -79,9 +79,9 @@ def s2():
 def s3():
     responded = False
     if lastNodeNoToken > 0:
-        responded = Functions.sendToken(myAddress, lastNodeNoToken, token) # (Node address, token)
+        responded = Functions.send_token(myAddress, lastNodeNoToken, token) # (Node address, token)
     while not responded:
-        responded = Functions.sendToken(myAddress, random.choice(nodesToSendToken), token)
+        responded = Functions.send_token(myAddress, random.choice(nodesToSendToken), token)
     return s4()
 
 

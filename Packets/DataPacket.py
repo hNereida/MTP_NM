@@ -76,7 +76,7 @@ class DataPacket(PacketGeneric):
         self.eot = getNumberFromField(packets.DATA["fields"]["eot"], packet_bitstring)
         self.sequence_number = getNumberFromField(packets.DATA["fields"]["sequence_number"], packet_bitstring)
         
-        field_binary = stripBinaryStringFromPacket(packet.DATA["fields"]["payload"], packet_bitstring, self.length*8)
+        field_binary = stripBinaryStringFromPacket(packets.DATA["fields"]["payload"], packet_bitstring, self.length*8)
         self.payload = convertBinaryStringToByteArray(field_binary)
 
         return True
