@@ -26,7 +26,7 @@ class TokenPacket(PacketGeneric):
         packet_string = addFieldToBinaryString(
             packets.TOKEN["fields"]["num_recv_data"], 
             packet_string,
-            getBinaryString(self.num_recv_data, num_recv_data)
+            getBinaryString(self.num_recv_data, length_num_recv_data)
         )
 
          # Convert string binary to ByteArray

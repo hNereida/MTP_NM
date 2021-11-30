@@ -201,7 +201,7 @@ def wait_read_packets():
 
         # SORTIR DEL WHILE QUANT NO ES DATA
         sequenceNumber = False
-        while not dataPacket.isEot():
+        while not dataPacket.isEoT():
             while not radio.available():
                 time.sleep(0.01)
             receivedPacket = radio.read(CNTS.PACKET_SIZE)
