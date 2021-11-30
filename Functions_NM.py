@@ -122,12 +122,12 @@ def send_data(srcAddress, rcvAddress, fileData):
             packetSize = len(fileData) - (sentPackets-1)*30
             EOF = True
         dataPacket = DataPacket(srcAddress, rcvAddress, packetSize, EOF, sequenceNumber, fileData[x:x+packetSize])
-
+        packetToSend = dataPacket.buildPacket()
         responded = False
         retries = 0
         while retries <= CNTS.RETRIES and not responded:
             radio.stopListening()
-            radio.write(dataPacket)
+            radio.write(packetToSend)
             radio.startListening()
             time.sleep(CNTS.TIMEOUT)
             if radio.available():
