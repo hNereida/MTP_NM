@@ -187,8 +187,9 @@ def wait_read_packets():
 
     # Group B
     # Read one packet
+    time.sleep(CNTS.TIMEOUT) # AFEGIT PER TEAM C
     while not radio.available():
-        time.sleep(0.01)
+        time.sleep(0.1) #VALOR ORIGINAL 0.01
     rcvBytes = radio.read(CNTS.PACKET_SIZE)
     packetGeneric = PacketGeneric()
     if packetGeneric.isPacket(rcvBytes, packets.HELLO["type"]):
