@@ -20,7 +20,8 @@ def getFieldLength(field_parameters):
 
 # Get Binary string from field
 def getBinaryString(data, lengthBits=0):
-    return format(data, "0"+ str(lengthBits) +"b")
+    # return format(data, "0"+ str(lengthBits) +"b")
+    return bin(data)[2:].zfill(lengthBits)
 
 # Convert binary string to bytes
 def convertBinaryStringToByteArray(s):
