@@ -187,7 +187,6 @@ def wait_read_packets():
     while not radio.available():
         time.sleep(0.01)
     rcvBytes = radio.read(CNTS.PACKET_SIZE)
-    print(packets.HELLO_RESPONSE["type"])
     packetGeneric = PacketGeneric()
     if packetGeneric.isPacket(rcvBytes, packets.HELLO["type"]):
         helloPacket = HelloPacket()

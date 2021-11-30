@@ -65,7 +65,7 @@ class PacketGeneric():
     # Check if it is a packet of this type
     @staticmethod
     # Check if it is a packet of this type
-    def isPacket(self, packet_bytes, typePacket): # Convert packet to binary string
+    def isPacket(packet_bytes, typePacket): # Convert packet to binary string
         packet_bitstring = convertByteArrayToBinaryString(packet_bytes)
         type_packet = getNumberFromField(packets.FIXED_PART["fields"]["type"], packet_bitstring)
         return type_packet == typePacket
