@@ -94,7 +94,6 @@ def send_hello(srcAddress, rcvAddress):
     rcvBytes = radio.read(CNTS.PACKET_SIZE)
     rcvPacket = HelloPacketResponse()
     rcvPacket.parsePacket(rcvBytes)
-    print(packets.HELLO_RESPONSE["type"])
     if rcvPacket.getTypePacket() == packets.HELLO_RESPONSE["type"]:
         hasData = rcvPacket.had_Data() 
         hadToken = rcvPacket.had_Token()
@@ -188,7 +187,7 @@ def wait_read_packets():
     while not radio.available():
         time.sleep(0.01)
     rcvBytes = radio.read(CNTS.PACKET_SIZE)
-
+    print(packets.HELLO_RESPONSE["type"])
     packetGeneric = PacketGeneric()
     if packetGeneric.isPacket(rcvBytes, packets.HELLO["type"]):
         helloPacket = HelloPacket()
