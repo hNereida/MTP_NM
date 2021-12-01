@@ -85,7 +85,7 @@ def send_hello(srcAddress, rcvAddress):
     packetToSend = helloPacket.buildPacket()
     
     retries = 0
-    while retries < CNTS.RETRIES and not responded:
+    while retries <= CNTS.RETRIES and not responded:
         radio.stopListening()
         radio.write(packetToSend)
         radio.startListening()
@@ -159,7 +159,7 @@ def send_token(srcAddress, rcvAddress, token):
     packetToSend = tokenPacket.buildPacket()
     
     retries = 0
-    while retries < CNTS.RETRIES and not responded:
+    while retries <= CNTS.RETRIES and not responded:
         radio.stopListening()
         radio.write(packetToSend)
         radio.startListening()
