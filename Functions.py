@@ -38,17 +38,25 @@ def initialize_radio(): # quan es para la radio?
 
 
 def is_usb_connected():
-    usbpath = "/media/usb" # Modificar per cada raspberry
-    isconnected = False
-    time.sleep(0.01)
-    if len(os.listdir(os.path.dirname(usbpath))) != 0:
-        usb = os.listdir(os.path.dirname(usbpath))[0]
-        time.sleep(0.01)
-        files = os.listdir(os.path.join(usbpath))
-        if len(files) != 0:
-            isconnected = True
-    return isconnected
+    command = "bash " + CNTS.is_usb_connected
+     
+    # Call command
+    p = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
+     
+    # Get terminal output
+    (output, err) = p.communicate()
+     
+    # Wait for wait and determine
+    p_status = p.wait()
 
+    if ("dev" in str(output)):
+        print("USB stick connected")
+        return(True)
+    else:
+        print("USB stick not connected")
+        return(False)
+
+    
 def get_file():
     #USB detection check, TODO: LED indication
     # ORIGINAL NO ESTAVA COMENTAT <----------------
@@ -63,10 +71,10 @@ def get_file():
 
     subprocess.call(['sh', '/home/pi/MTP/protocol/read_usb.sh']) #AFEGIT PER NOSALTRES (TEAM C)
 
-    txt_files = [f for f in os.listdir('/home/pi/working-directory') if f.endswith('.txt')]
+    txt_files = [f for f in os.listdir(CNTS.working_directory) if f.endswith('.txt')]
     filename = txt_files[1]
     #print("Loading file: "+ filename +" with size: "+str(os.path.getsize("/mnt/USBDrive/"+filename)))
-    return "/home/pi/working-directory/"+filename
+    return CNTS.working_directory+filename
 
 def read_usb_file():
     filename = get_file()
@@ -92,7 +100,7 @@ def send_hello(srcAddress, rcvAddress):
         time.sleep(CNTS.TIMEOUT)
         if radio.available():
             responded = True
-        print("HELLO RETRIES: " + str(retries) + " A NODE " + str(rcvAddress))
+        print("HELLO retries: " + str(retries) + " to node " + str(rcvAddress))
         retries += 1
 
     rcvBytes = radio.read(CNTS.PACKET_SIZE)
@@ -247,5 +255,5 @@ def wait_read_packets(myAddress):
 # CANVIAR A GUARDAR A RASPBERRY
 # ACABAR LA FUNCIO
 def write_file(data):
-    with open("/home/pi/working-directory/fileOutput_NM.txt","wb") as f:
+    with open(CNTS.working_directory + "fileOutput_NM.txt","wb") as f:
         f.write(data)

@@ -10,9 +10,9 @@ import Functions
 # Packets
 import Packets.PacketsDefinitions as packets
 
-
 # Init variables
 myAddress = CNTS.ADDRESS 
+
 
 haveData = False
 hadToken = False

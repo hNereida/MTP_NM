@@ -5,6 +5,10 @@ import RF24
 CE = 25 # RPi Chip Enable pin
 ADDRESS = 3 # Each device's address
 
+# Paths
+working_directory = '/home/pi/working-directory/'
+is_usb_connected = '/home/pi/MTP_NM/bash/usb_id.sh'
+
 
 
 # GROUP INDEPENDENT
