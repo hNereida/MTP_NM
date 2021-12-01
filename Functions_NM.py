@@ -4,7 +4,7 @@ import math
 import RF24
 import subprocess
 
-# CONSTANTS 
+# CONSTANTS
 import Constants_NM as CNTS
 import Packets.PacketsDefinitions as packets
 
@@ -28,7 +28,7 @@ def initialize_radio(): # quan es para la radio?
     radio = RF24.RF24()
     radio.begin(25,0)
     radio.setDataRate(CNTS.DATARATE)
-    radio.setChannel(CNTS.CHANNEL) 
+    radio.setChannel(CNTS.CHANNEL)
     radio.setRetries(1, CNTS.RETRIES)
     radio.setPALevel(CNTS.POWERLEVEL)
     radio.openWritingPipe(CNTS.PIPES)
@@ -68,7 +68,7 @@ def get_file():
 def read_usb_file():
     filename = get_file()
     with open(filename,'rb') as f:
-        ba = bytearray(f.read()) 
+        ba = bytearray(f.read())
     return ba
 
 # Fer import de radio, mirar el self
@@ -80,7 +80,7 @@ def send_hello(srcAddress, rcvAddress):
     hadToken = False
     helloPacket = HelloPacket(srcAddress, rcvAddress)
     packetToSend = helloPacket.buildPacket()
-    
+
     retries = 0
     while retries <= CNTS.RETRIES and not responded:
         radio.stopListening()
@@ -91,12 +91,12 @@ def send_hello(srcAddress, rcvAddress):
             responded = True
         print("HELLO RETRIES: " + str(retries) + " A NODE " + str(rcvAddress))
         retries += 1
-    
+
     rcvBytes = radio.read(CNTS.PACKET_SIZE)
     rcvPacket = HelloPacketResponse()
     rcvPacket.parsePacket(rcvBytes)
     if rcvPacket.getTypePacket() == packets.HELLO_RESPONSE["type"]:
-        hasData = rcvPacket.had_Data() 
+        hasData = rcvPacket.had_Data()
         hadToken = rcvPacket.had_Token()
     return responded, hasData, hadToken
 
@@ -142,19 +142,19 @@ def send_data(srcAddress, rcvAddress, fileData):
                     retries += 1
             else:
                 retries += 1
-            
+
         sequenceNumber = not sequenceNumber
 
         if retries > CNTS.RETRIES and not responded:
             return False
-    
+
     return True
 
 def send_token(srcAddress, rcvAddress, token):
     responded = False
     tokenPacket = TokenPacket(srcAddress, rcvAddress, token)
     packetToSend = tokenPacket.buildPacket()
-    
+
     retries = 0
     while retries <= CNTS.RETRIES and not responded:
         radio.stopListening()
@@ -171,7 +171,7 @@ def send_token(srcAddress, rcvAddress, token):
             else:
                 retries += 1
         else:
-            retries += 1    
+            retries += 1
 
     return responded
 
@@ -208,10 +208,10 @@ def wait_read_packets():
             receivedPacket = radio.read(CNTS.PACKET_SIZE)
             dataPacket.parsePacket(receivedPacket)
             # Check CRC
-            if dataPacket.getSequenceNumber == sequenceNumber:
-                dataPacketResponse = DataPacketResponse(dataPacket.getDestinationAddress, dataPacket.getSourceAddress, sequenceNumber, True)
+            if dataPacket.getSequenceNumber() == sequenceNumber:
+                dataPacketResponse = DataPacketResponse(dataPacket.getDestinationAddress(), dataPacket.getSourceAddress(), sequenceNumber, True)
             else:
-                dataPacketResponse = DataPacketResponse(dataPacket.getDestinationAddress, dataPacket.getSourceAddress, sequenceNumber, False)
+                dataPacketResponse = DataPacketResponse(dataPacket.getDestinationAddress(), dataPacket.getSourceAddress(), sequenceNumber, False)
             packetToSend = dataPacketResponse.buildPacket()
             radio.stopListening()
             radio.write(packetToSend)
@@ -225,7 +225,7 @@ def wait_read_packets():
         tokenPacket = TokenPacket()
         tokenPacket.parsePacket(rcvBytes)
         # We should check with the CRC that the packet is okey, value True of below
-        tokenPacketResponse = TokenPacketResponse(tokenPacket.getDestinationAddress, tokenPacket.getSourceAddress, True)
+        tokenPacketResponse = TokenPacketResponse(tokenPacket.getDestinationAddress(), tokenPacket.getSourceAddress(), True)
         packetToSend = tokenPacketResponse.buildPacket()
         radio.stopListening()
         radio.write(packetToSend)
