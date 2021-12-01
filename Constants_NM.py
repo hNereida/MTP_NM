@@ -3,7 +3,7 @@ import RF24
 # CONSTANTS
 
 RETRIES = 4 # Mirar si s'ha de modificar
-TIMEOUT = 0.001 # (en segons) Mirar si s'ha de modificar
+TIMEOUT = 1 # (en segons) Mirar si s'ha de modificar
 SENDER = True
 RECEIVER = False
 

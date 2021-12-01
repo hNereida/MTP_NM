@@ -95,7 +95,7 @@ def s3():
 def s4():
     print("Estic estat S4")
     global rcvData
-    packet_type, rcvData = Functions.wait_read_packets() #TORNA EL VALOR HELLO_PACKET/DATA_PACKET/TOKEN_PACKET i DATA DEL PAQUET
+    packet_type, rcvData = Functions.wait_read_packets(myAddress) #TORNA EL VALOR HELLO_PACKET/DATA_PACKET/TOKEN_PACKET i DATA DEL PAQUET
     if packet_type == packets.HELLO["type"]:
         return s5()
     elif packet_type == packets.DATA["type"]:
