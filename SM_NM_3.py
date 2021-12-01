@@ -9,7 +9,7 @@ import Functions_NM_Team_C as Functions
 
 import Packets.PacketsDefinitions as packets
 
-myAddress = 0
+myAddress = 3
 
 haveData = False
 hadToken = False
@@ -132,9 +132,8 @@ def s8():
     print("C'est fini!") # Considerar canvi
     # sys.exit()
 
-def main(myAddress):
-    myAddress = myAddress;
+def main():
     return s0()
 
 if __name__ == "__main__":
-    main(address)
+    main()
