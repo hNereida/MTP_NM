@@ -106,6 +106,9 @@ def s4():
 def s5():
     print("Estic estat S5")
     Functions.send_hello_response(myAddress, rcvData, haveData, hadToken)
+    print("ENVIO HELLO_RESPONSE A " + str(rcvData))
+    print("HAVE DATA " + str(haveData))
+    print("HAVE TOKEN " + str(hadToken))
     return s4()
 
 # XUCLAR DATA I GUARDAR EN FITXER

@@ -82,13 +82,14 @@ def send_hello(srcAddress, rcvAddress):
     packetToSend = helloPacket.buildPacket()
     
     retries = 0
-    while retries < CNTS.RETRIES and not responded:
+    while retries <= CNTS.RETRIES and not responded:
         radio.stopListening()
         radio.write(packetToSend)
         radio.startListening()
         time.sleep(CNTS.TIMEOUT)
         if radio.available():
             responded = True
+        print("HELLO RETRIES: " + str(retries) + " A NODE " + str(rcvAddress))
         retries += 1
     
     rcvBytes = radio.read(CNTS.PACKET_SIZE)
@@ -155,7 +156,7 @@ def send_token(srcAddress, rcvAddress, token):
     packetToSend = tokenPacket.buildPacket()
     
     retries = 0
-    while retries < CNTS.RETRIES and not responded:
+    while retries <= CNTS.RETRIES and not responded:
         radio.stopListening()
         radio.write(packetToSend)
         radio.startListening()

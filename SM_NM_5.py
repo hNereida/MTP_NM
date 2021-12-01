@@ -35,6 +35,7 @@ nodesToSendToken = []
 
 #Check if we have the USB connected. If we have it connected, we are the first to transmit. If not, we just wait.
 def s0():
+    print("Estic estat S0")
     global fileData
     Functions.initialize_radio()
     if Functions.is_usb_connected():
@@ -45,12 +46,15 @@ def s0():
 
 #We are the first to transmit -> we have the token. We need to send a hello to everybody reachable.  
 def s1():
+    print("Estic estat S1")
     global nodes
     global nodesToSendToken
     anyResponded = False
     while not anyResponded:
         for node in nodes:
+            print("VAIG A ENVIAR HELLO A " + str(node["address"]))
             responded, node["hasData"], node["hasToken"] = Functions.send_hello(myAddress, node["address"])
+            print(responded)
             if responded:
                 anyResponded = True
                 nodesToSendToken.append(node["address"])
@@ -61,6 +65,7 @@ def s1():
 
 #Send data
 def s2():
+    print("Estic estat S2")
     global nodes
     global token
     global lastNodeNoToken
@@ -77,16 +82,18 @@ def s2():
 #Updates token information and sends token to the last device that has received data. 
 #If we cannot send the token to the last one (has already had the token or it is unreachable), we need to try to send the token to another.
 def s3():
+    print("Estic estat S3")
     responded = False
     if lastNodeNoToken > 0:
-        responded = Functions.sendToken(myAddress, lastNodeNoToken, token) # (Node address, token)
+        responded = Functions.send_token(myAddress, lastNodeNoToken, token) # (Node address, token)
     while not responded:
-        responded = Functions.sendToken(myAddress, random.choice(nodesToSendToken), token)
+        responded = Functions.send_token(myAddress, random.choice(nodesToSendToken), token)
     return s4()
 
 
 #State where we wait to reveive a packet
 def s4():
+    print("Estic estat S4")
     global rcvData
     packet_type, rcvData = Functions.wait_read_packets() #TORNA EL VALOR HELLO_PACKET/DATA_PACKET/TOKEN_PACKET i DATA DEL PAQUET
     if packet_type == packets.HELLO["type"]:
@@ -97,11 +104,16 @@ def s4():
       	return s7() # Estat on llegeixes el token
 
 def s5():
-  	Functions.send_hello_response(myAddress, rcvData, haveData, hadToken)
-  	return s4()
+    print("Estic estat S5")
+    Functions.send_hello_response(myAddress, rcvData, haveData, hadToken)
+    print("ENVIO HELLO_RESPONSE A " + str(rcvData))
+    print("HAVE DATA " + str(haveData))
+    print("HAVE TOKEN " + str(hadToken))
+    return s4()
 
 # XUCLAR DATA I GUARDAR EN FITXER
 def s6():
+    print("Estic estat S6")
     global haveData
     Functions.write_file(rcvData) #into raspberry
     haveData = True
@@ -109,6 +121,7 @@ def s6():
 
 #Update the information of the node with the information of the token    
 def s7():
+    print("Estic estat S7")
     global token
     token = rcvData
     if token == 6:
@@ -116,7 +129,8 @@ def s7():
     return s1()
 
 def s8():
-  	print("C'est fini!") # Considerar canvi
+    print("Estic estat S8")
+    print("C'est fini!") # Considerar canvi
     # sys.exit()
 
 def main():

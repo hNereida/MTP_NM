@@ -52,7 +52,9 @@ def s1():
     anyResponded = False
     while not anyResponded:
         for node in nodes:
+            print("VAIG A ENVIAR HELLO A " + str(node["address"]))
             responded, node["hasData"], node["hasToken"] = Functions.send_hello(myAddress, node["address"])
+            print(responded)
             if responded:
                 anyResponded = True
                 nodesToSendToken.append(node["address"])
