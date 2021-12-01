@@ -75,7 +75,7 @@ class PacketGeneric():
         return self.sourceAddress
 
     def getDestinationAddress(self):
-        return self.destinationAddress
+        return self.destAddress
 
     def getTypePacket(self):
         return self.typePacket
