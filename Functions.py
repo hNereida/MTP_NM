@@ -69,10 +69,10 @@ def get_file():
     #         print("USB detected")
     #         usb=False
 
-    subprocess.call(['sh', '/home/pi/MTP/protocol/read_usb.sh']) #AFEGIT PER NOSALTRES (TEAM C)
+    subprocess.call(['sh', CNTS.read_usb]) #AFEGIT PER NOSALTRES (TEAM C)
 
     txt_files = [f for f in os.listdir(CNTS.working_directory) if f.endswith('.txt')]
-    filename = txt_files[1]
+    filename = txt_files[0]
     #print("Loading file: "+ filename +" with size: "+str(os.path.getsize("/mnt/USBDrive/"+filename)))
     return CNTS.working_directory+filename
 
@@ -100,7 +100,7 @@ def send_hello(srcAddress, rcvAddress):
         time.sleep(CNTS.TIMEOUT)
         if radio.available():
             responded = True
-        print("HELLO retries: " + str(retries) + " to node " + str(rcvAddress))
+        print("HELLO retries: " + str(retries) + " to node " + str(rcvAddress) , end='\r')
         retries += 1
 
     rcvBytes = radio.read(CNTS.PACKET_SIZE)
@@ -255,5 +255,5 @@ def wait_read_packets(myAddress):
 # CANVIAR A GUARDAR A RASPBERRY
 # ACABAR LA FUNCIO
 def write_file(data):
-    with open(CNTS.working_directory + "fileOutput_NM.txt","wb") as f:
+    with open(CNTS.working_directory + CNTS.output_file, "wb") as f:
         f.write(data)

@@ -8,6 +8,8 @@ ADDRESS = 3 # Each device's address
 # Paths
 working_directory = '/home/pi/working-directory/'
 is_usb_connected = '/home/pi/MTP_NM/bash/usb_id.sh'
+read_usb = '/home/pi/MTP_NM/bash/read_usb.sh'
+output_file = 'NM_received.txt'
 
 
 
