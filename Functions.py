@@ -5,7 +5,7 @@ import RF24
 import subprocess
 
 # CONSTANTS
-import Constants_NM as CNTS
+import Constants as CNTS
 import Packets.PacketsDefinitions as packets
 
 # IMPORTAR FUNCIONS DEFINIDES PER GRUP B --> ADAPTAR FUNCIONS FETES AMB LES SEVES FUNCIONS
