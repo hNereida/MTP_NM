@@ -92,7 +92,7 @@ def send_hello(srcAddress, rcvAddress):
         time.sleep(CNTS.TIMEOUT)
         if radio.available():
             responded = True
-        print("HELLO RETRIES: " + str(retries) + "A NODE " + str(rcvAddress))
+        print("HELLO RETRIES: " + str(retries) + " A NODE " + str(rcvAddress))
         retries += 1
     
     rcvBytes = radio.read(CNTS.PACKET_SIZE)
