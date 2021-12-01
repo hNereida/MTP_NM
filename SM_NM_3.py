@@ -9,8 +9,7 @@ import Functions_NM_Team_C as Functions
 
 import Packets.PacketsDefinitions as packets
 
-# VARIABLES
-myAddress = 3
+myAddress = 0
 
 haveData = False
 hadToken = False
@@ -41,10 +40,10 @@ def s0():
     if Functions.is_usb_connected():
     	fileData = Functions.read_usb_file()
     	return s1()
-    else: 
+    else:
         return s4()
 
-#We are the first to transmit -> we have the token. We need to send a hello to everybody reachable.  
+#We are the first to transmit -> we have the token. We need to send a hello to everybody reachable.
 def s1():
     print("Estic estat S1")
     global nodes
@@ -76,10 +75,10 @@ def s2():
                 token += 1
                 lastNodeNoToken = node["address"]
             node["toSendData"] = False
-    
+
     return s3()
 
-#Updates token information and sends token to the last device that has received data. 
+#Updates token information and sends token to the last device that has received data.
 #If we cannot send the token to the last one (has already had the token or it is unreachable), we need to try to send the token to another.
 def s3():
     print("Estic estat S3")
@@ -119,7 +118,7 @@ def s6():
     haveData = True
     return s4()
 
-#Update the information of the node with the information of the token    
+#Update the information of the node with the information of the token
 def s7():
     print("Estic estat S7")
     global token
@@ -133,8 +132,9 @@ def s8():
     print("C'est fini!") # Considerar canvi
     # sys.exit()
 
-def main():
+def main(myAddress):
+    myAddress = myAddress;
     return s0()
 
 if __name__ == "__main__":
-    main()
+    main(address)
