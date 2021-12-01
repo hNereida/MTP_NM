@@ -182,58 +182,65 @@ def send_token(srcAddress, rcvAddress, token):
 # Declarar EOT
 # MIRAR COM S'ADAPTA MAB LES FUNCIONS DEL TEAM B
 # ACABAR FUNCIO
-def wait_read_packets():
+def wait_read_packets(myAddress):
     finalData = ""
     radio.startListening()
-
+    received = False
     # Group B
     # Read one packet
-    while not radio.available():
-        time.sleep(0.01)
-    rcvBytes = radio.read(CNTS.PACKET_SIZE)
-    packetGeneric = PacketGeneric()
-    if packetGeneric.isPacket(rcvBytes, packets.HELLO["type"]):
-        helloPacket = HelloPacket()
-        helloPacket.parsePacket(rcvBytes)
-        return packets.HELLO["type"], helloPacket.getSourceAddress()
+    while not received:
+        while not radio.available():
+            time.sleep(0.01)
+        rcvBytes = radio.read(CNTS.PACKET_SIZE)
+        packetGeneric = PacketGeneric()
+        packetGeneric.parsePacket(rcvBytes)
 
-    # TODO: Check sequence number for Stop & Wait
-    if packetGeneric.isPacket(rcvBytes, packets.DATA["type"]):
-        dataPacket = DataPacket()
-        dataPacket.parsePacket(rcvBytes)
-        finalData = dataPacket.getPayload()
+        if packetGeneric.getDestinationAddress() == myAddress:
 
-        # SORTIR DEL WHILE QUANT NO ES DATA
-        sequenceNumber = False
-        while not dataPacket.isEoT():
-            while not radio.available():
-                time.sleep(0.01)
-            receivedPacket = radio.read(CNTS.PACKET_SIZE)
-            dataPacket.parsePacket(receivedPacket)
-            # Check CRC
-            if dataPacket.getSequenceNumber == sequenceNumber:
-                dataPacketResponse = DataPacketResponse(dataPacket.getDestinationAddress, dataPacket.getSourceAddress, sequenceNumber, True)
-            else:
-                dataPacketResponse = DataPacketResponse(dataPacket.getDestinationAddress, dataPacket.getSourceAddress, sequenceNumber, False)
-            packetToSend = dataPacketResponse.buildPacket()
-            radio.stopListening()
-            radio.write(packetToSend)
-            radio.startListening()
+            if packetGeneric.isPacket(rcvBytes, packets.HELLO["type"]):
+                helloPacket = HelloPacket()
+                helloPacket.parsePacket(rcvBytes)
+                return packets.HELLO["type"], helloPacket.getSourceAddress()
 
-            finalData.extend(dataPacket.getPayload())
+            # TODO: Check sequence number for Stop & Wait
+            if packetGeneric.isPacket(rcvBytes, packets.DATA["type"]):
+                dataPacket = DataPacket()
+                dataPacket.parsePacket(rcvBytes)
+                finalData = dataPacket.getPayload()
 
-        return packets.DATA["type"], finalData
+                # SORTIR DEL WHILE QUANT NO ES DATA
+                sequenceNumber = False
+                while not dataPacket.isEoT():
+                    while not radio.available():
+                        time.sleep(0.01)
+                    receivedPacket = radio.read(CNTS.PACKET_SIZE)
+                    dataPacket.parsePacket(receivedPacket)
+                    # Check CRC
+                    if dataPacket.getSequenceNumber == sequenceNumber:
+                        dataPacketResponse = DataPacketResponse(dataPacket.getDestinationAddress, dataPacket.getSourceAddress, sequenceNumber, True)
+                    else:
+                        dataPacketResponse = DataPacketResponse(dataPacket.getDestinationAddress, dataPacket.getSourceAddress, sequenceNumber, False)
+                    packetToSend = dataPacketResponse.buildPacket()
+                    radio.stopListening()
+                    radio.write(packetToSend)
+                    radio.startListening()
 
-    if packetGeneric.isPacket(rcvBytes, packets.TOKEN["type"]):
-        tokenPacket = TokenPacket()
-        tokenPacket.parsePacket(rcvBytes)
-        # We should check with the CRC that the packet is okey, value True of below
-        tokenPacketResponse = TokenPacketResponse(tokenPacket.getDestinationAddress, tokenPacket.getSourceAddress, True)
-        packetToSend = tokenPacketResponse.buildPacket()
-        radio.stopListening()
-        radio.write(packetToSend)
+                    finalData.extend(dataPacket.getPayload())
 
-        return packets.TOKEN["type"], tokenPacket.getNumRecvData()
+                return packets.DATA["type"], finalData
+
+            if packetGeneric.isPacket(rcvBytes, packets.TOKEN["type"]):
+                tokenPacket = TokenPacket()
+                tokenPacket.parsePacket(rcvBytes)
+                # We should check with the CRC that the packet is okey, value True of below
+                tokenPacketResponse = TokenPacketResponse(tokenPacket.getDestinationAddress, tokenPacket.getSourceAddress, True)
+                packetToSend = tokenPacketResponse.buildPacket()
+                radio.stopListening()
+                radio.write(packetToSend)
+
+                return packets.TOKEN["type"], tokenPacket.getNumRecvData()
+            
+            received = True
 
 
 # CANVIAR A GUARDAR A RASPBERRY
