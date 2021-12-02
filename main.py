@@ -15,6 +15,8 @@ import Packets.PacketsDefinitions as packets
 addresses = []
 myAddress = 0
 
+nodes = []
+
 haveData = False
 hadToken = False
 
@@ -27,11 +29,10 @@ def generate_nodes(myAddress):
     global addresses
     global nodes
     for i in range(1, 7):
-        print(i)
         if i < myAddress:
-            addresses[i] = i
+            addresses.append(i)
         if i > myAddress:
-            addresses[i-1] = i - 1
+            addresses.append(i-1)
     
     nodes = [{"address": addresses[0], "hasData": False, "hasToken": False, "toSendData": False},
          {"address": addresses[1], "hasData": False, "hasToken": False, "toSendData": False},
