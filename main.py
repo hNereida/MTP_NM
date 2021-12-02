@@ -29,10 +29,8 @@ def generate_nodes(myAddress):
     global addresses
     global nodes
     for i in range(1, 7):
-        if i < myAddress:
+        if i != myAddress:
             addresses.append(i)
-        if i > myAddress:
-            addresses.append(i-1)
     
     nodes = [{"address": addresses[0], "hasData": False, "hasToken": False, "toSendData": False},
          {"address": addresses[1], "hasData": False, "hasToken": False, "toSendData": False},
