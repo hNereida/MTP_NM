@@ -27,6 +27,7 @@ def generate_nodes(myAddress):
     global addresses
     global nodes
     for i in range(1, 7):
+        print(i)
         if i < myAddress:
             addresses[i-1] = i
         if i > myAddress:
