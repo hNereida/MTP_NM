@@ -110,6 +110,8 @@ def send_hello(srcAddress, rcvAddress):
                 hadToken = rcvPacket.had_Token()
             else:
                 retries += 1
+        else:
+            retries += 1
         print("Responded Dins: " + str(responded))
     return responded, hasData, hadToken
 
