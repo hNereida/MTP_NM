@@ -209,6 +209,7 @@ def send_token(srcAddress, rcvAddress, token):
     while retries < CNTS.RETRIES and not responded:
         radio.stopListening()
         radio.write(packetToSend)
+        print("TOKEN SENT, TOKEN VALUE: " + str(token))
         radio.startListening()
         time.sleep(CNTS.TIMEOUT)
         if radio.available():
@@ -218,6 +219,7 @@ def send_token(srcAddress, rcvAddress, token):
             # Check if it is the right packet type
             if rcvPacket.isValid() and rcvPacket.getDestinationAddress() == srcAddress:
                 responded = True
+                print("THE RECEIVER HAS THE TOKEN")
             else:
                 retries += 1
         else:
@@ -257,7 +259,7 @@ def wait_read_packets(myAddress):
                 finalData = dataPacket.getPayload()
                 print("Payload Data: " + str(dataPacket.getPayload()))
 
-                # SORTIR DEL WHILE QUANT NO ES DATA
+                # SORTIR DEL WHILE QUAN NO ES DATA
                 sequenceNumber = False
                 while not dataPacket.isEoT():
                     while not radio.available():
@@ -288,7 +290,7 @@ def wait_read_packets(myAddress):
                 packetToSend = tokenPacketResponse.buildPacket()
                 radio.stopListening()
                 radio.write(packetToSend)
-
+                print("HE ENVIAT EL TOKEN RESPONSE")
                 return packets.TOKEN["type"], tokenPacket.getNumRecvData()
 
             received = True
