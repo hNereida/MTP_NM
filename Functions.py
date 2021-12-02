@@ -297,6 +297,5 @@ def wait_read_packets(myAddress):
 # CANVIAR A GUARDAR A RASPBERRY
 # ACABAR LA FUNCIO
 def write_file(data):
-    subprocess.call(['sh', CNTS.permissions])
-    with open(CNTS.working_directory + CNTS.output_file, "w+b") as f:
+    with open(CNTS.working_directory + CNTS.output_file, "wb") as f:
         f.write(data)
