@@ -283,6 +283,7 @@ def wait_read_packets(myAddress):
                 return packets.DATA["type"], finalData
 
             if packetGeneric.isPacket(rcvBytes, packets.TOKEN["type"]):
+                print("HE REBUT EL TOKEN")
                 tokenPacket = TokenPacket()
                 tokenPacket.parsePacket(rcvBytes)
                 # We should check with the CRC that the packet is okey, value True of below
