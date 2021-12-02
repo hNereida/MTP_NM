@@ -36,7 +36,8 @@ class DataPacketResponse(PacketGeneric):
         packet_string = addFieldToBinaryString(
             packets.DATA_RESPONSE["fields"]["ack_nack"], 
             packet_string,
-            getBinaryString(self.length_ack_nack, length_ack_nack)
+            # getBinaryString(self.length_ack_nack, length_ack_nack)
+            getBinaryString(self.ack_nack, length_ack_nack)
         )
 
          # Convert string binary to ByteArray
