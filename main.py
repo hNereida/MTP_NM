@@ -22,6 +22,8 @@ packetType = "111"
 fileData = bytearray()
 rcvData = bytearray()
 
+print("my address = " + str(myAddress))
+
 def generate_addresses(myAddress):
     global addresses
     for i in range(1, 7):
@@ -39,8 +41,6 @@ nodes = [{"address": addresses[0], "hasData": False, "hasToken": False, "toSendD
          {"address": addresses[3], "hasData": False, "hasToken": False, "toSendData": False},
          {"address": addresses[4], "hasData": False, "hasToken": False, "toSendData": False}]
 
-
-print("my address = " + str(myAddress))
 print("nodes = " + str(nodes))
 
 token = 1
