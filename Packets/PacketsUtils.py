@@ -1,4 +1,4 @@
-import Constants_NM as constants
+import Constants as constants
 
 # Add binary string field to string of binary
 def addFieldToBinaryString(field_parameters, str, field):
