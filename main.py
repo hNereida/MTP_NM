@@ -13,6 +13,7 @@ import Packets.PacketsDefinitions as packets
 
 # Init variables
 addresses = []
+myAddress = 0
 
 haveData = False
 hadToken = False
