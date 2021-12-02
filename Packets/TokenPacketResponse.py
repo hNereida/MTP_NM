@@ -43,8 +43,7 @@ class TokenPacketResponse(PacketGeneric):
         # Convert packet to binary string
         packet_bitstring = convertByteArrayToBinaryString(packet_bytes)
         # Get ack nack
-        print(packets.TOKEN["fields"])
-        self.ack_nack = getNumberFromField(packets.TOKEN["fields"]["ack_nack"], packet_bitstring)
+        self.ack_nack = getNumberFromField(packets.TOKEN_RESPONSE["fields"]["ack_nack"], packet_bitstring)
 
         return True
 
