@@ -221,6 +221,7 @@ def wait_read_packets(myAddress):
                 dataPacket = DataPacket()
                 dataPacket.parsePacket(rcvBytes)
                 finalData = dataPacket.getPayload()
+                print("Payload Data: " + str(dataPacket.getPayload()))
 
                 # SORTIR DEL WHILE QUANT NO ES DATA
                 sequenceNumber = False
@@ -230,7 +231,7 @@ def wait_read_packets(myAddress):
                     receivedPacket = radio.read(CNTS.PACKET_SIZE)
                     dataPacket.parsePacket(receivedPacket)
                     # Check CRC
-                    if dataPacket.getSequenceNumber() == sequenceNumber:
+                    if dataPacket.getSequenceNumber() == sequenceNumber and dataPacket.getDestinationAddress() == myAddress:
                         dataPacketResponse = DataPacketResponse(dataPacket.getDestinationAddress(), dataPacket.getSourceAddress(), sequenceNumber, True)
                     else:
                         dataPacketResponse = DataPacketResponse(dataPacket.getDestinationAddress(), dataPacket.getSourceAddress(), sequenceNumber, False)
@@ -240,7 +241,8 @@ def wait_read_packets(myAddress):
                     radio.startListening()
 
                     finalData += dataPacket.getPayload()
-
+                    print("Payload Data: " + str(dataPacket.getPayload()))
+                print("Final Data: " + str(finalData))
                 return packets.DATA["type"], finalData
 
             if packetGeneric.isPacket(rcvBytes, packets.TOKEN["type"]):
