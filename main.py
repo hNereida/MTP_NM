@@ -118,6 +118,7 @@ def s4():
         return s5()
     elif packet_type == packets.DATA["type"]:
         print("s4 -> s6")
+        print("rcvData: " + str(rcvData))
         return s6() # Estat on guardes la data al fitxer
     elif packet_type == packets.TOKEN["type"]:
         print("s4 -> s7")
