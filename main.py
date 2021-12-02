@@ -22,26 +22,21 @@ packetType = "111"
 fileData = bytearray()
 rcvData = bytearray()
 
-print("my address = " + str(myAddress))
 
-def generate_addresses(myAddress):
+def generate_nodes(myAddress):
     global addresses
+    global nodes
     for i in range(1, 7):
         if i < myAddress:
             addresses[i-1] = i
         if i > myAddress:
             addresses[i-2] = i - 1
-
-generate_addresses(myAddress)
-
-# nodes = { address: valor, hasData: True or False, hasToken: True or False, toSend: True or False}
-nodes = [{"address": addresses[0], "hasData": False, "hasToken": False, "toSendData": False},
+    
+    nodes = [{"address": addresses[0], "hasData": False, "hasToken": False, "toSendData": False},
          {"address": addresses[1], "hasData": False, "hasToken": False, "toSendData": False},
          {"address": addresses[2], "hasData": False, "hasToken": False, "toSendData": False},
          {"address": addresses[3], "hasData": False, "hasToken": False, "toSendData": False},
          {"address": addresses[4], "hasData": False, "hasToken": False, "toSendData": False}]
-
-print("nodes = " + str(nodes))
 
 token = 1
 lastNodeNoToken = 0
@@ -167,4 +162,7 @@ def main():
 
 if __name__ == "__main__":
     myAddress = sys.argv[1]
+    print("my address = " + str(myAddress))
+    generate_nodes(myAddress)
+    print("nodes = " + str(nodes))
     main()
