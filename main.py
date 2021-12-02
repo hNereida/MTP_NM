@@ -22,6 +22,14 @@ packetType = "111"
 fileData = bytearray()
 rcvData = bytearray()
 
+def generate_addresses(myAddress):
+    global addresses
+    for i in range(1, 7):
+        if i < myAddress:
+            addresses[i-1] = i
+        if i > myAddress:
+            addresses[i-2] = i - 1
+
 generate_addresses(myAddress)
 
 # nodes = { address: valor, hasData: True or False, hasToken: True or False, toSend: True or False}
@@ -150,14 +158,6 @@ def s8():
     print("S8")
     print("s8: DONE!") # Considerar canvi
     # sys.exit()
-
-def generate_addresses(myAddress):
-    global addresses
-    for i in range(1, 7):
-        if i < myAddress:
-            addresses[i-1] = i
-        if i > myAddress:
-            addresses[i-2] = i - 1
 
 def main():
     return s0()
