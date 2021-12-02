@@ -163,7 +163,7 @@ def send_data(srcAddress, rcvAddress, fileData):
     sequenceNumber = False
 
     packets = createDataPackets(fileData)
-    print("Packet: " + str(packets))
+    print("Packets: " + str(packets))
 
     for x in range(0, len(packets)):
         sentPackets += 1
@@ -176,7 +176,7 @@ def send_data(srcAddress, rcvAddress, fileData):
         packetToSend = dataPacket.buildPacket()
         responded = False
         retries = 0
-        while retries <= CNTS.RETRIES and not responded:
+        while retries < CNTS.RETRIES and not responded:
             radio.stopListening()
             radio.write(packetToSend)
             radio.startListening()
@@ -206,7 +206,7 @@ def send_token(srcAddress, rcvAddress, token):
     packetToSend = tokenPacket.buildPacket()
 
     retries = 0
-    while retries <= CNTS.RETRIES and not responded:
+    while retries < CNTS.RETRIES and not responded:
         radio.stopListening()
         radio.write(packetToSend)
         radio.startListening()
@@ -273,6 +273,7 @@ def wait_read_packets(myAddress):
                     radio.stopListening()
                     radio.write(packetToSend)
                     radio.startListening()
+                    sequenceNumber = not sequenceNumber
 
                     finalData += dataPacket.getPayload()
                     print("Payload Data: " + str(dataPacket.getPayload()))
