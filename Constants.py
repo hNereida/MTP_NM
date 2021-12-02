@@ -7,6 +7,7 @@ CE = 25 # RPi Chip Enable pin
 # Paths
 working_directory = '/home/pi/working-directory/'
 is_usb_connected = '/home/pi/MTP_NM/bash/usb_id.sh'
+permissions = '/home/pi/MTP_NM/bash/permissions.sh'
 read_usb = '/home/pi/MTP_NM/bash/read_usb.sh'
 output_file = 'NM_received.txt'
 
