@@ -161,7 +161,7 @@ def main():
     return s0()
 
 if __name__ == "__main__":
-    myAddress = sys.argv[1]
+    myAddress = int(sys.argv[1])
     print("my address = " + str(myAddress))
     generate_nodes(myAddress)
     print("nodes = " + str(nodes))
