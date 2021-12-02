@@ -13,7 +13,7 @@ import Packets.PacketsDefinitions as packets
 
 # Init variables
 myAddress = sys.args[0] 
-
+addresses = []
 
 haveData = False
 hadToken = False
@@ -22,12 +22,14 @@ packetType = "111"
 fileData = bytearray()
 rcvData = bytearray()
 
+generate_addresses(myAddress)
+
 # nodes = { address: valor, hasData: True or False, hasToken: True or False, toSend: True or False}
-nodes = [{"address": 1, "hasData": False, "hasToken": False, "toSendData": False},
-         {"address": 2, "hasData": False, "hasToken": False, "toSendData": False},
-         {"address": 4, "hasData": False, "hasToken": False, "toSendData": False},
-         {"address": 5, "hasData": False, "hasToken": False, "toSendData": False},
-         {"address": 6, "hasData": False, "hasToken": False, "toSendData": False}]
+nodes = [{"address": addresses[0], "hasData": False, "hasToken": False, "toSendData": False},
+         {"address": addresses[1], "hasData": False, "hasToken": False, "toSendData": False},
+         {"address": addresses[2], "hasData": False, "hasToken": False, "toSendData": False},
+         {"address": addresses[3], "hasData": False, "hasToken": False, "toSendData": False},
+         {"address": addresses[4], "hasData": False, "hasToken": False, "toSendData": False}]
 
 token = 1
 
@@ -148,6 +150,14 @@ def s8():
     print("S8")
     print("s8: DONE!") # Considerar canvi
     # sys.exit()
+
+def generate_addresses(myAddress):
+    global addresses
+    for i in range(1, 7):
+        if i < myAddress:
+            addresses[i-1] = i
+        if i > myAddress:
+            addresses[i-2] = i - 1
 
 def main():
     return s0()
