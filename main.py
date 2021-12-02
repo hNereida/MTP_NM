@@ -39,8 +39,11 @@ nodes = [{"address": addresses[0], "hasData": False, "hasToken": False, "toSendD
          {"address": addresses[3], "hasData": False, "hasToken": False, "toSendData": False},
          {"address": addresses[4], "hasData": False, "hasToken": False, "toSendData": False}]
 
-token = 1
 
+print("my address = " + str(myAddress))
+print("nodes = " + str(nodes))
+
+token = 1
 lastNodeNoToken = 0
 nodesToSendToken = []
 
