@@ -12,7 +12,6 @@ import Functions
 import Packets.PacketsDefinitions as packets
 
 # Init variables
-myAddress = sys.args[0] 
 addresses = []
 
 haveData = False
@@ -166,4 +165,5 @@ def main():
     return s0()
 
 if __name__ == "__main__":
+    myAddress = sys.argv[1]
     main()
