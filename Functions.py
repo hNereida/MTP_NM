@@ -236,7 +236,7 @@ def wait_read_packets(myAddress):
                     radio.write(packetToSend)
                     radio.startListening()
 
-                    finalData.extend(dataPacket.getPayload())
+                    finalData += dataPacket.getPayload()
 
                 return packets.DATA["type"], finalData
 

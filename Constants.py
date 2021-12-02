@@ -3,7 +3,7 @@ import RF24
 # GROUP DEPENDENT
 # Hardware
 CE = 25 # RPi Chip Enable pin
-ADDRESS = 3 # Each device's address
+ADDRESS = 2 # Each device's address
 
 # Paths
 working_directory = '/home/pi/working-directory/'
