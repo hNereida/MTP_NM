@@ -85,6 +85,7 @@ def s2():
     global lastNodeNoToken
     for node in nodes:
         if node["toSendData"]:
+            print("Node que enviare data: " + str(node))
             if Functions.send_data(myAddress, node["address"], fileData): #includes ACK
                 node["hasData"] = True
                 token += 1
