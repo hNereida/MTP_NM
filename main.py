@@ -117,10 +117,10 @@ def s4():
         print("s4 -> s5")
         return s5()
     elif packet_type == packets.DATA["type"]:
-        print("s5 -> s6")
+        print("s4 -> s6")
         return s6() # Estat on guardes la data al fitxer
     elif packet_type == packets.TOKEN["type"]:
-        print("s6 -> s7")
+        print("s4 -> s7")
         return s7() # Estat on llegeixes el token
 
 def s5():
