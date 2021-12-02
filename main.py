@@ -1,3 +1,4 @@
+import sys
 import random
 import RF24
 
@@ -11,7 +12,7 @@ import Functions
 import Packets.PacketsDefinitions as packets
 
 # Init variables
-myAddress = CNTS.ADDRESS 
+myAddress = sys.args[0] 
 
 
 haveData = False
