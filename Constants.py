@@ -1,10 +1,8 @@
-import sys
 import RF24
 
 # GROUP DEPENDENT
 # Hardware
 CE = 25 # RPi Chip Enable pin
-ADDRESS = sys.argv[0] # Each device's address
 
 # Paths
 working_directory = '/home/pi/working-directory/'
