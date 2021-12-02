@@ -123,6 +123,35 @@ def send_hello_response(srcAddress, rcvAddress, haveData, hadToken):
     radio.stopListening()
     radio.write(packetToSend)
 
+# ---------------------------------------------------------
+def getNumberPackets(str_bytes):
+    num_packets = int(len(str_bytes)/CNTS.DATA_SIZE)
+    if not len(str_bytes)%CNTS.DATA_SIZE == 0:
+      num_packets = num_packets + 1
+    
+    return num_packets
+ 
+def createDataPackets(str_bytes):
+    # Get number packets to send
+    num_packets = getNumberPackets(str_bytes)
+    # Get length of the last packet
+    last_packet_length = len(str_bytes) - (int(len(str_bytes)/CNTS.DATA_SIZE)*CNTS.DATA_SIZE)
+ 
+    # Array of data packets
+    dataPackets = []
+ 
+    # Sequence number is going to be filled with 0,1 as for stop & wait protocol
+    x = 0
+    while x < num_packets:
+      if x == num_packets-1:
+        dataPackets.append(str_bytes[x*CNTS.DATA_SIZE:])
+      else:
+        dataPackets.append(str_bytes[x*CNTS.DATA_SIZE:CNTS.DATA_SIZE*(x+1)])
+      x = x + 1
+    
+    return dataPackets
+
+# ---------------------------------------------------------
 
 # Declarar EOT
 # Retorna true si la data s'ha enviat correctament
@@ -133,13 +162,17 @@ def send_data(srcAddress, rcvAddress, fileData):
     EOF = False
     sequenceNumber = False
     packetSize = CNTS.DATA_SIZE
-    for x in range(0, len(fileData), 30):
+
+    packets = createDataPackets(fileData)
+
+    for x in range(0, len(packets)):
         sentPackets += 1
-        if sentPackets == math.ceil(len(fileData)/30):
-            packetSize = len(fileData) - (sentPackets-1)*30
+
+        if x == len(packets)-1:
             EOF = True
-        dataPacket = DataPacket(srcAddress, rcvAddress, packetSize, EOF, sequenceNumber, fileData[x:x+packetSize])
-        print("Payload DataPacket: " + str(fileData[x:x+packetSize]))
+            
+        dataPacket = DataPacket(srcAddress, rcvAddress, len(packets[x]), EOF, sequenceNumber, packets[x])
+        print("Payload DataPacket: " + str(packets[x]))
         packetToSend = dataPacket.buildPacket()
         responded = False
         retries = 0
