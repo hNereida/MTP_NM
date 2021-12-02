@@ -98,18 +98,18 @@ def send_hello(srcAddress, rcvAddress):
         radio.write(packetToSend)
         radio.startListening()
         time.sleep(CNTS.TIMEOUT)
-        if radio.available():
-            responded = True
-            print("received")
         print("HELLO retries: " + str(retries) + " to node " + str(rcvAddress))
-        retries += 1
-
-    rcvBytes = radio.read(CNTS.PACKET_SIZE)
-    rcvPacket = HelloPacketResponse()
-    rcvPacket.parsePacket(rcvBytes)
-    if rcvPacket.getTypePacket() == packets.HELLO_RESPONSE["type"]:
-        hasData = rcvPacket.had_Data()
-        hadToken = rcvPacket.had_Token()
+        if radio.available():
+            rcvBytes = radio.read(CNTS.PACKET_SIZE)
+            rcvPacket = HelloPacketResponse()
+            rcvPacket.parsePacket(rcvBytes)
+            if rcvPacket.getTypePacket() == packets.HELLO_RESPONSE["type"] and rcvPacket.getDestinationAddress() == srcAddress:
+                responded = True
+                print("received")
+                hasData = rcvPacket.had_Data()
+                hadToken = rcvPacket.had_Token()
+            else:
+                retries += 1
     return responded, hasData, hadToken
 
 
@@ -149,7 +149,7 @@ def send_data(srcAddress, rcvAddress, fileData):
                 rcvPacket = DataPacketResponse()
                 rcvPacket.parsePacket(rcvBytes)
                 # Check if it is the right packet type
-                if sequenceNumber == rcvPacket.getSequenceNumber() and rcvPacket.isValid():
+                if sequenceNumber == rcvPacket.getSequenceNumber() and rcvPacket.isValid() and rcvPacket.getDestinationAddress() == srcAddress:
                     responded = True
                 else:
                     retries += 1
@@ -179,7 +179,7 @@ def send_token(srcAddress, rcvAddress, token):
             rcvPacket = TokenPacketResponse()
             rcvPacket.parsePacket(rcvBytes)
             # Check if it is the right packet type
-            if rcvPacket.isValid():
+            if rcvPacket.isValid() and rcvPacket.getDestinationAddress() == srcAddress:
                 responded = True
             else:
                 retries += 1
