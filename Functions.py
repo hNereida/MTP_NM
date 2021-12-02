@@ -161,9 +161,9 @@ def send_data(srcAddress, rcvAddress, fileData):
     sentPackets = 0
     EOF = False
     sequenceNumber = False
-    packetSize = CNTS.DATA_SIZE
 
     packets = createDataPackets(fileData)
+    print("Packet: " + str(packets))
 
     for x in range(0, len(packets)):
         sentPackets += 1
