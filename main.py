@@ -29,9 +29,9 @@ def generate_nodes(myAddress):
     for i in range(1, 7):
         print(i)
         if i < myAddress:
-            addresses[i-1] = i
+            addresses[i] = i
         if i > myAddress:
-            addresses[i-2] = i - 1
+            addresses[i-1] = i - 1
     
     nodes = [{"address": addresses[0], "hasData": False, "hasToken": False, "toSendData": False},
          {"address": addresses[1], "hasData": False, "hasToken": False, "toSendData": False},
