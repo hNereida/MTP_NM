@@ -48,10 +48,12 @@ nodesToSendToken = []
 def s0():
     print("S0")
     global fileData
+    global haveData
     Functions.initialize_radio()
     if Functions.is_usb_connected():
         print("s0 -> s1, USB connected")
         fileData = Functions.read_usb_file()
+        haveData = True
         return s1()
     else:
         print("s0 -> s4, USB not connected")
