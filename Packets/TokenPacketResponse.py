@@ -24,7 +24,7 @@ class TokenPacketResponse(PacketGeneric):
         # Add ack_nack field
         length_ack_nack = getFieldLength(packets.TOKEN_RESPONSE["fields"]["ack_nack"])
         packet_string = addFieldToBinaryString(
-            packets.TOKEN["fields"]["ack_nack"], 
+            packets.TOKEN_RESPONSE["fields"]["ack_nack"], 
             packet_string,
             getBinaryString(self.ack_nack, length_ack_nack)
         )
