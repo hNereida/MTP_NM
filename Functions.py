@@ -1,6 +1,5 @@
 import time
 import os
-import math
 import RF24
 import subprocess
 
@@ -59,21 +58,11 @@ def is_usb_connected():
     
 def get_file():
     #USB detection check, TODO: LED indication
-    # ORIGINAL NO ESTAVA COMENTAT <----------------
-    # usb=True
-    # while usb:
-    #     str=subprocess.getoutput("sudo mount -t vfat -o uid=pi,gid=pi, /dev/sda1 /mnt/USBDrive")
-    #     if "does not exist" in str:
-    #         time.sleep(1)
-    #     else:
-    #         print("USB detected")
-    #         usb=False
 
     subprocess.call(['sh', CNTS.read_usb]) #AFEGIT PER NOSALTRES (TEAM C)
 
     txt_files = [f for f in os.listdir(CNTS.working_directory) if f.endswith('.txt')]
     filename = txt_files[0]
-    #print("Loading file: "+ filename +" with size: "+str(os.path.getsize("/mnt/USBDrive/"+filename)))
     return CNTS.working_directory+filename
 
 def read_usb_file():
@@ -112,14 +101,12 @@ def send_hello(srcAddress, rcvAddress):
                 retries += 1
         else:
             retries += 1
-        print("Responded Dins: " + str(responded))
     return responded, hasData, hadToken
 
 
 def send_hello_response(srcAddress, rcvAddress, haveData, hadToken):
     helloPacketResponse = HelloPacketResponse(srcAddress, rcvAddress, haveData, hadToken)
     packetToSend = helloPacketResponse.buildPacket()
-    print(packetToSend)
     radio.stopListening()
     radio.write(packetToSend)
 
