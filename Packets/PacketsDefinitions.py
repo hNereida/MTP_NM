@@ -102,7 +102,7 @@ DATA_RESPONSE = {
 }
 
 TOKEN = {
-  "type": 2,
+  "type": 4,
   "fields": {
     "num_recv_data": {
       "static": True,
@@ -115,7 +115,7 @@ TOKEN = {
 }
 
 TOKEN_RESPONSE = {
-  "type": 3,
+  "type": 5,
   "fields": {
     "ack_nack": {
       "static": True,
