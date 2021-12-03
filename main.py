@@ -114,6 +114,7 @@ def s4():
     print("S4")
     global rcvData
     packet_type, rcvData = Functions.wait_read_packets(myAddress) #TORNA EL VALOR HELLO_PACKET/DATA_PACKET/TOKEN_PACKET i DATA DEL PAQUET
+    print("El paquet es de tipus: " + str(packet_type))
     if packet_type == packets.HELLO["type"]:
         print("s4 -> s5")
         return s5()
