@@ -17,7 +17,7 @@ output_file = 'NM_received.txt'
 RETRIES = 5 # Check documentation
 # TIMEOUT = 0.001 # (s) Check documentation
 # TIMEOUT = 0.01 # (s) Check documentation
-TIMEOUT = 0.3 # (s) Check documentation
+TIMEOUT = 0.2 # (s) Check documentation
 SENDER = True
 RECEIVER = False
 
