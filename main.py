@@ -131,6 +131,8 @@ def s3():
 
     global currentTime
 
+    rcvAddress = 0
+
     currentTime = time.perf_counter()
     if currentTime - startTime >= CNTS.NM_DURATION:
         print("s3 -> s8, 5 minutes")
@@ -139,8 +141,11 @@ def s3():
     responded = False
     if lastNodeNoToken > 0:
         responded = Functions.send_token(myAddress, lastNodeNoToken, token) # (Node address, token)
+        print("Sending a TOKEN packet to " + str(lastNodeNoToken))
     while not responded:
-        responded = Functions.send_token(myAddress, random.choice(nodesToSendToken), token)
+        rcvAddress = random.choice(nodesToSendToken)
+        responded = Functions.send_token(myAddress, rcvAddress, token)
+        print("Sending a TOKEN packet to " + str(rcvAddress))
 
     print("s3 -> s4")
     return s4()
