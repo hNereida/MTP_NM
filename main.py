@@ -134,7 +134,7 @@ def s3():
     print("S3")
 
     global currentTime
-
+    global lastNodeNoToken
     rcvAddress = 0
 
     currentTime = time.perf_counter()
@@ -145,6 +145,7 @@ def s3():
     responded = False
     if lastNodeNoToken > 0:
         responded = Functions.send_token(myAddress, lastNodeNoToken, token) # (Node address, token)
+        lastNodeNoToken = 0
         print("Sending a TOKEN packet to " + str(lastNodeNoToken))
     while not responded:
         rcvAddress = random.choice(nodesToSendToken)
