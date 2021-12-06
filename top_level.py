@@ -41,6 +41,7 @@ def main():
             sleep(0.1) 
         except Exception as e:
             print(e)
+            os.system("bash " + CNTS.kill_file)
             exit()
 
 
