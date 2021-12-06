@@ -142,6 +142,7 @@ def s3():
 
     global currentTime
     global lastNodeNoToken
+    global nodesToSendToken
     rcvAddress = 0
 
     currentTime = time.perf_counter()
@@ -158,8 +159,7 @@ def s3():
         rcvAddress = random.choice(nodesToSendToken)
         print("Sending RANDOMLY a TOKEN packet to " + str(rcvAddress))
         responded = Functions.send_token(myAddress, rcvAddress, token)
-        
-
+    nodesToSendToken = []
     print("s3 -> s4")
     return s4()
 
