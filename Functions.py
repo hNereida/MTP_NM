@@ -101,7 +101,7 @@ def send_hello(srcAddress, rcvAddress, hasDataBD, hadTokenBD):
             if packetGeneric.isPacket(rcvBytes, packets.HELLO_RESPONSE["type"]):
                 helloResponsePacket = HelloPacketResponse()
                 helloResponsePacket.parsePacket(rcvBytes)
-                if helloResponsePacket.getSourceAddress() == rcvAddress and helloResponsePacket.getTypePacket() == packets.HELLO_RESPONSE["type"] and rcvPacket.getDestinationAddress() == srcAddress:
+                if helloResponsePacket.getSourceAddress() == rcvAddress and helloResponsePacket.getDestinationAddress() == srcAddress:
                     responded = True
                     print("received per part del node " + str(helloResponsePacket.getSourceAddress()))
                     hasData = helloResponsePacket.had_Data()
