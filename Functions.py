@@ -245,7 +245,6 @@ def wait_read_packets(myAddress):
                 dataPacket = DataPacket()
                 dataPacket.parsePacket(rcvBytes)
                 finalData = dataPacket.getPayload()
-                print("Payload Data: " + str(dataPacket.getPayload()))
 
                 # SORTIR DEL WHILE QUAN NO ES DATA
                 sequenceNumber = False
