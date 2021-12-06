@@ -61,6 +61,7 @@ def s0():
     Functions.initialize_radio()
     if Functions.has_usb_been_connected():
         print("s0 -> s1, USB connected")
+        fileData = Functions.read_usb_file()
         return s1()
     else:
         print("s0 -> s4, USB not connected")

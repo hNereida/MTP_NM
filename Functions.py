@@ -62,8 +62,6 @@ def is_usb_connected():
 def get_file():
     #USB detection check, TODO: LED indication
 
-    subprocess.call(['sh', CNTS.read_usb]) #AFEGIT PER NOSALTRES (TEAM C)
-
     txt_files = [f for f in os.listdir(CNTS.working_directory) if f.endswith('.txt')]
     filename = txt_files[0]
     return CNTS.working_directory+filename
