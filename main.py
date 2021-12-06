@@ -217,7 +217,7 @@ def s7():
         return s8()
     
     token = rcvData
-    if token == 6:
+    if token == 4: # TORNAR A POSAR A 6 <----------------------------
         print("s7 -> s8")
         return s8()
     print("s7 -> s1")
