@@ -55,6 +55,7 @@ def s0():
     global startTime
     global fileData
     global haveData
+    global hadToken
 
     startTime = time.perf_counter()
 
@@ -65,6 +66,7 @@ def s0():
         print("s0 -> s1, USB connected")
         fileData = Functions.read_usb_file()
         haveData = True
+        hadToken = True
         return s1()
     else:
         print("s0 -> s4, USB not connected")

@@ -98,7 +98,7 @@ def send_hello(srcAddress, rcvAddress):
             rcvBytes = radio.read(CNTS.PACKET_SIZE)
             rcvPacket = HelloPacketResponse()
             rcvPacket.parsePacket(rcvBytes)
-            if rcvPacket.getTypePacket() == packets.HELLO_RESPONSE["type"] and rcvPacket.getDestinationAddress() == srcAddress:
+            if rcvPacket.getSourceAddress() == rcvAddress and rcvPacket.getTypePacket() == packets.HELLO_RESPONSE["type"] and rcvPacket.getDestinationAddress() == srcAddress:
                 responded = True
                 print("received per part del node " + str(rcvPacket.getSourceAddress()))
                 hasData = rcvPacket.had_Data()
@@ -245,6 +245,7 @@ def wait_read_packets(myAddress):
             if packetGeneric.isPacket(rcvBytes, packets.HELLO["type"]):
                 helloPacket = HelloPacket()
                 helloPacket.parsePacket(rcvBytes)
+                print("He rebut un HELLO del node " + str(helloPacket.getSourceAddress()))
                 return packets.HELLO["type"], helloPacket.getSourceAddress()
 
             # TODO: Check sequence number for Stop & Wait
