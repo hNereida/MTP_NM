@@ -40,7 +40,9 @@ def main():
                     # Store received file to USB
                     ioparent.control_led(1, True)
                     os.system("bash " + CNTS.write_usb)
+                    print("Copied to USB, DONE")
                     ioparent.control_led(2, True)
+                    exit()
 
 
             sleep(0.1) 
