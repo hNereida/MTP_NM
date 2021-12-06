@@ -15,7 +15,7 @@ read_usb = '/home/pi/MTP_NM/bash/read_usb.sh'
 kill_file = '/home/pi/MTP_NM/bash/kill.sh'
 write_usb = '/home/pi/MTP_NM/bash/write_usb.sh'
 
-ADDRESS = 4
+ADDRESS = 3
 
 
 

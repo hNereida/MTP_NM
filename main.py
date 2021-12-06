@@ -93,10 +93,10 @@ def s1():
         for node in nodes:
             print("s1: Sending a HELLO packet to " + str(node["address"]))
             responded, new_hasData, new_hasToken = Functions.send_hello(myAddress, node["address"], node["hasData"], node["hasToken"])
-            if (not node["hasData"] and new_hasData):
-                node["hasData"] = True
-            if (not node["hasToken"] and new_hasToken):
-                node["hasToken"] = True
+#             if (not node["hasData"] and new_hasData):
+#                 node["hasData"] = True
+#             if (not node["hasToken"] and new_hasToken):
+#                 node["hasToken"] = True
 
             # responded, node["hasData"], node["hasToken"] = Functions.send_hello(myAddress, node["address"], node["hasData"], node["hasToken"])
             if responded:
