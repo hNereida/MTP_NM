@@ -282,6 +282,8 @@ def wait_read_packets(myAddress):
                 return packets.TOKEN["type"], tokenPacket.getNumRecvData()
 
             received = True
+            print("Si no entra a cap if del wait_read_packet el tipus es: " + str(packetGeneric.getTypePacket()))
+        return packetGeneric.getTypePacket(), bytearray()
 
 
 # CANVIAR A GUARDAR A RASPBERRY
