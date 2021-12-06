@@ -6,13 +6,13 @@ CE = 25 # RPi Chip Enable pin
 
 # Paths
 working_directory = '/home/pi/working-directory/'
-is_usb_connected = '/home/pi/MTP_NM/bash/usb_id.sh'
-read_usb = '/home/pi/MTP_NM/bash/read_usb.sh'
 output_file = 'NM_received.txt'
-
 timeout_file = '/home/pi/MTP_NM/timeout.py'
 main_file = '/home/pi/MTP_NM/main.py'
-kill_file = '/home/pi/MTP_NM/kill.sh'
+
+is_usb_connected = '/home/pi/MTP_NM/bash/usb_id.sh'
+read_usb = '/home/pi/MTP_NM/bash/read_usb.sh'
+kill_file = '/home/pi/MTP_NM/bash/kill.sh'
 
 ADDRESS = 3
 

@@ -59,14 +59,13 @@ def s0():
     startTime = time.perf_counter()
 
     Functions.initialize_radio()
-    if Functions.is_usb_connected():
+    if Functions.has_usb_been_connected():
         print("s0 -> s1, USB connected")
-        fileData = Functions.read_usb_file()
-        haveData = True
         return s1()
-    else:
+    else
         print("s0 -> s4, USB not connected")
         return s4()
+
 
 #We are the first to transmit -> we have the token. We need to send a hello to everybody reachable.
 def s1():

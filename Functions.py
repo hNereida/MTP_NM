@@ -35,6 +35,9 @@ def initialize_radio(): # quan es para la radio?
     radio.powerUp()
     return radio
 
+def has_usb_been_connected():
+    return os.path.exists(CNTS.working_directory):
+
 
 def is_usb_connected():
     command = "bash " + CNTS.is_usb_connected

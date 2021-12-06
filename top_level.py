@@ -10,10 +10,21 @@ import Constants as CNTS
 def main():
 
     has_started = False
+    haveData = False
     ioparent.config()
+    os.system("sudo rm -r " + CNTS.working_directory) # Clean, so that if it exists it means the USB has been read
     while True:
 
         try:
+
+            # Read USB and store its file if connected
+            if not haveData:
+                if Functions.is_usb_connected():
+                    print("USB connected")
+                    fileData = Functions.read_usb_file()
+                    haveData = True
+
+
             SW = ioparent.read_switches() # get switches config, decide which son to run, add logic below
             SW_GO = SW[ioparent.MASTER_SWITCH]
 
