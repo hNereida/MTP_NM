@@ -100,13 +100,14 @@ def send_hello(srcAddress, rcvAddress):
             rcvPacket.parsePacket(rcvBytes)
             if rcvPacket.getTypePacket() == packets.HELLO_RESPONSE["type"] and rcvPacket.getDestinationAddress() == srcAddress:
                 responded = True
-                print("received")
+                print("received per part del node " + str(rcvPacket.getSourceAddress()))
                 hasData = rcvPacket.had_Data()
                 hadToken = rcvPacket.had_Token()
             else:
                 retries += 1
         else:
             retries += 1
+    print("hasData received: " + str(hasData) + " hadToken received: " + str(hadToken))
     return responded, hasData, hadToken
 
 
