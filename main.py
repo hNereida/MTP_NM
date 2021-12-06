@@ -148,8 +148,9 @@ def s3():
         print("Sending a TOKEN packet to " + str(lastNodeNoToken))
     while not responded:
         rcvAddress = random.choice(nodesToSendToken)
+        print("Sending RANDOMLY a TOKEN packet to " + str(rcvAddress))
         responded = Functions.send_token(myAddress, rcvAddress, token)
-        print("Sending a TOKEN packet to " + str(rcvAddress))
+        
 
     print("s3 -> s4")
     return s4()
