@@ -5,7 +5,7 @@ import subprocess
 
 # CONSTANTS
 import Constants as CNTS
-import Packets.PacketsDefinitions as packets
+import Packets.PacketsDefinitions as packetsDef
 
 # IMPORTAR FUNCIONS DEFINIDES PER GRUP B --> ADAPTAR FUNCIONS FETES AMB LES SEVES FUNCIONS
 from Packets.HelloPacket import HelloPacket
@@ -98,7 +98,7 @@ def send_hello(srcAddress, rcvAddress, hasDataBD, hadTokenBD):
             rcvBytes = radio.read(CNTS.PACKET_SIZE)
             packetGeneric = PacketGeneric()
             packetGeneric.parsePacket(rcvBytes)
-            if packetGeneric.isPacket(rcvBytes, packets.HELLO_RESPONSE["type"]):
+            if packetGeneric.isPacket(rcvBytes, packetsDef.HELLO_RESPONSE["type"]):
                 helloResponsePacket = HelloPacketResponse()
                 helloResponsePacket.parsePacket(rcvBytes)
                 if helloResponsePacket.getSourceAddress() == rcvAddress and helloResponsePacket.getDestinationAddress() == srcAddress:
@@ -183,15 +183,18 @@ def send_data(srcAddress, rcvAddress, fileData):
             time.sleep(CNTS.TIMEOUT)
             if radio.available():
                 rcvBytes = radio.read(CNTS.PACKET_SIZE)
-                rcvPacket = DataPacketResponse()
-                rcvPacket.parsePacket(rcvBytes)
-                print("ACK Data Sequence Number: " + str(rcvPacket.getSequenceNumber()))
-                # Check if it is the right packet type
-                if sequenceNumber == rcvPacket.getSequenceNumber() and rcvPacket.isValid() and rcvPacket.getDestinationAddress() == srcAddress:
-                    sequenceNumber = not sequenceNumber
-                    responded = True
-                else:
-                    retries += 1
+                packetGeneric = PacketGeneric()
+                packetGeneric.parsePacket(rcvBytes)
+                if packetGeneric.isPacket(rcvBytes, packetsDef.DATA_RESPONSE["type"]):
+                  rcvPacket = DataPacketResponse()
+                  rcvPacket.parsePacket(rcvBytes)
+                  print("ACK Data Sequence Number: " + str(rcvPacket.getSequenceNumber()))
+                  # Check if it is the right packet type
+                  if sequenceNumber == rcvPacket.getSequenceNumber() and rcvPacket.isValid() and rcvPacket.getDestinationAddress() == srcAddress:
+                      sequenceNumber = not sequenceNumber
+                      responded = True
+                  else:
+                      retries += 1
             else:
                 retries += 1
 
@@ -215,14 +218,17 @@ def send_token(srcAddress, rcvAddress, token):
         time.sleep(CNTS.TIMEOUT)
         if radio.available():
             rcvBytes = radio.read(CNTS.PACKET_SIZE)
-            rcvPacket = TokenPacketResponse()
-            rcvPacket.parsePacket(rcvBytes)
-            # Check if it is the right packet type
-            if rcvPacket.isValid() and rcvPacket.getDestinationAddress() == srcAddress:
-                responded = True
-                print("THE NODE " + str(rcvPacket.getSourceAddress()) + " HAS THE TOKEN | TOKEN RESPONSE")
-            else:
-                retries += 1
+            packetGeneric = PacketGeneric()
+            packetGeneric.parsePacket(rcvBytes)
+            if packetGeneric.isPacket(rcvBytes, packetsDef.TOKEN_RESPONSE["type"]):
+              rcvPacket = TokenPacketResponse()
+              rcvPacket.parsePacket(rcvBytes)
+              # Check if it is the right packet type
+              if rcvPacket.isValid() and rcvPacket.getDestinationAddress() == srcAddress:
+                  responded = True
+                  print("THE NODE " + str(rcvPacket.getSourceAddress()) + " HAS THE TOKEN | TOKEN RESPONSE")
+              else:
+                  retries += 1
         else:
             retries += 1
 
@@ -248,13 +254,13 @@ def wait_read_packets(myAddress):
 
         if packetGeneric.getDestinationAddress() == myAddress:
 
-            if packetGeneric.isPacket(rcvBytes, packets.HELLO["type"]):
+            if packetGeneric.isPacket(rcvBytes, packetsDef.HELLO["type"]):
                 helloPacket = HelloPacket()
                 helloPacket.parsePacket(rcvBytes)
                 print("He rebut un HELLO del node " + str(helloPacket.getSourceAddress()))
-                return packets.HELLO["type"], helloPacket.getSourceAddress()
+                return packetsDef.HELLO["type"], helloPacket.getSourceAddress()
 
-            if packetGeneric.isPacket(rcvBytes, packets.DATA["type"]):
+            if packetGeneric.isPacket(rcvBytes, packetsDef.DATA["type"]):
                 dataPacket = DataPacket()
                 dataPacket.parsePacket(rcvBytes)
                 sequenceNumber = False # first we wait for a seq_num=0
@@ -303,9 +309,9 @@ def wait_read_packets(myAddress):
                         print("Payload Data: " + str(dataPacket.getPayload()))
 
                 print("Final Data: " + str(finalData))
-                return packets.DATA["type"], finalData
+                return packetsDef.DATA["type"], finalData
 
-            if packetGeneric.isPacket(rcvBytes, packets.TOKEN["type"]):
+            if packetGeneric.isPacket(rcvBytes, packetsDef.TOKEN["type"]):
                 print("HE REBUT EL TOKEN")
                 tokenPacket = TokenPacket()
                 tokenPacket.parsePacket(rcvBytes)
@@ -315,7 +321,7 @@ def wait_read_packets(myAddress):
                 radio.stopListening()
                 radio.write(packetToSend)
                 print("HE ENVIAT EL TOKEN RESPONSE a " + str(tokenPacket.getSourceAddress()))
-                return packets.TOKEN["type"], tokenPacket.getNumRecvData()
+                return packetsDef.TOKEN["type"], tokenPacket.getNumRecvData()
 
             received = True
     print("Si no entra a cap if del wait_read_packet el tipus es: " + str(packetGeneric.getTypePacket()) + "i le paquet és per al node :" + str(packetGeneric.getDestinationAddress()))
