@@ -18,11 +18,12 @@ RETRIES = 5 # Check documentation
 # TIMEOUT = 0.001 # (s) Check documentation
 # TIMEOUT = 0.01 # (s) Check documentation
 TIMEOUT = 0.2 # (s) Check documentation
+
+NM_DURATION = 300 # 5 minutes expressed in secs
+
 SENDER = True
 RECEIVER = False
 
-
-# Declare EOT
 
 # NRF24 constants
 DATARATE = RF24.RF24_1MBPS

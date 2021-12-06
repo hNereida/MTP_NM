@@ -1,6 +1,7 @@
 import sys
 import random
 import RF24
+import time
 
 # Constants
 import Constants as CNTS
@@ -23,6 +24,9 @@ hadToken = False
 packetType = "111"
 fileData = bytearray()
 rcvData = bytearray()
+
+startTime = 0
+currentTime = 0
 
 
 def generate_nodes(myAddress):
@@ -47,8 +51,13 @@ nodesToSendToken = []
 #Check if we have the USB connected. If we have it connected, we are the first to transmit. If not, we just wait.
 def s0():
     print("S0")
+
+    global startTime
     global fileData
     global haveData
+
+    startTime = time.perf_counter()
+
     Functions.initialize_radio()
     if Functions.is_usb_connected():
         print("s0 -> s1, USB connected")
@@ -62,8 +71,16 @@ def s0():
 #We are the first to transmit -> we have the token. We need to send a hello to everybody reachable.
 def s1():
     print("S1")
+
     global nodes
     global nodesToSendToken
+    global currentTime
+
+    currentTime = time.perf_counter()
+    if currentTime - startTime >= CNTS.NM_DURATION:
+        print("s1 -> s8, 5 minutes")
+        return s8()
+
     anyResponded = False
     while not anyResponded:
         for node in nodes:
@@ -82,9 +99,17 @@ def s1():
 #Send data
 def s2():
     print("S2")
+
     global nodes
     global token
     global lastNodeNoToken
+    global currentTime
+
+    currentTime = time.perf_counter()
+    if currentTime - startTime >= CNTS.NM_DURATION:
+        print("s2 -> s8, 5 minutes")
+        return s8()
+    
     for node in nodes:
         if node["toSendData"]:
             print("Node que enviare data: " + str(node))
@@ -101,6 +126,14 @@ def s2():
 #If we cannot send the token to the last one (has already had the token or it is unreachable), we need to try to send the token to another.
 def s3():
     print("S3")
+
+    global currentTime
+
+    currentTime = time.perf_counter()
+    if currentTime - startTime >= CNTS.NM_DURATION:
+        print("s3 -> s8, 5 minutes")
+        return s8()
+    
     responded = False
     if lastNodeNoToken > 0:
         responded = Functions.send_token(myAddress, lastNodeNoToken, token) # (Node address, token)
@@ -114,7 +147,15 @@ def s3():
 #State where we wait to reveive a packet
 def s4():
     print("S4")
+
     global rcvData
+    global currentTime
+
+    currentTime = time.perf_counter()
+    if currentTime - startTime >= CNTS.NM_DURATION:
+        print("s4 -> s8, 5 minutes")
+        return s8()
+    
     packet_type, rcvData = Functions.wait_read_packets(myAddress) #TORNA EL VALOR HELLO_PACKET/DATA_PACKET/TOKEN_PACKET i DATA DEL PAQUET
     if packet_type == packets.HELLO["type"]:
         print("s4 -> s5")
@@ -129,6 +170,14 @@ def s4():
 
 def s5():
     print("S5")
+
+    global currentTime
+
+    currentTime = time.perf_counter()
+    if currentTime - startTime >= CNTS.NM_DURATION:
+        print("s5 -> s8, 5 minutes")
+        return s8()
+    
     Functions.send_hello_response(myAddress, rcvData, haveData, hadToken)
     print("s5: Sending a HELLO_RESPONSE packet to " + str(rcvData))
     print("s5: Have data " + str(haveData))
@@ -139,7 +188,15 @@ def s5():
 # XUCLAR DATA I GUARDAR EN FITXER
 def s6():
     print("S6")
+
     global haveData
+    global currentTime
+
+    currentTime = time.perf_counter()
+    if currentTime - startTime >= CNTS.NM_DURATION:
+        print("s6 -> s8, 5 minutes")
+        return s8()
+    
     Functions.write_file(rcvData) #into raspberry
     haveData = True
     print("s6 -> s4")
@@ -148,7 +205,15 @@ def s6():
 #Update the information of the node with the information of the token
 def s7():
     print("S7")
+
     global token
+    global currentTime
+
+    currentTime = time.perf_counter()
+    if currentTime - startTime >= CNTS.NM_DURATION:
+        print("s7 -> s8, 5 minutes")
+        return s8()
+    
     token = rcvData
     if token == 6:
         print("s7 -> s8")
@@ -159,7 +224,6 @@ def s7():
 def s8():
     print("S8")
     print("s8: DONE!") # Considerar canvi
-    # sys.exit()
 
 def main():
     return s0()
