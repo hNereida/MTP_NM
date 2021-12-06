@@ -58,6 +58,8 @@ def s0():
 
     startTime = time.perf_counter()
 
+    print("my address en S0 = " + str(myAddress))
+
     Functions.initialize_radio()
     if Functions.has_usb_been_connected():
         print("s0 -> s1, USB connected")
