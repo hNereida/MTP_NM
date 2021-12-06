@@ -35,7 +35,7 @@ def main():
                 time_start = time.time()
                 os.system("python3 " + CNTS.main_file + " " + str(CNTS.ADDRESS) + " &") # Start main
             if (has_started):
-                if (time.time() - time_start > 300): # kill
+                if (time.time() - time_start > CNTS.NM_DURATION): # kill
                     os.system("bash " + CNTS.kill_file)
 
             sleep(0.1) 
