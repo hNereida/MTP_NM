@@ -13,6 +13,7 @@ main_file = '/home/pi/MTP_NM/main.py'
 is_usb_connected = '/home/pi/MTP_NM/bash/usb_id.sh'
 read_usb = '/home/pi/MTP_NM/bash/read_usb.sh'
 kill_file = '/home/pi/MTP_NM/bash/kill.sh'
+write_usb = '/home/pi/MTP_NM/bash/write_usb.sh'
 
 ADDRESS = 3
 

@@ -37,15 +37,21 @@ def main():
             if (has_started):
                 if (time.time() - time_start > CNTS.NM_DURATION): # kill
                     os.system("bash " + CNTS.kill_file)
+                    # Store received file to USB
+                    ioparent.control_led(1, True)
+                    os.system("bash " + CNTS.write_usb)
+                    ioparent.control_led(2, True)
+
 
             sleep(0.1) 
         except KeyboardInterrupt:
             os.system("bash " + CNTS.kill_file)
+            ioparent.reset_leds()
             exit()
         except Exception as e:
-            print("abc")
             print(e)
             os.system("bash " + CNTS.kill_file)
+            ioparent.reset_leds()
             exit()
 
 
