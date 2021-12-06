@@ -287,5 +287,7 @@ def wait_read_packets(myAddress):
 # CANVIAR A GUARDAR A RASPBERRY
 # ACABAR LA FUNCIO
 def write_file(data):
+    if not os.path.exists(CNTS.working_directory):
+        os.system("mkdir " + CNTS.working_directory)
     with open(CNTS.working_directory + CNTS.output_file, "w+b") as f:
         f.write(data)
