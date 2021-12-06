@@ -214,7 +214,7 @@ def send_token(srcAddress, rcvAddress, token):
             # Check if it is the right packet type
             if rcvPacket.isValid() and rcvPacket.getDestinationAddress() == srcAddress:
                 responded = True
-                print("THE RECEIVER HAS THE TOKEN")
+                print("THE NODE " + str(rcvPacket.getDestinationAddress()) + "HAS THE TOKEN")
             else:
                 retries += 1
         else:
@@ -288,7 +288,7 @@ def wait_read_packets(myAddress):
                 packetToSend = tokenPacketResponse.buildPacket()
                 radio.stopListening()
                 radio.write(packetToSend)
-                print("HE ENVIAT EL TOKEN RESPONSE")
+                print("HE ENVIAT EL TOKEN RESPONSE a " + str(tokenPacket.getSourceAddress()))
                 return packets.TOKEN["type"], tokenPacket.getNumRecvData()
 
             received = True
