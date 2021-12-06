@@ -39,7 +39,11 @@ def main():
                     os.system("bash " + CNTS.kill_file)
 
             sleep(0.1) 
+        except KeyboardInterrupt:
+            os.system("bash " + CNTS.kill_file)
+            exit()
         except Exception as e:
+            print("abc")
             print(e)
             os.system("bash " + CNTS.kill_file)
             exit()
