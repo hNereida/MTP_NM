@@ -45,6 +45,7 @@ def main():
 
             sleep(0.1) 
         except KeyboardInterrupt:
+            print("Keyboard Ctrl+C")
             os.system("bash " + CNTS.kill_file)
             ioparent.reset_leds()
             exit()
