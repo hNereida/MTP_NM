@@ -10,6 +10,13 @@ is_usb_connected = '/home/pi/MTP_NM/bash/usb_id.sh'
 read_usb = '/home/pi/MTP_NM/bash/read_usb.sh'
 output_file = 'NM_received.txt'
 
+timeout_file = '/home/pi/MTP_NM/timeout.py'
+main_file = '/home/pi/MTP_NM/main.py'
+kill_file = '/home/pi/MTP_NM/kill.sh'
+
+ADDRESS = 3
+
+
 
 
 # GROUP INDEPENDENT
