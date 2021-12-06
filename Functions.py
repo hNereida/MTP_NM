@@ -58,13 +58,18 @@ def is_usb_connected():
         print("USB stick not connected")
         return(False)
 
-    
+ 
+def copy_usb_file():
+    subprocess.call(['sh', CNTS.read_usb]) #AFEGIT PER NOSALTRES (TEAM C)
+
+   
 def get_file():
     #USB detection check, TODO: LED indication
 
     txt_files = [f for f in os.listdir(CNTS.working_directory) if f.endswith('.txt')]
     filename = txt_files[0]
     return CNTS.working_directory+filename
+
 
 def read_usb_file():
     filename = get_file()

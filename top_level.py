@@ -23,7 +23,7 @@ def main():
             if not haveData and not has_started:
                 if Functions.is_usb_connected():
                     print("USB connected")
-                    fileData = Functions.read_usb_file()
+                    Functions.copy_usb_file()
                     haveData = True
 
 
