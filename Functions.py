@@ -96,15 +96,20 @@ def send_hello(srcAddress, rcvAddress, hasDataBD, hadTokenBD):
         print("HELLO retries: " + str(retries) + " to node " + str(rcvAddress))
         if radio.available():
             rcvBytes = radio.read(CNTS.PACKET_SIZE)
-            rcvPacket = HelloPacketResponse()
-            rcvPacket.parsePacket(rcvBytes)
-            if rcvPacket.getSourceAddress() == rcvAddress and rcvPacket.getTypePacket() == packets.HELLO_RESPONSE["type"] and rcvPacket.getDestinationAddress() == srcAddress:
-                responded = True
-                print("received per part del node " + str(rcvPacket.getSourceAddress()))
-                hasData = rcvPacket.had_Data()
-                hadToken = rcvPacket.had_Token()
+            packetGeneric = PacketGeneric()
+            packetGeneric.parsePacket(rcvBytes)
+            if packetGeneric.isPacket(rcvBytes, packets.HELLO_RESPONSE["type"]):
+                helloResponsePacket = HelloPacketResponse()
+                helloResponsePacket.parsePacket(rcvBytes)
+                if helloResponsePacket.getSourceAddress() == rcvAddress and helloResponsePacket.getTypePacket() == packets.HELLO_RESPONSE["type"] and rcvPacket.getDestinationAddress() == srcAddress:
+                    responded = True
+                    print("received per part del node " + str(helloResponsePacket.getSourceAddress()))
+                    hasData = helloResponsePacket.had_Data()
+                    hadToken = helloResponsePacket.had_Token()
+                else:
+                    retries += 1
             else:
-                retries += 1
+                retries +=1
         else:
             retries += 1
     print("hasData received: " + str(hasData) + " hadToken received: " + str(hadToken))
@@ -214,7 +219,7 @@ def send_token(srcAddress, rcvAddress, token):
             # Check if it is the right packet type
             if rcvPacket.isValid() and rcvPacket.getDestinationAddress() == srcAddress:
                 responded = True
-                print("THE NODE " + str(rcvPacket.getDestinationAddress()) + "HAS THE TOKEN")
+                print("THE NODE " + str(rcvPacket.getSourceAddress()) + " HAS THE TOKEN | TOKEN RESPONSE")
             else:
                 retries += 1
         else:
