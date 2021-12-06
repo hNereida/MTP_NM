@@ -89,7 +89,6 @@ def s1():
         for node in nodes:
             print("s1: Sending a HELLO packet to " + str(node["address"]))
             responded, node["hasData"], node["hasToken"] = Functions.send_hello(myAddress, node["address"])
-            print("Responded Fora: " + str(responded))
             if responded:
                 anyResponded = True
                 nodesToSendToken.append(node["address"])
