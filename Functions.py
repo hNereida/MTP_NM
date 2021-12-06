@@ -112,7 +112,8 @@ def send_hello(srcAddress, rcvAddress, hasDataBD, hadTokenBD):
                 retries +=1
         else:
             retries += 1
-    print("hasData received: " + str(hasData) + " hadToken received: " + str(hadToken))
+    if responded:
+        print("hasData received: " + str(hasData) + " hadToken received: " + str(hadToken))
     return responded, hasData, hadToken
 
 
@@ -187,15 +188,15 @@ def send_data(srcAddress, rcvAddress, fileData):
                 print("ACK Data Sequence Number: " + str(rcvPacket.getSequenceNumber()))
                 # Check if it is the right packet type
                 if sequenceNumber == rcvPacket.getSequenceNumber() and rcvPacket.isValid() and rcvPacket.getDestinationAddress() == srcAddress:
+                    sequenceNumber = not sequenceNumber
                     responded = True
                 else:
                     retries += 1
             else:
                 retries += 1
 
-        sequenceNumber = not sequenceNumber
-
-        if retries > CNTS.RETRIES and not responded:
+        if retries >= CNTS.RETRIES and not responded:
+            # It is not worth it to send the data. Too much retransmissions. Maybe other node will have it easier.
             return False
 
     return True
@@ -253,41 +254,54 @@ def wait_read_packets(myAddress):
                 print("He rebut un HELLO del node " + str(helloPacket.getSourceAddress()))
                 return packets.HELLO["type"], helloPacket.getSourceAddress()
 
-            # TODO: Check sequence number for Stop & Wait
             if packetGeneric.isPacket(rcvBytes, packets.DATA["type"]):
                 dataPacket = DataPacket()
                 dataPacket.parsePacket(rcvBytes)
-                finalData = dataPacket.getPayload()
-                flagFinalData = False
-                # print("final dat")
-                # print(finalData)
+                sequenceNumber = False # first we wait for a seq_num=0
+
+                finalData = []
+
+                if sequenceNumber == dataPacket.getSequenceNumber():
+                    finalData = dataPacket.getPayload()
+                    # Send ack
+                    dataPacketResponse = DataPacketResponse(dataPacket.getDestinationAddress(), dataPacket.getSourceAddress(), sequenceNumber, True)
+                    sequenceNumber = not sequenceNumber
+                else:
+                    dataPacketResponse = DataPacketResponse(dataPacket.getDestinationAddress(), dataPacket.getSourceAddress(), dataPacket.getSequenceNumber(), True)
+
+                packetToSend = dataPacketResponse.buildPacket()
+                radio.stopListening()
+                radio.write(packetToSend)
+                radio.startListening()
 
                 # SORTIR DEL WHILE QUAN NO ES DATA
-                sequenceNumber = False
                 while not dataPacket.isEoT():
+                    dataPacket = DataPacket() #start with a clean fresh object
+
                     while not radio.available():
                         time.sleep(0.01)
+
                     receivedPacket = radio.read(CNTS.PACKET_SIZE)
                     dataPacket.parsePacket(receivedPacket)
-                    # Check CRC
+
                     if dataPacket.getDestinationAddress() == myAddress:
                         if dataPacket.getSequenceNumber() == sequenceNumber:
                             dataPacketResponse = DataPacketResponse(dataPacket.getDestinationAddress(), dataPacket.getSourceAddress(), sequenceNumber, True)
                             sequenceNumber = not sequenceNumber
-                    else:
-                        dataPacketResponse = DataPacketResponse(dataPacket.getDestinationAddress(), dataPacket.getSourceAddress(), sequenceNumber, False)
-                    packetToSend = dataPacketResponse.buildPacket()
-                    radio.stopListening()
-                    radio.write(packetToSend)
-                    radio.startListening()
-                    # sequenceNumber = not sequenceNumber
+                            # Save data packet
+                            finalData += dataPacket.getPayload()
 
-                    if (not flagFinalData):
-                        flagFinalData = True
-                    else:
-                        finalData += dataPacket.getPayload()
+                        else:
+                            # Maybe the ack was lost, so we send back again the previous ack
+                            dataPacketResponse = DataPacketResponse(dataPacket.getDestinationAddress(), dataPacket.getSourceAddress(), dataPacket.getSequenceNumber(), True)
 
-                    print("Payload Data: " + str(dataPacket.getPayload()))
+                        packetToSend = dataPacketResponse.buildPacket()
+                        radio.stopListening()
+                        radio.write(packetToSend)
+                        radio.startListening()
+
+                        print("Payload Data: " + str(dataPacket.getPayload()))
+
                 print("Final Data: " + str(finalData))
                 return packets.DATA["type"], finalData
 
