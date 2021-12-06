@@ -259,13 +259,14 @@ def wait_read_packets(myAddress):
                     # Check CRC
                     if dataPacket.getSequenceNumber() == sequenceNumber and dataPacket.getDestinationAddress() == myAddress:
                         dataPacketResponse = DataPacketResponse(dataPacket.getDestinationAddress(), dataPacket.getSourceAddress(), sequenceNumber, True)
+                        sequenceNumber = not sequenceNumber
                     else:
                         dataPacketResponse = DataPacketResponse(dataPacket.getDestinationAddress(), dataPacket.getSourceAddress(), sequenceNumber, False)
                     packetToSend = dataPacketResponse.buildPacket()
                     radio.stopListening()
                     radio.write(packetToSend)
                     radio.startListening()
-                    sequenceNumber = not sequenceNumber
+                    # sequenceNumber = not sequenceNumber
 
                     finalData += dataPacket.getPayload()
                     print("Payload Data: " + str(dataPacket.getPayload()))
