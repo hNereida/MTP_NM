@@ -257,7 +257,10 @@ def wait_read_packets(myAddress):
             if packetGeneric.isPacket(rcvBytes, packets.DATA["type"]):
                 dataPacket = DataPacket()
                 dataPacket.parsePacket(rcvBytes)
-                finalData = dataPacket.getPayload()
+                # finalData = dataPacket.getPayload()
+                finalData = None
+                # print("final dat")
+                # print(finalData)
 
                 # SORTIR DEL WHILE QUAN NO ES DATA
                 sequenceNumber = False
@@ -279,7 +282,11 @@ def wait_read_packets(myAddress):
                     radio.startListening()
                     # sequenceNumber = not sequenceNumber
 
-                    finalData += dataPacket.getPayload()
+                    if (finalData == None):
+                        finalData = dataPacket.getPayload()
+                    else:
+                        finalData += dataPacket.getPayload()
+
                     print("Payload Data: " + str(dataPacket.getPayload()))
                 print("Final Data: " + str(finalData))
                 return packets.DATA["type"], finalData
