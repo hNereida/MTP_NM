@@ -75,12 +75,14 @@ def s1():
     global nodes
     global nodesToSendToken
     global currentTime
+    global hadToken
 
     currentTime = time.perf_counter()
     if currentTime - startTime >= CNTS.NM_DURATION:
         print("s1 -> s8, 5 minutes")
         return s8()
-
+    
+    hadToken = True
     anyResponded = False
     while not anyResponded:
         for node in nodes:
