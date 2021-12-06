@@ -260,9 +260,10 @@ def wait_read_packets(myAddress):
                     receivedPacket = radio.read(CNTS.PACKET_SIZE)
                     dataPacket.parsePacket(receivedPacket)
                     # Check CRC
-                    if dataPacket.getSequenceNumber() == sequenceNumber and dataPacket.getDestinationAddress() == myAddress:
-                        dataPacketResponse = DataPacketResponse(dataPacket.getDestinationAddress(), dataPacket.getSourceAddress(), sequenceNumber, True)
-                        sequenceNumber = not sequenceNumber
+                    if dataPacket.getDestinationAddress() == myAddress:
+                        if dataPacket.getSequenceNumber() == sequenceNumber:
+                            dataPacketResponse = DataPacketResponse(dataPacket.getDestinationAddress(), dataPacket.getSourceAddress(), sequenceNumber, True)
+                            sequenceNumber = not sequenceNumber
                     else:
                         dataPacketResponse = DataPacketResponse(dataPacket.getDestinationAddress(), dataPacket.getSourceAddress(), sequenceNumber, False)
                     packetToSend = dataPacketResponse.buildPacket()
