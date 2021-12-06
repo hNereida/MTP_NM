@@ -92,7 +92,7 @@ def s1():
     while not anyResponded:
         for node in nodes:
             print("s1: Sending a HELLO packet to " + str(node["address"]))
-            responded, node["hasData"], node["hasToken"] = Functions.send_hello(myAddress, node["address"])
+            responded, node["hasData"], node["hasToken"] = Functions.send_hello(myAddress, node["address"], node["hasData"], node["hasToken"])
             if responded:
                 anyResponded = True
                 nodesToSendToken.append(node["address"])

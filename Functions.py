@@ -80,10 +80,10 @@ def read_usb_file():
 # Fer import de radio, mirar el self
 # MIRAR COM S'ADAPTA AMB LES FUNCIONS DEL TEAM B
 # UTILITZAR LES CONSTANTS DE RETRIES I TIMEOUTS
-def send_hello(srcAddress, rcvAddress):
+def send_hello(srcAddress, rcvAddress, hasDataBD, hadTokenBD):
     responded = False
-    hasData = False
-    hadToken = False
+    hasData = hasDataBD
+    hadToken = hadTokenBD
     helloPacket = HelloPacket(srcAddress, rcvAddress)
     packetToSend = helloPacket.buildPacket()
 
