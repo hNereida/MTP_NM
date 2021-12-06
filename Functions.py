@@ -159,7 +159,7 @@ def send_data(srcAddress, rcvAddress, fileData):
             EOF = True
             
         dataPacket = DataPacket(srcAddress, rcvAddress, len(packets[x]), EOF, sequenceNumber, packets[x])
-        print("Payload DataPacket: " + str(packets[x]))
+        print("Payload DataPacket: " + str(packets[x]) + "Sequence number: " + str(sequenceNumber))
         packetToSend = dataPacket.buildPacket()
         responded = False
         retries = 0
@@ -172,6 +172,7 @@ def send_data(srcAddress, rcvAddress, fileData):
                 rcvBytes = radio.read(CNTS.PACKET_SIZE)
                 rcvPacket = DataPacketResponse()
                 rcvPacket.parsePacket(rcvBytes)
+                print("ACK Data Sequence Number: " + str(rcvPacket.getSequenceNumber()))
                 # Check if it is the right packet type
                 if sequenceNumber == rcvPacket.getSequenceNumber() and rcvPacket.isValid() and rcvPacket.getDestinationAddress() == srcAddress:
                     responded = True
