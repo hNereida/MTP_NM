@@ -5,6 +5,8 @@ import time
 
 # Constants
 import Constants as CNTS
+# Functions
+import Functions
 
 
 def main():
@@ -18,7 +20,7 @@ def main():
         try:
 
             # Read USB and store its file if connected
-            if not haveData:
+            if not haveData and not has_started:
                 if Functions.is_usb_connected():
                     print("USB connected")
                     fileData = Functions.read_usb_file()
@@ -37,8 +39,8 @@ def main():
                     os.system("bash " + CNTS.kill_file)
 
             sleep(0.1) 
-        except:
-            print("Exception")
+        except Exception as e:
+            print(e)
             exit()
 
 

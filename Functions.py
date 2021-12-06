@@ -36,7 +36,7 @@ def initialize_radio(): # quan es para la radio?
     return radio
 
 def has_usb_been_connected():
-    return os.path.exists(CNTS.working_directory):
+    return os.path.exists(CNTS.working_directory)
 
 
 def is_usb_connected():

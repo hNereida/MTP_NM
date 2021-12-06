@@ -62,7 +62,7 @@ def s0():
     if Functions.has_usb_been_connected():
         print("s0 -> s1, USB connected")
         return s1()
-    else
+    else:
         print("s0 -> s4, USB not connected")
         return s4()
 
