@@ -258,13 +258,17 @@ def wait_read_packets(myAddress):
                 dataPacket = DataPacket()
                 dataPacket.parsePacket(rcvBytes)
                 finalData = dataPacket.getPayload()
-                flagFinalData = False
                 # print("final dat")
                 # print(finalData)
+                isLastPacket = dataPacket.isEoT()
+
+                dataPacketResponse = DataPacketResponse(dataPacket.getDestinationAddress(), dataPacket.getSourceAddress(), dataPacket.getSequenceNumber(), True)
+                print("Send ACK ", dataPacket.getSequenceNumber())
+                sequenceNumber = not dataPacket.getSequenceNumber()
 
                 # SORTIR DEL WHILE QUAN NO ES DATA
-                sequenceNumber = False
-                while not dataPacket.isEoT():
+                # sequenceNumber = False
+                while not isLastPacket:
                     while not radio.available():
                         time.sleep(0.01)
                     receivedPacket = radio.read(CNTS.PACKET_SIZE)
@@ -273,21 +277,21 @@ def wait_read_packets(myAddress):
                     if dataPacket.getDestinationAddress() == myAddress:
                         if dataPacket.getSequenceNumber() == sequenceNumber:
                             dataPacketResponse = DataPacketResponse(dataPacket.getDestinationAddress(), dataPacket.getSourceAddress(), sequenceNumber, True)
+                            print("Send ACK ",sequenceNumber)
                             sequenceNumber = not sequenceNumber
-                    else:
-                        dataPacketResponse = DataPacketResponse(dataPacket.getDestinationAddress(), dataPacket.getSourceAddress(), sequenceNumber, False)
-                    packetToSend = dataPacketResponse.buildPacket()
-                    radio.stopListening()
-                    radio.write(packetToSend)
-                    radio.startListening()
-                    # sequenceNumber = not sequenceNumber
+                            finalData += dataPacket.getPayload()
+                            isLastPacket = dataPacket.isEoT()
+                        else:
+                            dataPacketResponse = DataPacketResponse(dataPacket.getDestinationAddress(), dataPacket.getSourceAddress(), not sequenceNumber, True)
+                            print("Send ACK ", not sequenceNumber)
+                    
+                        packetToSend = dataPacketResponse.buildPacket()
+                        radio.stopListening()
+                        radio.write(packetToSend)
+                        radio.startListening()
+                        # sequenceNumber = not sequenceNumber
 
-                    if (not flagFinalData):
-                        flagFinalData = True
-                    else:
-                        finalData += dataPacket.getPayload()
-
-                    print("Payload Data: " + str(dataPacket.getPayload()))
+                        print("Payload Data: " + str(dataPacket.getPayload()))
                 print("Final Data: " + str(finalData))
                 return packets.DATA["type"], finalData
 
