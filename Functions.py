@@ -161,20 +161,21 @@ def send_data(srcAddress, rcvAddress, fileData):
     EOF = False
     sequenceNumber = False
 
-    packets = createDataPackets(fileData)
-    print("Packets: " + str(packets))
+    packetsToSend = createDataPackets(fileData)
+    print("Packets: " + str(packetsToSend))
 
-    for x in range(0, len(packets)):
+    for x in range(0, len(packetsToSend)):
         sentPackets += 1
 
-        if x == len(packets)-1:
+        if x == len(packetsToSend)-1:
             EOF = True
             
-        dataPacket = DataPacket(srcAddress, rcvAddress, len(packets[x]), EOF, sequenceNumber, packets[x])
-        print("Payload DataPacket: " + str(packets[x]) + "Sequence number: " + str(sequenceNumber))
+        dataPacket = DataPacket(srcAddress, rcvAddress, len(packetsToSend[x]), EOF, sequenceNumber, packetsToSend[x])
+        print("Payload DataPacket: " + str(packetsToSend[x]) + "Sequence number: " + str(sequenceNumber))
         packetToSend = dataPacket.buildPacket()
         responded = False
         retries = 0
+
         while retries < CNTS.RETRIES and not responded:
             radio.stopListening()
             radio.write(packetToSend)
@@ -195,7 +196,7 @@ def send_data(srcAddress, rcvAddress, fileData):
 
         sequenceNumber = not sequenceNumber
 
-        if retries > CNTS.RETRIES and not responded:
+        if retries >= CNTS.RETRIES and not responded:
             return False
 
     return True
@@ -255,38 +256,50 @@ def wait_read_packets(myAddress):
 
             # TODO: Check sequence number for Stop & Wait
             if packetGeneric.isPacket(rcvBytes, packets.DATA["type"]):
+                sequenceNumber = False
+
                 dataPacket = DataPacket()
                 dataPacket.parsePacket(rcvBytes)
-                finalData = dataPacket.getPayload()
-                flagFinalData = False
+
+                if sequenceNumber == dataPacket.getSequenceNumber():
+                  finalData = dataPacket.getPayload()
+                  dataPacketResponse = DataPacketResponse(dataPacket.getDestinationAddress(), dataPacket.getSourceAddress(), sequenceNumber, False)
+                  sequenceNumber = not sequenceNumber
+                else:
+                  finalData = []
+                  dataPacketResponse = DataPacketResponse(dataPacket.getDestinationAddress(), dataPacket.getSourceAddress(), dataPacket.getSequenceNumber(), False)
+                
+                packetToSend = dataPacketResponse.buildPacket()
+                radio.stopListening()
+                radio.write(packetToSend)
+                radio.startListening()
+
                 # print("final dat")
                 # print(finalData)
 
                 # SORTIR DEL WHILE QUAN NO ES DATA
-                sequenceNumber = False
+                
                 while not dataPacket.isEoT():
                     while not radio.available():
                         time.sleep(0.01)
                     receivedPacket = radio.read(CNTS.PACKET_SIZE)
                     dataPacket.parsePacket(receivedPacket)
+
                     # Check CRC
                     if dataPacket.getDestinationAddress() == myAddress:
                         if dataPacket.getSequenceNumber() == sequenceNumber:
                             dataPacketResponse = DataPacketResponse(dataPacket.getDestinationAddress(), dataPacket.getSourceAddress(), sequenceNumber, True)
                             sequenceNumber = not sequenceNumber
+                            finalData += dataPacket.getPayload()
                     else:
-                        dataPacketResponse = DataPacketResponse(dataPacket.getDestinationAddress(), dataPacket.getSourceAddress(), sequenceNumber, False)
+                        dataPacketResponse = DataPacketResponse(dataPacket.getDestinationAddress(), dataPacket.getSourceAddress(), dataPacket.getSequenceNumber(), True)
+                    
                     packetToSend = dataPacketResponse.buildPacket()
                     radio.stopListening()
                     radio.write(packetToSend)
                     radio.startListening()
                     # sequenceNumber = not sequenceNumber
-
-                    if (not flagFinalData):
-                        flagFinalData = True
-                    else:
-                        finalData += dataPacket.getPayload()
-
+                        
                     print("Payload Data: " + str(dataPacket.getPayload()))
                 print("Final Data: " + str(finalData))
                 return packets.DATA["type"], finalData

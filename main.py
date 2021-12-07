@@ -180,7 +180,7 @@ def s4():
     if packet_type == packets.HELLO["type"]:
         print("s4 -> s5")
         return s5()
-    elif packet_type == packets.DATA["type"]:
+    elif packet_type == packets.DATA["type"] and not haveData:
         print("s4 -> s6")
         print("rcvData: " + str(rcvData))
         return s6() # Estat on guardes la data al fitxer
