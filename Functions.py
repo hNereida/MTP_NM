@@ -319,3 +319,4 @@ def write_file(data):
         os.system("mkdir " + CNTS.working_directory)
     with open(CNTS.working_directory + CNTS.output_file, "w+b") as f:
         f.write(data)
+        f.close()
