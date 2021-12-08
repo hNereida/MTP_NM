@@ -211,13 +211,15 @@ def s6():
 
     global haveData
     global currentTime
+    global fileData
 
     currentTime = time.perf_counter()
     if currentTime - startTime >= CNTS.NM_DURATION:
         print("s6 -> s8, 5 minutes")
         return s8()
-    
+
     Functions.write_file(rcvData) #into raspberry
+    fileData = rcvData
     haveData = True
     print("s6 -> s4")
     return s4()
