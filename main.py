@@ -187,6 +187,8 @@ def s4():
     elif packet_type == packets.TOKEN["type"]:
         print("s4 -> s7")
         return s7() # Estat on llegeixes el token
+    
+    return s4()
 
 def s5():
     print("S5")
