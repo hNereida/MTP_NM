@@ -35,12 +35,13 @@ def main():
                 time_start = time.time()
                 os.system("python3 " + CNTS.main_file + " " + str(CNTS.ADDRESS) + " &") # Start main
             if (has_started):
-                if (time.time() - time_start > CNTS.NM_DURATION): # kill
+                if (time.time() - time_start > CNTS.NM_DURATION or not SW_GO): # kill
                     os.system("bash " + CNTS.kill_file)
                     # Store received file to USB
                     ioparent.control_led(1, True)
-                    os.system("bash " + CNTS.write_usb)
-                    print("Copied to USB, DONE")
+                    if(not haveData):
+                        os.system("bash " + CNTS.write_usb)
+                        print("Copied to USB, DONE")
                     ioparent.control_led(2, True)
                     exit()
 

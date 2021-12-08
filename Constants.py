@@ -15,14 +15,14 @@ read_usb = '/home/pi/MTP_NM/bash/read_usb.sh'
 kill_file = '/home/pi/MTP_NM/bash/kill.sh'
 write_usb = '/home/pi/MTP_NM/bash/write_usb.sh'
 
-ADDRESS = 3
+ADDRESS = 6
 
 
 
 
 # GROUP INDEPENDENT
 # Constants
-RETRIES = 5 # Check documentation
+RETRIES = 30 # Check documentation
 # TIMEOUT = 0.001 # (s) Check documentation
 # TIMEOUT = 0.01 # (s) Check documentation
 TIMEOUT = 0.3 # (s) Check documentation
@@ -37,7 +37,7 @@ RECEIVER = False
 DATARATE = RF24.RF24_1MBPS
 # POWERLEVEL = RF24.RF24_PA_HIGH
 POWERLEVEL = RF24.RF24_PA_HIGH
-CHANNEL = 6
+CHANNEL = 28
 ENCODING_TRANSMISSION = 'utf-8'
 PACKET_SIZE = 32
 DATA_SIZE = 30
