@@ -1,0 +1,51 @@
+\boolfalse {citerequest}\boolfalse {citetracker}\boolfalse {pagetracker}\boolfalse {backtracker}\relax 
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\numberline {1}Document versions}{2}{chapter.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\numberline {2}Introduction and scope}{3}{chapter.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\numberline {3}Procedure specification}{4}{chapter.3}%
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\numberline {4}Packet structure}{8}{chapter.4}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {4.1}HELLO}{9}{section.4.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {4.2}HELLO RESPONSE}{9}{section.4.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {4.3}DATA}{9}{section.4.3}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {4.4}DATA ACK}{9}{section.4.4}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {4.5}TOKEN}{10}{section.4.5}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {4.6}TOKEN ACK}{10}{section.4.6}%
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\numberline {A}Error probability and timeouts study}{11}{appendix.A}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {A.1}Introduction}{11}{section.A.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {A.1.1}Scope}{11}{subsection.A.1.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {A.2}Error probability}{11}{section.A.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {A.2.1}Required number of retries}{11}{subsection.A.2.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {A.2.2}Bit error probability $p_{eb}$}{12}{subsection.A.2.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {A.2.3}Numerical example for the NM competition scenario}{14}{subsection.A.2.3}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{DATA packet, neighbour distance}{14}{subsection.A.2.3}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{DATA packet, maximum distance}{16}{equation.A.2.17}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{TOKEN packet, neighbour distance}{17}{equation.A.2.23}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{TOKEN packet, 3 nodes distance}{18}{equation.A.2.29}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{Summary}{18}{equation.A.2.33}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {A.3}Timeouts}{19}{section.A.3}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {A.3.1}Theoretical explanation}{19}{subsection.A.3.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {A.3.2}Numerical example for the NM competition scenario}{20}{subsection.A.3.2}%

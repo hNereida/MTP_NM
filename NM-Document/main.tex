@@ -19,7 +19,7 @@
 \usepackage{fancyhdr}
 \fancypagestyle{plain}{
 	\fancyhf{}
-	\fancyhead[L]{\footnotesize{Network Mode standard - Error probability and timeouts study}}
+	\fancyhead[L]{\footnotesize{Standard protocol for supporting the Network Mode test of MTP course}}
 	\fancyhead[R]{\footnotesize{Group A, B and C}}
 	\fancyfoot[R]{\footnotesize{\thepage}}
 }
@@ -317,6 +317,11 @@
 \usepackage{afterpage}
 \usepackage{placeins}
 
+% Landscape
+\usepackage{pdflscape}
+\usepackage{rotating}
+\usepackage{lscape}
+\usepackage[landscape]{geometry}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % BIBLIOGRAPHY 
@@ -342,8 +347,10 @@
 
 
 % Input Chapters
-\input{chapters/Doc}
+\input{chapters/Main}
 
+\appendix
+\input{chapters/Annex}
 
 %\chapter{Code}
 % 

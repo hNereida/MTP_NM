@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021/Arch Linux) (preloaded format=pdflatex 2021.7.23)  22 NOV 2021 01:01
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021/Arch Linux) (preloaded format=pdflatex 2021.7.23)  28 DEC 2021 04:00
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -951,70 +951,102 @@ Package: afterpage 2014/10/28 v1.08 After-Page Package (DPC)
 \AP@footins=\box97
 ) (/usr/share/texmf-dist/tex/latex/placeins/placeins.sty
 Package: placeins 2005/04/18  v 2.2
-) (/usr/share/texmf-dist/tex/latex/biblatex/biblatex.sty
+) (/usr/share/texmf-dist/tex/latex/pdflscape/pdflscape.sty
+Package: pdflscape 2019/12/05 v0.12 Display of landscape pages in PDF (HO)
+ (/usr/share/texmf-dist/tex/latex/graphics/lscape.sty
+Package: lscape 2020/05/28 v3.02 Landscape Pages (DPC)
+)
+Package pdflscape Info: Auto-detected driver: pdftex on input line 81.
+) (/usr/share/texmf-dist/tex/latex/graphics/rotating.sty
+Package: rotating 2016/08/11 v2.16d rotated objects in LaTeX
+\c@r@tfl@t=\count389
+\rotFPtop=\skip75
+\rotFPbot=\skip76
+\rot@float@box=\box98
+\rot@mess@toks=\toks56
+)
+
+./main.tex:325: LaTeX Error: Option clash for package geometry.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.325 
+      
+The package geometry has already been loaded with options:
+  [a4paper,left=30mm,right=20mm,top=25mm,bottom=25mm]
+There has now been an attempt to load it with options
+  [landscape]
+Adding the global options:
+  a4paper,left=30mm,right=20mm,top=25mm,bottom=25mm,landscape
+to your \documentclass declaration may fix this.
+Try typing  <return>  to proceed.
+
+(/usr/share/texmf-dist/tex/latex/biblatex/biblatex.sty
 Package: biblatex 2020/12/31 v3.16 programmable bibliographies (PK/MW)
  (/usr/share/texmf-dist/tex/latex/logreq/logreq.sty
 Package: logreq 2010/08/04 v1.0 xml request logger
-\lrq@indent=\count389
+\lrq@indent=\count390
  (/usr/share/texmf-dist/tex/latex/logreq/logreq.def
 File: logreq.def 2010/08/04 v1.0 logreq spec v1.0
 ))
-\c@tabx@nest=\count390
-\c@listtotal=\count391
-\c@listcount=\count392
-\c@liststart=\count393
-\c@liststop=\count394
-\c@citecount=\count395
-\c@citetotal=\count396
-\c@multicitecount=\count397
-\c@multicitetotal=\count398
-\c@instcount=\count399
-\c@maxnames=\count400
-\c@minnames=\count401
-\c@maxitems=\count402
-\c@minitems=\count403
-\c@citecounter=\count404
-\c@maxcitecounter=\count405
-\c@savedcitecounter=\count406
-\c@uniquelist=\count407
-\c@uniquename=\count408
-\c@refsection=\count409
-\c@refsegment=\count410
-\c@maxextratitle=\count411
-\c@maxextratitleyear=\count412
-\c@maxextraname=\count413
-\c@maxextradate=\count414
-\c@maxextraalpha=\count415
-\c@abbrvpenalty=\count416
-\c@highnamepenalty=\count417
-\c@lownamepenalty=\count418
-\c@maxparens=\count419
-\c@parenlevel=\count420
-\blx@tempcnta=\count421
-\blx@tempcntb=\count422
-\blx@tempcntc=\count423
-\blx@maxsection=\count424
-\blx@maxsegment@0=\count425
-\blx@notetype=\count426
-\blx@parenlevel@text=\count427
-\blx@parenlevel@foot=\count428
-\blx@sectionciteorder@0=\count429
-\blx@entrysetcounter=\count430
-\blx@biblioinstance=\count431
-\labelnumberwidth=\skip75
-\labelalphawidth=\skip76
-\biblabelsep=\skip77
-\bibitemsep=\skip78
-\bibnamesep=\skip79
-\bibinitsep=\skip80
-\bibparsep=\skip81
-\bibhang=\skip82
+\c@tabx@nest=\count391
+\c@listtotal=\count392
+\c@listcount=\count393
+\c@liststart=\count394
+\c@liststop=\count395
+\c@citecount=\count396
+\c@citetotal=\count397
+\c@multicitecount=\count398
+\c@multicitetotal=\count399
+\c@instcount=\count400
+\c@maxnames=\count401
+\c@minnames=\count402
+\c@maxitems=\count403
+\c@minitems=\count404
+\c@citecounter=\count405
+\c@maxcitecounter=\count406
+\c@savedcitecounter=\count407
+\c@uniquelist=\count408
+\c@uniquename=\count409
+\c@refsection=\count410
+\c@refsegment=\count411
+\c@maxextratitle=\count412
+\c@maxextratitleyear=\count413
+\c@maxextraname=\count414
+\c@maxextradate=\count415
+\c@maxextraalpha=\count416
+\c@abbrvpenalty=\count417
+\c@highnamepenalty=\count418
+\c@lownamepenalty=\count419
+\c@maxparens=\count420
+\c@parenlevel=\count421
+\blx@tempcnta=\count422
+\blx@tempcntb=\count423
+\blx@tempcntc=\count424
+\blx@maxsection=\count425
+\blx@maxsegment@0=\count426
+\blx@notetype=\count427
+\blx@parenlevel@text=\count428
+\blx@parenlevel@foot=\count429
+\blx@sectionciteorder@0=\count430
+\blx@entrysetcounter=\count431
+\blx@biblioinstance=\count432
+\labelnumberwidth=\skip77
+\labelalphawidth=\skip78
+\biblabelsep=\skip79
+\bibitemsep=\skip80
+\bibnamesep=\skip81
+\bibinitsep=\skip82
+\bibparsep=\skip83
+\bibhang=\skip84
 \blx@bcfin=\read4
 \blx@bcfout=\write6
 \blx@langwohyphens=\language87
-\c@mincomprange=\count432
-\c@maxcomprange=\count433
-\c@mincompwidth=\count434
+\c@mincomprange=\count433
+\c@maxcomprange=\count434
+\c@mincompwidth=\count435
 Package biblatex Info: Trying to load biblatex default data model...
 Package biblatex Info: ... file 'blx-dm.def' found.
  (/usr/share/texmf-dist/tex/latex/biblatex/blx-dm.def
@@ -1024,88 +1056,88 @@ Package biblatex Info: Trying to load biblatex style data model...
 Package biblatex Info: ... file 'ieee.dbx' not found.
 Package biblatex Info: Trying to load biblatex custom data model...
 Package biblatex Info: ... file 'biblatex-dm.cfg' not found.
-\c@afterword=\count435
-\c@savedafterword=\count436
-\c@annotator=\count437
-\c@savedannotator=\count438
-\c@author=\count439
-\c@savedauthor=\count440
-\c@bookauthor=\count441
-\c@savedbookauthor=\count442
-\c@commentator=\count443
-\c@savedcommentator=\count444
-\c@editor=\count445
-\c@savededitor=\count446
-\c@editora=\count447
-\c@savededitora=\count448
-\c@editorb=\count449
-\c@savededitorb=\count450
-\c@editorc=\count451
-\c@savededitorc=\count452
-\c@foreword=\count453
-\c@savedforeword=\count454
-\c@holder=\count455
-\c@savedholder=\count456
-\c@introduction=\count457
-\c@savedintroduction=\count458
-\c@namea=\count459
-\c@savednamea=\count460
-\c@nameb=\count461
-\c@savednameb=\count462
-\c@namec=\count463
-\c@savednamec=\count464
-\c@translator=\count465
-\c@savedtranslator=\count466
-\c@shortauthor=\count467
-\c@savedshortauthor=\count468
-\c@shorteditor=\count469
-\c@savedshorteditor=\count470
-\c@labelname=\count471
-\c@savedlabelname=\count472
-\c@institution=\count473
-\c@savedinstitution=\count474
-\c@lista=\count475
-\c@savedlista=\count476
-\c@listb=\count477
-\c@savedlistb=\count478
-\c@listc=\count479
-\c@savedlistc=\count480
-\c@listd=\count481
-\c@savedlistd=\count482
-\c@liste=\count483
-\c@savedliste=\count484
-\c@listf=\count485
-\c@savedlistf=\count486
-\c@location=\count487
-\c@savedlocation=\count488
-\c@organization=\count489
-\c@savedorganization=\count490
-\c@origlocation=\count491
-\c@savedoriglocation=\count492
-\c@origpublisher=\count493
-\c@savedorigpublisher=\count494
-\c@publisher=\count495
-\c@savedpublisher=\count496
-\c@language=\count497
-\c@savedlanguage=\count498
-\c@origlanguage=\count499
-\c@savedoriglanguage=\count500
-\c@pageref=\count501
-\c@savedpageref=\count502
-\shorthandwidth=\skip83
-\shortjournalwidth=\skip84
-\shortserieswidth=\skip85
-\shorttitlewidth=\skip86
-\shortauthorwidth=\skip87
-\shorteditorwidth=\skip88
-\locallabelnumberwidth=\skip89
-\locallabelalphawidth=\skip90
-\localshorthandwidth=\skip91
-\localshortjournalwidth=\skip92
-\localshortserieswidth=\skip93
-\localshorttitlewidth=\skip94
-\localshortauthorwidth=\skip95
-\localshorteditorwidth=\skip96
+\c@afterword=\count436
+\c@savedafterword=\count437
+\c@annotator=\count438
+\c@savedannotator=\count439
+\c@author=\count440
+\c@savedauthor=\count441
+\c@bookauthor=\count442
+\c@savedbookauthor=\count443
+\c@commentator=\count444
+\c@savedcommentator=\count445
+\c@editor=\count446
+\c@savededitor=\count447
+\c@editora=\count448
+\c@savededitora=\count449
+\c@editorb=\count450
+\c@savededitorb=\count451
+\c@editorc=\count452
+\c@savededitorc=\count453
+\c@foreword=\count454
+\c@savedforeword=\count455
+\c@holder=\count456
+\c@savedholder=\count457
+\c@introduction=\count458
+\c@savedintroduction=\count459
+\c@namea=\count460
+\c@savednamea=\count461
+\c@nameb=\count462
+\c@savednameb=\count463
+\c@namec=\count464
+\c@savednamec=\count465
+\c@translator=\count466
+\c@savedtranslator=\count467
+\c@shortauthor=\count468
+\c@savedshortauthor=\count469
+\c@shorteditor=\count470
+\c@savedshorteditor=\count471
+\c@labelname=\count472
+\c@savedlabelname=\count473
+\c@institution=\count474
+\c@savedinstitution=\count475
+\c@lista=\count476
+\c@savedlista=\count477
+\c@listb=\count478
+\c@savedlistb=\count479
+\c@listc=\count480
+\c@savedlistc=\count481
+\c@listd=\count482
+\c@savedlistd=\count483
+\c@liste=\count484
+\c@savedliste=\count485
+\c@listf=\count486
+\c@savedlistf=\count487
+\c@location=\count488
+\c@savedlocation=\count489
+\c@organization=\count490
+\c@savedorganization=\count491
+\c@origlocation=\count492
+\c@savedoriglocation=\count493
+\c@origpublisher=\count494
+\c@savedorigpublisher=\count495
+\c@publisher=\count496
+\c@savedpublisher=\count497
+\c@language=\count498
+\c@savedlanguage=\count499
+\c@origlanguage=\count500
+\c@savedoriglanguage=\count501
+\c@pageref=\count502
+\c@savedpageref=\count503
+\shorthandwidth=\skip85
+\shortjournalwidth=\skip86
+\shortserieswidth=\skip87
+\shorttitlewidth=\skip88
+\shortauthorwidth=\skip89
+\shorteditorwidth=\skip90
+\locallabelnumberwidth=\skip91
+\locallabelalphawidth=\skip92
+\localshorthandwidth=\skip93
+\localshortjournalwidth=\skip94
+\localshortserieswidth=\skip95
+\localshorttitlewidth=\skip96
+\localshortauthorwidth=\skip97
+\localshorteditorwidth=\skip98
 Package biblatex Info: Trying to load compatibility code...
 Package biblatex Info: ... file 'blx-compat.def' found.
  (/usr/share/texmf-dist/tex/latex/biblatex/blx-compat.def
@@ -1115,19 +1147,19 @@ Package biblatex Info: Trying to load generic definitions...
 Package biblatex Info: ... file 'biblatex.def' found.
  (/usr/share/texmf-dist/tex/latex/biblatex/biblatex.def
 File: biblatex.def 2020/12/31 v3.16 biblatex compatibility (PK/MW)
-\c@textcitecount=\count503
-\c@textcitetotal=\count504
-\c@textcitemaxnames=\count505
-\c@biburlbigbreakpenalty=\count506
-\c@biburlbreakpenalty=\count507
-\c@biburlnumpenalty=\count508
-\c@biburlucpenalty=\count509
-\c@biburllcpenalty=\count510
+\c@textcitecount=\count504
+\c@textcitetotal=\count505
+\c@textcitemaxnames=\count506
+\c@biburlbigbreakpenalty=\count507
+\c@biburlbreakpenalty=\count508
+\c@biburlnumpenalty=\count509
+\c@biburlucpenalty=\count510
+\c@biburllcpenalty=\count511
 \biburlbigskip=\muskip18
 \biburlnumskip=\muskip19
 \biburlucskip=\muskip20
 \biburllcskip=\muskip21
-\c@smartand=\count511
+\c@smartand=\count512
 )
 Package biblatex Info: Trying to load bibliography style 'ieee'...
 Package biblatex Info: ... file 'ieee.bbx' found.
@@ -1145,8 +1177,8 @@ Package biblatex Info: Trying to load bibliography style 'standard'...
 Package biblatex Info: ... file 'standard.bbx' found.
  (/usr/share/texmf-dist/tex/latex/biblatex/bbx/standard.bbx
 File: standard.bbx 2020/12/31 v3.16 biblatex bibliography style (PK/MW)
-\c@bbx:relatedcount=\count512
-\c@bbx:relatedtotal=\count513
+\c@bbx:relatedcount=\count513
+\c@bbx:relatedtotal=\count514
 ))))
 Package biblatex Info: Trying to load citation style 'ieee'...
 Package biblatex Info: ... file 'ieee.cbx' found.
@@ -1156,10 +1188,10 @@ Package biblatex Info: Trying to load citation style 'numeric-comp'...
 Package biblatex Info: ... file 'numeric-comp.cbx' found.
  (/usr/share/texmf-dist/tex/latex/biblatex/cbx/numeric-comp.cbx
 File: numeric-comp.cbx 2020/12/31 v3.16 biblatex citation style (PK/MW)
-\c@cbx@tempcnta=\count514
-\c@cbx@tempcntb=\count515
-\c@cbx@tempcntc=\count516
-\c@cbx@tempcntd=\count517
+\c@cbx@tempcnta=\count515
+\c@cbx@tempcntb=\count516
+\c@cbx@tempcntc=\count517
+\c@cbx@tempcntd=\count518
 Package biblatex Info: Redefining '\cite'.
 Package biblatex Info: Redefining '\parencite'.
 Package biblatex Info: Redefining '\footcite'.
@@ -1180,32 +1212,45 @@ Package biblatex Info: ... file 'biblatex.cfg' found.
  (/usr/share/texmf-dist/tex/latex/biblatex/biblatex.cfg
 File: biblatex.cfg 
 ))
-\@quotelevel=\count518
-\@quotereset=\count519
-LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 332.
+\@quotelevel=\count519
+\@quotereset=\count520
+LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 337.
  (/usr/share/texmf-dist/tex/latex/lm/ot1lmr.fd
 File: ot1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-) (./main.aux)
+) (./main.aux
+
+LaTeX Warning: Label `tab:label' multiply defined.
+
+
+LaTeX Warning: Label `tab:label@cref' multiply defined.
+
+
+LaTeX Warning: Label `tab:label' multiply defined.
+
+
+LaTeX Warning: Label `tab:label@cref' multiply defined.
+
+)
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 332.
-LaTeX Font Info:    ... okay on input line 332.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 332.
-LaTeX Font Info:    ... okay on input line 332.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 332.
-LaTeX Font Info:    ... okay on input line 332.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 332.
-LaTeX Font Info:    ... okay on input line 332.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 332.
-LaTeX Font Info:    ... okay on input line 332.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 332.
-LaTeX Font Info:    ... okay on input line 332.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 332.
-LaTeX Font Info:    ... okay on input line 332.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 332.
-LaTeX Font Info:    ... okay on input line 332.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 332.
-LaTeX Font Info:    ... okay on input line 332.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 337.
+LaTeX Font Info:    ... okay on input line 337.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 337.
+LaTeX Font Info:    ... okay on input line 337.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 337.
+LaTeX Font Info:    ... okay on input line 337.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 337.
+LaTeX Font Info:    ... okay on input line 337.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 337.
+LaTeX Font Info:    ... okay on input line 337.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 337.
+LaTeX Font Info:    ... okay on input line 337.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 337.
+LaTeX Font Info:    ... okay on input line 337.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 337.
+LaTeX Font Info:    ... okay on input line 337.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 337.
+LaTeX Font Info:    ... okay on input line 337.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -1245,20 +1290,21 @@ Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: float package is loaded.
 Package caption Info: hyperref package is loaded.
 Package caption Info: listings package is loaded.
+Package caption Info: rotating package is loaded.
 Package caption Info: End \AtBeginDocument code.
 (/usr/share/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count520
+\scratchcounter=\count521
 \scratchdimen=\dimen365
-\scratchbox=\box98
-\nofMPsegments=\count521
-\nofMParguments=\count522
-\everyMPshowfont=\toks56
-\MPscratchCnt=\count523
+\scratchbox=\box99
+\nofMPsegments=\count522
+\nofMParguments=\count523
+\everyMPshowfont=\toks57
+\MPscratchCnt=\count524
 \MPscratchDim=\dimen366
-\MPnumerator=\count524
-\makeMPintoPDFobject=\count525
-\everyMPtoPDFconversion=\toks57
+\MPnumerator=\count525
+\makeMPintoPDFobject=\count526
+\everyMPtoPDFconversion=\toks58
 ) (/usr/share/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
  (/usr/share/texmf-dist/tex/latex/grfext/grfext.sty
@@ -1271,7 +1317,7 @@ Package grfext Info: Graphics extension search list:
  (/usr/share/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
-Package hyperref Info: Link coloring ON on input line 332.
+Package hyperref Info: Link coloring ON on input line 337.
  (/usr/share/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
  (/usr/share/texmf-dist/tex/latex/refcount/refcount.sty
@@ -1279,11 +1325,11 @@ Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 ) (/usr/share/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
-\c@section@level=\count526
+\c@section@level=\count527
 )
-LaTeX Info: Redefining \ref on input line 332.
-LaTeX Info: Redefining \pageref on input line 332.
-LaTeX Info: Redefining \nameref on input line 332.
+LaTeX Info: Redefining \ref on input line 337.
+LaTeX Info: Redefining \pageref on input line 337.
+LaTeX Info: Redefining \nameref on input line 337.
  (./main.out) (./main.out)
 \@outlinefile=\write7
 \openout7 = `main.out'.
@@ -1297,15 +1343,8 @@ Dictionary: translator-basic-dictionary, Language: English
 )
 Package pgfplots notification 'compat/show suggested version=true': document has been generated with the most recent feature set (\pgfplotsset{compat=1.17}).
 
-(/usr/share/texmf-dist/tex/latex/pdflscape/pdflscape.sty
-Package: pdflscape 2019/12/05 v0.12 Display of landscape pages in PDF (HO)
- (/usr/share/texmf-dist/tex/latex/graphics/lscape.sty
-Package: lscape 2020/05/28 v3.02 Landscape Pages (DPC)
-)
-Package pdflscape Info: Auto-detected driver: pdftex on input line 81.
-)
-\c@lstlisting=\count527
- (/usr/share/texmf-dist/tex/latex/fmtcount/fc-english.def
+\c@lstlisting=\count528
+(/usr/share/texmf-dist/tex/latex/fmtcount/fc-english.def
 File: fc-english.def 2016/01/12
 )
 Package biblatex Info: Trying to load language 'english'...
@@ -1329,43 +1368,43 @@ Package: blx-case-expl3 2020/12/31 v3.16 expl3 case changing code for biblatex
 Package biblatex Info: Trying to load bibliographic data...
 Package biblatex Info: ... file 'main.bbl' found.
  (./main.bbl)
-Package biblatex Info: Reference section=0 on input line 332.
-Package biblatex Info: Reference segment=0 on input line 332.
-LaTeX Font Info:    Trying to load font information for OML+lmm on input line 332.
+Package biblatex Info: Reference section=0 on input line 337.
+Package biblatex Info: Reference segment=0 on input line 337.
+LaTeX Font Info:    Trying to load font information for OML+lmm on input line 337.
  (/usr/share/texmf-dist/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 332.
+LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 337.
  (/usr/share/texmf-dist/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 332.
+LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 337.
  (/usr/share/texmf-dist/tex/latex/lm/omxlmex.fd
 File: omxlmex.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10.95> on input line 332.
+(Font)              <10.95> on input line 337.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 332.
+(Font)              <8> on input line 337.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 332.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 332.
+(Font)              <6> on input line 337.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 337.
  (/usr/share/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 332.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 337.
  (/usr/share/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Trying to load font information for OT1+lmss on input line 332.
+LaTeX Font Info:    Trying to load font information for OT1+lmss on input line 337.
  (/usr/share/texmf-dist/tex/latex/lm/ot1lmss.fd
 File: ot1lmss.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OT1+lmtt on input line 332.
+LaTeX Font Info:    Trying to load font information for OT1+lmtt on input line 337.
  (/usr/share/texmf-dist/tex/latex/lm/ot1lmtt.fd
 File: ot1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 ) (./titlepage/titlepage.tex
-<./titlepage/upc-telecos-bw.png, id=99, 481.8pt x 172.645pt>
+<./titlepage/upc-telecos-bw.png, id=123, 481.8pt x 172.645pt>
 File: ./titlepage/upc-telecos-bw.png Graphic file (type png)
 <use ./titlepage/upc-telecos-bw.png>
 Package pdftex.def Info: ./titlepage/upc-telecos-bw.png  used on input line 23.
@@ -1376,11 +1415,11 @@ Package pdftex.def Info: ./titlepage/upc-telecos-bw.png  used on input line 23.
 \tf@toc=\write8
 \openout8 = `main.toc'.
 
- (./chapters/Doc.texpdfTeX warning (ext4): destination with the same identifier (name{page.1}) has been already used, duplicate ignored
+ (./chapters/Main.texpdfTeX warning (ext4): destination with the same identifier (name{page.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
 l.1 \chapter
-            {Introduction} [1
+            {Document versions} [1
 
 ]
 Chapter 1.
@@ -1391,65 +1430,269 @@ Chapter 2.
 [3
 
 ]
-LaTeX Font Info:    Calculating math sizes for size <11> on input line 56.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <11> on input line 56.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7.69997> on input line 56.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5.5> on input line 56.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 56.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `subscript' on input line 56.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 56.
-
-<images//Luque-GFSK.png, id=150, 878.28125pt x 574.145pt>
-File: images//Luque-GFSK.png Graphic file (type png)
-<use images//Luque-GFSK.png>
-Package pdftex.def Info: images//Luque-GFSK.png  used on input line 62.
-(pdftex.def)             Requested size: 364.19667pt x 238.08176pt.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <9> on input line 63.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 63.
-[4 <./images//Luque-GFSK.png>] [5] [6] [7] [8] [9] [10]
 Chapter 3.
+<images//m1.png, id=171, 800.23969pt x 398.23781pt>
+File: images//m1.png Graphic file (type png)
+<use images//m1.png>
+Package pdftex.def Info: images//m1.png  used on input line 39.
+(pdftex.def)             Requested size: 455.24411pt x 226.5543pt.
+<images//m2.png, id=172, 800.23969pt x 398.23781pt>
+File: images//m2.png Graphic file (type png)
+<use images//m2.png>
+Package pdftex.def Info: images//m2.png  used on input line 45.
+(pdftex.def)             Requested size: 455.24411pt x 226.5543pt.
+[4
+
+ <./images//m1.png> <./images//m2.png>] [5]
+
+pdfTeX warning: pdflatex (file ./images//flowchart.pdf): PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
+<images//flowchart.pdf, id=186, 1456.48132pt x 948.42331pt>
+File: images//flowchart.pdf Graphic file (type pdf)
+<use images//flowchart.pdf>
+Package pdftex.def Info: images//flowchart.pdf  used on input line 70.
+(pdftex.def)             Requested size: 455.24411pt x 296.43944pt.
+[6 <./images//flowchart.pdf>]
+*geometry* verbose mode - [ newgeometry ] result:
+* driver: pdftex
+* paper: a4paper
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* modes: 
+* h-part:(L,W,R)=(2.84544pt, 591.81699pt, 2.84544pt)
+* v-part:(T,H,B)=(85.35826pt, 756.84314pt, 2.84544pt)
+* \paperwidth=597.50787pt
+* \paperheight=845.04684pt
+* \textwidth=591.81699pt
+* \textheight=756.84314pt
+* \oddsidemargin=-69.42455pt
+* \evensidemargin=-69.42455pt
+* \topmargin=-18.91173pt
+* \headheight=12.0pt
+* \headsep=20.0pt
+* \topskip=11.0pt
+* \footskip=25.0pt
+* \marginparwidth=50.0pt
+* \marginparsep=10.0pt
+* \columnsep=10.0pt
+* \skip\footins=10.0pt plus 4.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidefalse
+* \@mparswitchfalse
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
+File: images//flowchart.pdf Graphic file (type pdf)
+<use images//flowchart.pdf>
+Package pdftex.def Info: images//flowchart.pdf  used on input line 82.
+(pdftex.def)             Requested size: 840.37903pt x 547.23497pt.
+
+Overfull \hbox (83.53589pt too wide) in paragraph at lines 82--83
+ [][] 
+ []
+
+[7
+
+
+
+]
+Chapter 4.
+LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 96.
+(/usr/share/texmf-dist/tex/latex/lm/ts1lmr.fd
+File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+./chapters/Main.tex:101: Undefined control sequence.
+l.101 ...ctly (or incorrectly) received the \texit
+                                                  {TOKEN}.
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+<images//1.png, id=209, 1755.55875pt x 187.70125pt>
+File: images//1.png Graphic file (type png)
+<use images//1.png>
+Package pdftex.def Info: images//1.png  used on input line 107.
+(pdftex.def)             Requested size: 364.19667pt x 38.93726pt.
+./chapters/Main.tex:112: Undefined control sequence.
+l.112 The \texit
+                {Source address} and \textit{Destination address}, as we hav...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+[8
+
+
+
+ <./images//1.png>]
+<images//2.png, id=220, 833.1125pt x 134.5025pt>
+File: images//2.png Graphic file (type png)
+<use images//2.png>
+Package pdftex.def Info: images//2.png  used on input line 139.
+(pdftex.def)             Requested size: 182.09486pt x 29.3977pt.
+<images//3.png, id=221, 1541.76pt x 123.46124pt>
+File: images//3.png Graphic file (type png)
+<use images//3.png>
+Package pdftex.def Info: images//3.png  used on input line 148.
+(pdftex.def)             Requested size: 364.19667pt x 29.1641pt.
+
+./chapters/Main.tex:149: Undefined control sequence.
+<argument> ... {thefigure}}}{\ignorespaces \texit 
+                                                  {DATA} packet variable par...
+l.149 	\caption{\texit{DATA} packet variable part}
+                                                  
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+./chapters/Main.tex:149: Undefined control sequence.
+<argument> \texit 
+                  {DATA} packet variable part
+l.149 	\caption{\texit{DATA} packet variable part}
+                                                  
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+./chapters/Main.tex:149: Undefined control sequence.
+<argument> \texit 
+                  {DATA} packet variable part
+l.149 	\caption{\texit{DATA} packet variable part}
+                                                  
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+./chapters/Main.tex:154: Misplaced alignment tab character &.
+l.154 ... that we are acknowledging for the stop &
+                                                   wait protocol. And \texti...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+<images//4.png, id=222, 740.7675pt x 122.70844pt>
+File: images//4.png Graphic file (type png)
+<use images//4.png>
+Package pdftex.def Info: images//4.png  used on input line 157.
+(pdftex.def)             Requested size: 182.09486pt x 30.16399pt.
+./chapters/Main.tex:158: Undefined control sequence.
+<argument> ... {thefigure}}}{\ignorespaces \texit 
+                                                  {DATA ACK} packet variable...
+l.158 ...on{\texit{DATA ACK} packet variable part}
+                                                  
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+./chapters/Main.tex:158: Undefined control sequence.
+<argument> \texit 
+                  {DATA ACK} packet variable part
+l.158 ...on{\texit{DATA ACK} packet variable part}
+                                                  
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+./chapters/Main.tex:158: Undefined control sequence.
+<argument> \texit 
+                  {DATA ACK} packet variable part
+l.158 ...on{\texit{DATA ACK} packet variable part}
+                                                  
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+<images//5.png, id=223, 422.57875pt x 129.48375pt>
+File: images//5.png Graphic file (type png)
+<use images//5.png>
+Package pdftex.def Info: images//5.png  used on input line 167.
+(pdftex.def)             Requested size: 91.04742pt x 27.89772pt.
+[9 <./images//2.png> <./images//3.png> <./images//4.png>]
+<images//6.png, id=236, 413.545pt x 117.43875pt>
+File: images//6.png Graphic file (type png)
+<use images//6.png>
+Package pdftex.def Info: images//6.png  used on input line 176.
+(pdftex.def)             Requested size: 91.04742pt x 25.8545pt.
+) (./chapters/Annex.tex [10 <./images//5.png> <./images//6.png>]
+Appendix A.
 [11
 
 ]
-LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 354.
- (/usr/share/texmf-dist/tex/latex/lm/ts1lmr.fd
-File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-)) [12] [13
+LaTeX Font Info:    Calculating math sizes for size <11> on input line 57.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <11> on input line 57.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <7.69997> on input line 57.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <5.5> on input line 57.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 57.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `subscript' on input line 57.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 57.
+
+<images//Luque-GFSK.png, id=258, 878.28125pt x 574.145pt>
+File: images//Luque-GFSK.png Graphic file (type png)
+<use images//Luque-GFSK.png>
+Package pdftex.def Info: images//Luque-GFSK.png  used on input line 63.
+(pdftex.def)             Requested size: 364.19667pt x 238.08176pt.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <9> on input line 64.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <5> on input line 64.
+[12] [13 <./images//Luque-GFSK.png>] [14] [15] [16] [17] [18] [19]) [20] [21
 
 ] (./main.aux)
+
+LaTeX Warning: There were multiply-defined labels.
+
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 643DE67BE98FD7346D77FAC92F948167;2580.
+(rerunfilecheck)             Checksum: 0F399F77CF55BD82D6B8C71D1E7C2146;3043.
 Package logreq Info: Writing requests to 'main.run.xml'.
 \openout1 = `main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 66227 strings out of 478994
- 1594600 string characters out of 5864751
- 2681422 words of memory out of 5000000
- 82705 multiletter control sequences out of 15000+600000
- 495294 words of font info for 100 fonts, out of 8000000 for 9000
+ 66410 strings out of 478994
+ 1597302 string characters out of 5864751
+ 2684887 words of memory out of 5000000
+ 82846 multiletter control sequences out of 15000+600000
+ 493618 words of font info for 99 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 102i,29n,102p,1193b,2036s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-rmtt.enc}{/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-rmsc.enc}{/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}{/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}</usr/share/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmcsc10.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmex10.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmmi10.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmmi12.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmmi6.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmmi8.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmmi9.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmr10.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmr12.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmr6.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmr8.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmr9.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmri10.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmsy6.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmsy8.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmtt10.pfb>
-Output written on main.pdf (14 pages, 438385 bytes).
+ 102i,29n,102p,1274b,2042s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-rmtt.enc}{/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-rmsc.enc}{/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}{/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}</usr/share/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmcsc10.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmex10.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmmi10.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmmi12.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmmi6.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmmi8.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmmi9.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmr10.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmr12.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmr6.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmr8.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmr9.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmri10.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmri9.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmsy6.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmsy8.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmtt10.pfb>
+Output written on main.pdf (22 pages, 616217 bytes).
 PDF statistics:
- 358 PDF objects out of 1000 (max. 8388607)
- 292 compressed objects within 3 object streams
- 75 named destinations out of 1000 (max. 500000)
- 279 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 472 PDF objects out of 1000 (max. 8388607)
+ 379 compressed objects within 4 object streams
+ 101 named destinations out of 1000 (max. 500000)
+ 372 words of extra memory for PDF output out of 10000 (max. 10000000)
 

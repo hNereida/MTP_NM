@@ -1,17 +1,18 @@
-\chapter{Introduction}
-This document has been written with the purpose to quantify the error probability that transcievers that implement the Network Mode standard can suffer, as well as to study the minimum timeout requirements. A proper analysis can lead to optimal values than enhance the performance without hurting the robustness of the standard.
+\chapter{Error probability and timeouts study} \label{chapter:errors}
+\section{Introduction}
+This annex has been written with the purpose to quantify the error probability that transcievers that implement the Network Mode standard can suffer, as well as to study the minimum timeout requirements. A proper analysis can lead to optimal values than enhance the performance without hurting the robustness of the standard.
 
 % This document has been written with the purpose to quantify the error probability that transcievers that implement the Network Mode standard can suffer, and from there justify the chosen amount of retry attemps for a concrete application. Moreover, a general timeout definition is made, used later to provide the required minimum timeout for a concrete implementation of the standard.
 
-\section{Scope}
+\subsection{Scope}
 This document establishes the minimum number of retries and the minimum timeout to achieve a successful Network Mode standard operation. It starts from generic explanations and equations to later focus on the Network Mode particular case. For both chapters there are, first, theoretical sections; and after a section that shows calculations for a concrete application.
 
 This document is applicable to transcievers that implement the Network Mode standard in its totality. Numerical results given as examples are made for the Network Mode competition constraints; the reader should perform his own calculations if he brings the Network Mode standard to other scenarios.
 
 
-\chapter{Error probability}
+\section{Error probability}
 
-\section{Required number of retries}
+\subsection{Required number of retries}
 The bit error rate (BER) can be understood as the expectancy for a bit, sent by a transmitter, to be flipped at the receiver side, by unit of time. To avoid time dependency this document makes use of bit error probability, defined as $p_{eb}$. If multiple bits are exchanged between a transmitter and a receiver, then the following holds:
 \begin{equation}
 	p_{eb} = \text{E} \left \{ \frac{ \text{\# erroneous bits}}{\text{\# total bits}}  \right \} = \frac{ \text{E} \left \{  \text{\# erroneous bits}  \right \} }{\text{\# total bits}} \ .
@@ -53,7 +54,7 @@ The number of retries is just
 
 
 
-\section{Bit error probability $p_{eb}$}
+\subsection{Bit error probability $p_{eb}$}
 % LNA: https://wiki.iteadstudio.com/NRF24L01_with_PA_and_LNA_Module . Molt clau
 RF modules manufacturers typically provide the expected bit error probability (usually named as BER) for a single received power. To solve \eqref{eq:R} for $T$, link budget calculations are required, and the calculated received power signal at the receiver end should be used to determine $p_{eb}$.
 
@@ -104,27 +105,29 @@ Using the previous definitions \eqref{eq:R} can be solved. As a summary, $P_{RX}
 
 
 
-\section{Numerical example for the NM competition scenario}
+\subsection{Numerical example for the NM competition scenario}
 The purpose of this section is to provide some application-dependant orientative numbers to solve for $T$.
 
 
-\subsection{DATA packet, neighbour distance} \label{sub:data1}
-First, for the link budget it's taken into account that nRF24 output power is set to \SI{-6}{\dB}m. The nRF24l01 contains a low noise amplifier (LNA) that provides \SI{10}{\dB}. The sensitivities given by the manufacturer are referenced to the LNA output, meaning that at the LNA input they are \SI{10}{\dB} lower. Both the transmitter and the receiver antennas show the same gain: $G_{\text{antenna RX}} = G_{\text{antenna TX}} = \SI{2}{\dB}$. $G_{\text{losses}}$ is set to \SI{6}{\dB} to account for the ground reflection effec effect.
+\subsubsection{DATA packet, neighbour distance} \label{sub:data1}
+First, for the link budget it's taken into account that nRF24 output power is set to \SI{-6}{\dB}m. The nRF24l01 comes, often, soldered in a board together with a \SI{20}{\dB} power amplifier (PA), leading to a transmitted power of \SI{14}{\dB}m. Moreover, it contains a low noise amplifier (LNA) that provides \SI{10}{\dB}. The sensitivities given by the manufacturer are referenced to the LNA output, meaning that at the LNA input they are \SI{10}{\dB} lower. 
 
-It's assumed $4$ transcievers will be placed at the \SI{260}{\m} Campus Nord side, meaning the distance between transcievers is $d = \SI{86.67}{\m}$. The central frequency of operation must be between \SI{2.4}{\GHz} and \SI{2.525}{\GHz}; the middle value \SI{2.4625}{\GHz} is taken.
+Both the transmitter and the receiver antennas show the same gain: $G_{\text{antenna RX}} = G_{\text{antenna TX}} = \SI{2}{\dB}$. $G_{\text{losses}}$ is set to \SI{12}{\dB} to account for the ground reflection effect and the fact that, after some measurements, it was seen that the output power was a few \SI{}{\dB} shy of the one specified by the manufacturer.
+
+It's assumed $3$ transcievers will be placed at the \SI{260}{\m} Campus Nord side, meaning the worst case distance between transcievers is $d = \SI{130}{\m}$. Up to $4$ devices are expected on the short side, with the corner device being taken into account. The central frequency of operation must be between \SI{2.4}{\GHz} and \SI{2.525}{\GHz}. Channel 27 was chosen because of interference reasons, meaning the central frequency is \SI{2.427}{\GHz}.
 
 With all the considered values \eqref{eq:link} is solved.
 \begin{equation}
 	\begin{split}
-		& P_{RX} \left[ \SI{}{\dB}\text{m} \right] = \SI{-6}{\dB}\text{m} +  \SI{2}{\dB}  - 20 \log\left( \frac{4 \pi \SI{86.67}{\m}}{\frac{\SI{3e8}{\m\per\s}}{\SI{2.4625}{\GHz}}} \right) \left[ \SI{}{\dB} \right] + \SI{2}{\dB} - \SI{8}{\dB} \\
-		& P_{RX} = - \SI{87}{\dB}\text{m}
+		& P_{RX} \left[ \SI{}{\dB}\text{m} \right] = \SI{14}{\dB}\text{m} +  \SI{2}{\dB}  - 20 \log\left( \frac{4 \pi \SI{130}{\m}}{\frac{\SI{3e8}{\m\per\s}}{\SI{2.427}{\GHz}}} \right) \left[ \SI{}{\dB} \right] + \SI{2}{\dB} - \SI{12}{\dB} \\
+		& P_{RX} = - \SI{76.42}{\dB}\text{m}
 	\end{split} \ .
 \end{equation}
-For the nRF24, at $250$kbps the sensitivity that achieves $p_{eb} = \SI{1e-3}{}$ is $- \SI{94}{\dB}\text{m} - \SI{10}{\dB}\text{m} = - \SI{104}{\dB}\text{m}$. The difference between the received power at the LNA input and the mentioned sensitivity is $- \SI{87}{\dB}\text{m} - \left( - \SI{104}{\dB}\text{m} \right) = \SI{17}{\dB}$.
+For the nRF24, at $250$kbps the sensitivity that achieves $p_{eb} = \SI{1e-3}{}$ is $- \SI{94}{\dB}\text{m} - \SI{10}{\dB}\text{m} = - \SI{104}{\dB}\text{m}$. The difference between the received power at the LNA input and the mentioned sensitivity is $- \SI{76.42}{\dB}\text{m} - \left( - \SI{104}{\dB}\text{m} \right) = \SI{27.58}{\dB}$.
 
-Now, from \Cref{fig:Luque-GFSK-png} and testbed measurements it's derived that to get $p_{eb} = \SI{1e-3}{}$, $\frac{E_b}{N_0} = \SI{13}{\dB}$. If there's \SI{17}{\dB} difference between the received power and the sensitivity for which $p_{eb} = \SI{1e-3}{}$, then $p_{eb}$ is obtained by looking at $\frac{E_b}{N_0} = \SI{30}{\dB}$. 
+Now, from \Cref{fig:Luque-GFSK-png} and testbed measurements it's derived that to get $p_{eb} = \SI{1e-3}{}$, $\frac{E_b}{N_0} = \SI{13}{\dB}$. If there's a \SI{27.58}{\dB} difference between the received power and the sensitivity for which $p_{eb} = \SI{1e-3}{}$, then $p_{eb}$ is obtained by looking at $\frac{E_b}{N_0} \approx \SI{40}{\dB}$. 
 
-The testbed measurements plot is quite linear in a logarithmic scale, with an approximate slope of $\approx 3.5$ decades for every \SI{10}{\dB} increase in $\frac{E_b}{N_0}$. Thus, in this numeric case $p_{eb} \approx \SI{1e-9}{}$.
+The testbed measurements plot is quite linear in a logarithmic scale, with an approximate slope of $\approx 3.5$ decades for every \SI{10}{\dB} increase in $\frac{E_b}{N_0}$. Thus, in this numeric case $p_{eb} \approx \SI{1e-13}{}$.
 
 
 The DATA packet defined in the protocol requires $30$ bytes plus $7$ bits. This payload is fitted inside the nRF24 packet. This means a preamble of $1$ byte, an address of up to $5$ bytes, a packet control field of $9$ bits and a CRC of up to $2$ bytes are also required. This adds up to
@@ -135,16 +138,16 @@ Substituting the $N$ number of bits and the bit error probability $p_{eb}$ into 
 \begin{equation}
 	\begin{split}
 		& p_{ep} = 1 - \left( 1 - p_{eb} \right)^N \\
-		& p_{ep} = 1 - \left( 1 - \SI{1e-9}{} \right)^{320} \\
-		& p_{ep} = \SI{320e-9}{}
+		& p_{ep} = 1 - \left( 1 - \SI{1e-13}{} \right)^{320} \\
+		& p_{ep} = \SI{3.20e-11}{}
 	\end{split} \ .
 \end{equation}
-A failure threshold of $p_{\text{fail threshold}} = \SI{1e-12}{}$ is imposed and $T$ is found using \eqref{eq:R}.
+A failure threshold of $p_{\text{fail threshold}} = \SI{1e-16}{}$ is imposed and $T$ is found using \eqref{eq:R}.
 \begin{equation}
 	\begin{split}
 		& T > \frac{\ln \left( p_{\text{fail threshold}}  \right) }{\ln \left( 1 - \left( 1 - p_{eb} \right)^N \right) } \\
-		& T > \frac{\ln \left( \SI{1e-12}{} \right) }{\ln \left( 1 - \left( 1 - \SI{1e-9}{} \right)^{320} \right) } \\
-		& T > 1.848 \\
+		& T > \frac{\ln \left( \SI{1e-16}{} \right) }{\ln \left( 1 - \left( 1 - \SI{1e-13}{} \right)^{320} \right) } \\
+		& T > 1.525 \\
 		& T \rightarrow 2 \\
 	\end{split} \ .
 \end{equation}
@@ -156,55 +159,55 @@ due to the low probability of getting a packet wrong. The fact that the \SI{250}
 
 
 
-\subsection{DATA packet, 3 nodes distance} \label{sub:data3}
-The previous case considered the distance between transmitter and receiver was just $d = \SI{86.67}{\m}$. Although this is expected to be the most common case, the low sensitivity makes it possible to send data at higher distances. Here, $d = \SI{260}{\m}$, which is the maximum line of sight (LOS) distance expected, is taken.
+\subsubsection{DATA packet, maximum distance} \label{sub:data3}
+The previous case considered the distance between transmitter and receiver was just $d = \SI{130}{\m}$. Although this is expected to be the most common case, the low sensitivity makes it possible to send data at higher distances. Here, $d = \SI{260}{\m}$, which is the maximum line of sight (LOS) distance expected, is taken.
 
 From \eqref{eq:link}, it's enough to calculate the received power decrease because of the distance increase.
 \begin{equation}
 	\begin{split}
 	&	\Delta P_{RX} = - 20 \log \left( d_{\text{current}} \right)  + 20 \log \left( d_{\text{previous}} \right)  \\
-	&	\Delta P_{RX} = - 20 \log \left( \SI{260}{\m} \right)  + 20 \log \left( \SI{86.67}{\m} \right)  \\
-	&	\Delta P_{RX} = - \SI{11.56}{\dB}
+	&	\Delta P_{RX} = - 20 \log \left( \SI{260}{\m} \right)  + 20 \log \left( \SI{130}{\m} \right)  \\
+	&	\Delta P_{RX} = - \SI{6.02}{\dB}
 	\end{split} \ .
 \end{equation}
 Thus,
 \begin{equation}
 	\begin{split}
 		& P_{RX} = P_{RX \text{, previous}} + \Delta P_{RX} \\
-		& P_{RX} = - \SI{87}{\dB}\text{m} - \SI{11.56}{\dB} \\
-		& P_{RX} = - \SI{98.564}{\dB}\text{m} \\
+		& P_{RX} = - \SI{76.42}{\dB}\text{m} - \SI{6.02}{\dB} \\
+		& P_{RX} = - \SI{82.44}{\dB}\text{m} \\
 	\end{split} \ .
 \end{equation}
-In this case, the difference of the received power with respect to the senstivity level is $\SI{-98.564}{\dB}\text{m} - \left( - \SI{104}{\dB}\text{m} \right) = \SI{5.44}{\dB}$. Adding up the \SI{13}{\dB}, the \Cref{fig:Luque-GFSK-png} must be analyzed at \SI{18.55}{\dB}. In this case, by extrapolating the testbed measurements plot a safe value to take is
+In this case, the difference of the received power with respect to the senstivity level is $\SI{-82.44}{\dB}\text{m} - \left( - \SI{104}{\dB}\text{m} \right) = \SI{21.56}{\dB}$. Adding up the \SI{13}{\dB}, the \Cref{fig:Luque-GFSK-png} must be analyzed at \SI{34.56}{\dB}. In this case, by extrapolating the testbed measurements plot a safe value to take is
 \begin{equation}
-	p_{eb} = \SI{1e-5}{} \ .
+	p_{eb} = \SI{1e-11}{} \ .
 \end{equation}
 Considering the $N = 320$ bits of the DATA packet, the packet error probability is:
 \begin{equation}
 	\begin{split}
 		& p_{ep} = 1 - \left( 1 - p_{eb} \right)^N \\
-		& p_{ep} = 1 - \left( 1 - \SI{1e-5}{} \right)^{320} \\
-		& p_{ep} = \SI{3.195e-3}{}
+		& p_{ep} = 1 - \left( 1 - \SI{1e-11}{} \right)^{320} \\
+		& p_{ep} = \SI{3.2e-9}{}
 	\end{split} \ .
 \end{equation}
-The difference with the previous case is around $4$ orders of magnitude. Again, a failure threshold of $p_{\text{fail threshold}} = \SI{1e-12}{}$ is imposed and $T$ is found using \eqref{eq:R}.
+The difference with the previous case is around $4$ orders of magnitude. Again, a failure threshold of $p_{\text{fail threshold}} = \SI{1e-16}{}$ is imposed and $T$ is found using \eqref{eq:R}.
 \begin{equation}
 	\begin{split}
 		& T > \frac{\ln \left( p_{\text{fail threshold}}  \right) }{\ln \left( 1 - \left( 1 - p_{eb} \right)^N \right) } \\
-		& T > \frac{\ln \left( \SI{1e-12}{} \right) }{\ln \left( 1 - \left( 1 - \SI{1e-5}{} \right)^{320} \right) } \\
-		& T > 4.809 \\
-		& T \rightarrow 5 \\
+		& T > \frac{\ln \left( \SI{1e-16}{} \right) }{\ln \left( 1 - \left( 1 - \SI{1e-11}{} \right)^{320} \right) } \\
+		& T > 1.88 \\
+		& T \rightarrow 3 \\
 	\end{split} \ .
 \end{equation}
-This means that the number of retries must be
+Just to be safe, as the result is close to its ceiling integer, the result has been approximated to $3$ tries. This means that the number of retries must be
 \begin{equation}
-	R = 4 \ .
+	R = 2 \ .
 \end{equation}
-Thanks the exponential dependence of $p_{ep}$ on the number of tries $T$ the $4$ orders of magnitude between the two cases just require a $3$ tries difference.
+Thanks to the exponential dependence of $p_{ep}$ on the number of tries $T$ the $4$ orders of magnitude between the two cases don't require a tries difference.
 
 
 
-\subsection{TOKEN packet, neighbour distance} \label{sub:token1}
+\subsubsection{TOKEN packet, neighbour distance} \label{sub:token1}
 The two previous cases detailed in subsections \ref{sub:data1} and \ref{sub:data3} refer to the DATA packet, which is the largest packet specified by the standard. However, the TOKEN packet should also be considered. As mentioned in the standard, a transmitter needs to make sure if a node is available of not. The TOKEN packet contains a variable part of \SI{3}{} bits, larger than the \SI{2}{} bits of the HELLO RESPONSE packet. The TOKEN packet is analyzed because it's the largest of the two.
 
 Thanks to previous calculations the $P_{RX}$ power are already known. Changes appear, now, at the packet number of bits, $N$.
@@ -215,26 +218,26 @@ Thanks to previous calculations the $P_{RX}$ power are already known. Changes ap
 
 For the neighbour distance
 \begin{equation}
-		P_{RX} = - \SI{87}{\dB}\text{m} \ .
+		P_{RX} = - \SI{76.42}{\dB}\text{m} \ .
 \end{equation}
 Recall this lead to
 \begin{equation}
-	p_{eb} = \SI{1e-9}{} \ .
+	p_{eb} = \SI{1e-13}{} \ .
 \end{equation}
 Considering the $N = 67$ bits of the TOKEN packet, the packet error probability is:
 \begin{equation}
 	\begin{split}
 		& p_{ep} = 1 - \left( 1 - p_{eb} \right)^N \\
-		& p_{ep} = 1 - \left( 1 - \SI{1e-9}{} \right)^{67} \\
-		& p_{ep} = \SI{67.0e-9}{}
+		& p_{ep} = 1 - \left( 1 - \SI{1e-13}{} \right)^{67} \\
+		& p_{ep} = \SI{6.70e-12}{}
 	\end{split} \ .
 \end{equation}
-In this case, the packet failure threshold is decreased by two orders of magnitude with respect to the DATA packet, i.e., $p_{\text{fail threshold}} = \SI{1e-14}{}$. This number is arbitrary, but the authors want to emphasize the importance of sending the TOKEN packet properly. \eqref{eq:R} is solved for $T$.
+In this case, the packet failure threshold is decreased by two orders of magnitude with respect to the DATA packet, i.e., $p_{\text{fail threshold}} = \SI{1e-18}{}$. This number is arbitrary, but the authors want to emphasize the importance of sending the TOKEN packet properly. \eqref{eq:R} is solved for $T$.
 \begin{equation}
 	\begin{split}
 		& T > \frac{\ln \left( p_{\text{fail threshold}}  \right) }{\ln \left( 1 - \left( 1 - p_{eb} \right)^N \right) } \\
-		& T > \frac{\ln \left( \SI{1e-14}{} \right) }{\ln \left( 1 - \left( 1 - \SI{1e-9}{} \right)^{67} \right) } \\
-		& T > 1.952 \\
+		& T > \frac{\ln \left( \SI{1e-18}{} \right) }{\ln \left( 1 - \left( 1 - \SI{1e-13}{} \right)^{67} \right) } \\
+		& T > 1.610 \\
 		& T \rightarrow 2 \\
 	\end{split} \ .
 \end{equation}
@@ -245,50 +248,50 @@ On one hand, the threshold has been decreased; on the other the number of bits $
 
 
 
-\subsection{TOKEN packet, 3 nodes distance}
-The main difference with respect to subsection \ref{sub:token1} is that now $P_{RX} = \SI{-98.564}{\dB}$m, which means
+\subsubsection{TOKEN packet, 3 nodes distance}
+The main difference with respect to subsection \ref{sub:token1} is that now $P_{RX} = \SI{-82.44}{\dB}$m, which means
 \begin{equation}
-	p_{eb} = \SI{1e-5}{} \ .
+	p_{eb} = \SI{1e-11}{} \ .
 \end{equation}
 Recall the defined TOKEN packet contains $N = 67$ bits. Then,
 \begin{equation}
 	\begin{split}
 		& p_{ep} = 1 - \left( 1 - p_{eb} \right)^N \\
-		& p_{ep} = 1 - \left( 1 - \SI{1e-5}{} \right)^{67} \\
-		& p_{ep} = \SI{669.78e-6}{}
+		& p_{ep} = 1 - \left( 1 - \SI{1e-11}{} \right)^{67} \\
+		& p_{ep} = \SI{6.70e-10}{}
 	\end{split} \ .
 \end{equation}
-There's been a $4$ orders of magnitude increase in $p_{ep}$ with respect to subsection \ref{sub:token1}. Again, the packed failure threshold is set to $p_{\text{fail threshold}} = \SI{1e-14}{}$. \eqref{eq:R} is solved for $T$.
+There's been a $2$ orders of magnitude increase in $p_{ep}$ with respect to subsection \ref{sub:token1}. Again, the packed failure threshold is set to $p_{\text{fail threshold}} = \SI{1e-18}{}$. \eqref{eq:R} is solved for $T$.
 \begin{equation}
 	\begin{split}
 		& T > \frac{\ln \left( p_{\text{fail threshold}}  \right) }{\ln \left( 1 - \left( 1 - p_{eb} \right)^N \right) } \\
-		& T > \frac{\ln \left( \SI{1e-14}{} \right) }{\ln \left( 1 - \left( 1 - \SI{1e-5}{} \right)^{67} \right) } \\
-		& T > 4.411 \\
-		& T \rightarrow 5 \\
+		& T > \frac{\ln \left( \SI{1e-18}{} \right) }{\ln \left( 1 - \left( 1 - \SI{1e-11}{} \right)^{67} \right) } \\
+		& T > 1.962 \\
+		& T \rightarrow 3 \\
 	\end{split} \ .
 \end{equation}
-On one hand, the threshold has been decreased; on the other the number of bits $N$ is lower.
+On one hand, the threshold has been decreased; on the other the number of bits $N$ is lower. Again, because the value is very close to its ceiling integer the number of tries has been made $3$.
 \begin{equation}
-	R = 4 \ .
+	R = 2 \ .
 \end{equation}
 
 
-\subsection{Summary}
+\subsubsection{Summary}
 The obtained results are summarized below:
 \begin{table}[H]
 	\centering
 	\begin{tabular}{|r|r|r||r|r|} \hline
 		Packet & Distance (\SI{}{\m}) & $p_{\text{fail threshold}}$ & Number of tries $T$ & Number of retries $R$ \\ \hline \hline
-		DATA & \SI{86.67}{\m} & \SI{1e-12}{} & $2$ & $1$ \\ \hline
-		DATA & \SI{260}{\m} & \SI{1e-12}{} & $5$ & $4$ \\ \hline
-		TOKEN & \SI{86.67}{\m} & \SI{1e-14}{} & $2$ & $1$ \\ \hline
-		TOKEN & \SI{260}{\m} & \SI{1e-14}{} & $5$ & $4$ \\ \hline
+		DATA & \SI{130}{\m} & \SI{1e-16}{} & $2$ & $1$ \\ \hline
+		DATA & \SI{260}{\m} & \SI{1e-16}{} & $3$ & $2$ \\ \hline
+		TOKEN & \SI{130}{\m} & \SI{1e-18}{} & $2$ & $1$ \\ \hline
+		TOKEN & \SI{260}{\m} & \SI{1e-18}{} & $3$ & $2$ \\ \hline
 	\end{tabular}
 	\caption{Number of tries and retries, summary}
 	\label{tab:label}
 \end{table}
 
-In conclusion, it's been justified that for both the DATA and TOKEN packets a total of $T=5$ tries, i.e., $R=4$ retries are required, to meet the set thresholds for the \SI{260}{\m} distance.
+In conclusion, it's been justified that for both the DATA and TOKEN packets a total of $T=3$ tries, i.e., $R=2$ retries are required, to meet the set thresholds for the \SI{260}{\m} distance.
 
 
 
@@ -298,9 +301,9 @@ In conclusion, it's been justified that for both the DATA and TOKEN packets a to
 
 
 
-\chapter{Timeouts}
+\section{Timeouts}
 
-\section{Theoretical explanation}
+\subsection{Theoretical explanation}
 As important as the number of tries and retries are, it's also critical to determine the timeouts required for a transmitter to switch to a receiver and wait for acknowledgements (ACKs) from potential receivers that switch to transmitters after they have received a package.
 
 It should be made clear that the timeout is defined here as the maximum loop time in which a transmitter will be stuck waiting for an acknowledgement signal. Too small, and there won't be time to receive the ACK. Too large, and the transmitter will waste time waiting for no signal. This means there's an optimal timeout. It's the aim of this chapter to find it. 
@@ -334,7 +337,7 @@ The $t_{\text{RTAD}}$ time is typically specified by the RF module manufacturer.
 
 
 
-\section{Numerical example for the NM competition scenario}
+\subsection{Numerical example for the NM competition scenario}
 Once the timeout equation \eqref{eq:timeout} has been specified, numerical values can be substituted to calculate the timeout required for a real application.
 
 The maximum expected line of sight communication distance during the NM competition is $d = \SI{260}{\m}$. Thus,
